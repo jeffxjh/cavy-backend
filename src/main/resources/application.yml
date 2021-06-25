@@ -1,0 +1,19 @@
+mybatis:
+    mapper-locations: classpath:mapper/*xml
+    type-aliases-package: com.jh.cavybackend.domain
+server:
+    port: 8011
+    servlet:
+        context-path: /cavy
+spring:
+    application:
+        name: cavy-backend
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        name: defaultDataSource
+        password: 123456
+        url: jdbc:mysql://localhost:3307/cavy?serverTimezone=UTC
+        username: root
+logging:
+    level:
+        org.hibernate.type.descriptor.sql.BasicBinder: trace
