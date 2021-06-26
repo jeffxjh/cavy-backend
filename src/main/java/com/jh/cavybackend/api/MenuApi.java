@@ -1,11 +1,8 @@
 package com.jh.cavybackend.api;
 
 import cn.hutool.core.lang.tree.Tree;
-import com.jh.cavybackend.common.exception.APIException;
 import com.jh.cavybackend.domain.Menu;
 import com.jh.cavybackend.service.MenuService;
-import com.jh.cavybackend.vo.MenuTree;
-import com.jh.cavybackend.web.CustomResult.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -23,3 +23,5 @@ INSERT INTO cavy.t_sys_menu (id, menu_code, menu_name, parent_id, icon, url, hid
 INSERT INTO cavy.t_sys_menu (id, menu_code, menu_name, parent_id, icon, url, hidden, weight, sort, is_default, addTime, addUser, updateTime, updateUser) VALUES (3, 'test', '测试', 0, null, null, 1, null, 4, 1, null, null, null, null);
 INSERT INTO cavy.t_sys_menu (id, menu_code, menu_name, parent_id, icon, url, hidden, weight, sort, is_default, addTime, addUser, updateTime, updateUser) VALUES (4, 'test-1', '测试-1', 3, null, null, 1, null, 1, 1, null, null, null, null);
 INSERT INTO cavy.t_sys_menu (id, menu_code, menu_name, parent_id, icon, url, hidden, weight, sort, is_default, addTime, addUser, updateTime, updateUser) VALUES (5, 'user', '用户管理', 0, null, null, 1, null, 2, 1, null, null, null, null);
+
+

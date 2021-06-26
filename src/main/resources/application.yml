@@ -1,19 +1,59 @@
-mybatis:
-    mapper-locations: classpath:mapper/*xml
-    type-aliases-package: com.jh.cavybackend.domain
+
 server:
-    port: 8011
-    servlet:
-        context-path: /cavy
+  port: 8011
+  servlet:
+    context-path: /cavy
 spring:
-    application:
-        name: cavy-backend
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        name: defaultDataSource
-        password: 123456
-        url: jdbc:mysql://localhost:3307/cavy?serverTimezone=UTC
-        username: root
+  application:
+    name: cavy-backend
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3307/cavy?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      validationQuery: select 1
+      validationQueryTimeout: 5
+      testOnBorrow: false
+      testOnReturn: false
+      testWhileIdle: true
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
+      filters: stat
+      webStatFilter:
+        enabled: true
+        urlPattern: /api/*
+        sessionStatEnable: true
+        sessionStatMaxCount: 1000
+        profileEnable: true
+      statViewServlet:
+        enabled: true
+        urlPattern: /druid/*
+        resetEnable: false
+        loginUsername: admin
+        loginPassword: admin
+      filter:
+        stat:
+          enabled: true
+          mergeSql: true
+        commons-log:
+          connection-logger-name: stat,wall,log4j
+mybatis:
+  mapper-locations: classpath:mapper/*xml
+  type-aliases-package: com.jh.cavybackend.domain
 logging:
-    level:
-        org.hibernate.type.descriptor.sql.BasicBinder: trace
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+cavy:
+  init-database: cavy1
+  init-file: init

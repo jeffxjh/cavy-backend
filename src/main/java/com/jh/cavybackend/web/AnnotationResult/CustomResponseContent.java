@@ -1,4 +1,4 @@
-package com.jh.cavybackend.web.CustomResult;
+package com.jh.cavybackend.web.AnnotationResult;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

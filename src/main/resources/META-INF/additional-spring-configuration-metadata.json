@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "cavy.init-database",
+      "type": "java.lang.String",
+      "description": "用于指定初始化的数据库名称"
+    },
+    {
+      "name": "cavy.init-file",
+      "type": "java.lang.String",
+      "description": "用于指定初始化的数据库脚本文件"
+    }
+  ] }

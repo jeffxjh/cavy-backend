@@ -1,4 +1,4 @@
-package com.jh.cavybackend.web.CustomResult;
+package com.jh.cavybackend.web.AnnotationResult;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;

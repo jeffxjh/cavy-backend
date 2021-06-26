@@ -1,4 +1,4 @@
-package com.jh.cavybackend.web.CustomResult;
+package com.jh.cavybackend.web.AnnotationResult;
 
 import java.lang.annotation.*;
 
