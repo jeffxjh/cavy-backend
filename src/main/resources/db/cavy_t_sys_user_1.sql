@@ -1,0 +1,1 @@
+INSERT INTO cavy.t_sys_user (id, user_name, password, real_name, gender, phone, email, addTime, addUser, updateTime, updateUser) VALUES (1, 'admin', ' 123', '超级管理员', 1, null, null, null, null, null, null);

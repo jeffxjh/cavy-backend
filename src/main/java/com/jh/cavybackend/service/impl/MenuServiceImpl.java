@@ -8,15 +8,12 @@ import cn.hutool.core.lang.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jh.cavybackend.vo.MenuTree;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-
 import com.jh.cavybackend.domain.Menu;
 import com.jh.cavybackend.mapper.MenuMapper;
 import com.jh.cavybackend.service.MenuService;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +81,7 @@ public class MenuServiceImpl implements MenuService {
             TreeNode<Integer> integerTreeNode = new TreeNode<>(menu.getId(), menu.getParentId(), menu.getMenuName(), menu.getWeight());
             Map<String, Object> extra = new HashMap<>();
             extra.put("code", menu.getMenuCode());
+            extra.put("icon", menu.getIcon());
             integerTreeNode.setExtra(extra);
             nodeList.add(integerTreeNode);
         }
@@ -95,12 +93,13 @@ public class MenuServiceImpl implements MenuService {
         treeNodeConfig.setNameKey("menuName");
         // 最大递归深度
         treeNodeConfig.setDeep(3);
-        List<Tree<Integer>> build = TreeUtil.build(nodeList, 0,treeNodeConfig, (treeNode, tree) -> {
+        List<Tree<Integer>> build = TreeUtil.build(nodeList, 0, treeNodeConfig, (treeNode, tree) -> {
             tree.setId(treeNode.getId());
             tree.setParentId(treeNode.getParentId());
             tree.setWeight(treeNode.getWeight());
             tree.setName(treeNode.getName());
             tree.putExtra("code", treeNode.getExtra().get("code"));
+            tree.putExtra("icon", treeNode.getExtra().get("icon"));
         });
         return build;
     }
