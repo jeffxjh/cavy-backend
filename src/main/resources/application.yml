@@ -48,6 +48,21 @@ spring:
           mergeSql: true
         commons-log:
           connection-logger-name: stat,wall,log4j
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtualHost: /
+    #开启发送失败返回
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+      #开启ack
+      direct:
+        acknowledge-mode: manual
+
 mybatis:
   mapper-locations: classpath:mapper/*xml
   type-aliases-package: com.jh.cavybackend.domain

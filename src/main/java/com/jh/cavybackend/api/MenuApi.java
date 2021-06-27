@@ -2,12 +2,10 @@ package com.jh.cavybackend.api;
 
 import cn.hutool.core.lang.tree.Tree;
 import com.jh.cavybackend.domain.Menu;
+import com.jh.cavybackend.rabbitmq.MqSend;
 import com.jh.cavybackend.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +16,8 @@ import java.util.stream.Stream;
 @RequestMapping("/menu")
 @RestController
 public class MenuApi {
+    @Autowired
+    private MqSend mqSend;
     @Autowired
     private MenuService menuService;
 
@@ -48,5 +48,12 @@ public class MenuApi {
     @GetMapping("/tree")
     public List<Tree<Integer>> getMenusTree() {
         return menuService.findMenusTree();
+    }
+
+
+    @GetMapping("/rabbit")
+    public String rabbit(@RequestParam String exchange,@RequestParam String key,@RequestParam String msg) {
+        mqSend.sendMsg(exchange,key,msg);
+        return "";
     }
 }
