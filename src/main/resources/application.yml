@@ -63,6 +63,19 @@ spring:
       direct:
         acknowledge-mode: manual
 
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    timeout: 1000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
 mybatis:
   mapper-locations: classpath:mapper/*xml
   type-aliases-package: com.jh.cavybackend.domain

@@ -4,6 +4,9 @@ import cn.hutool.core.lang.tree.Tree;
 import com.jh.cavybackend.domain.Menu;
 import com.jh.cavybackend.rabbitmq.MqSend;
 import com.jh.cavybackend.service.MenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,7 @@ import java.util.stream.Stream;
 
 @RequestMapping("/menu")
 @RestController
+@Api(value = "菜单",tags = {"菜单"})
 public class MenuApi {
     @Autowired
     private MqSend mqSend;
@@ -45,6 +49,9 @@ public class MenuApi {
     public List<Menu> getMenus() {
         return menuService.findAll();
     }
+
+    @ApiOperation("获取用户菜单树")
+    @ApiImplicitParam(name = "id", value = "id", required = false, paramType = "query", dataType = "String")
     @GetMapping("/tree")
     public List<Tree<Integer>> getMenusTree() {
         return menuService.findMenusTree();
