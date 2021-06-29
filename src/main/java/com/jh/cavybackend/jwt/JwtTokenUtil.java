@@ -20,7 +20,6 @@ import java.util.Map;
 public class JwtTokenUtil implements InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(JwtTokenUtil.class);
     private final JwtProperties jwtProperties;
-    public static final String JWT_SCOPE = "scope";
     private Key key;
 
     @Autowired
@@ -56,7 +55,7 @@ public class JwtTokenUtil implements InitializingBean {
     public Claims getClaimsFromToken(String token) {
         Claims claims = null;
         try {
-            claims = Jwts.parser().setSigningKey(this.key).parseClaimsJws(token).getBody();
+            claims = Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,7 +142,7 @@ public class JwtTokenUtil implements InitializingBean {
 
     public boolean validateToken(String token, String subject) {
         try {
-            Claims claims = (Claims) Jwts.parser().setSigningKey(this.key).parseClaimsJws(token).getBody();
+            Claims claims = Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
             return (subject.equals(claims.getSubject())) && (!isTokenExpired(token));
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature.");
@@ -164,7 +163,7 @@ public class JwtTokenUtil implements InitializingBean {
     public boolean validateToken(String token, JwtUser jwtUser) {
         try {
             String username = getUsernameFromToken(token);
-            Jwts.parser().setSigningKey(this.key).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token);
             return (username.equals(jwtUser.getUsername())) && (!isTokenExpired(token));
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature.");

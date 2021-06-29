@@ -1,7 +1,6 @@
-package com.jh.cavybackend.filter;
+package com.jh.cavybackend.jwt;
 
 import com.auth0.jwt.interfaces.Claim;
-import com.jh.cavybackend.jwt.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
