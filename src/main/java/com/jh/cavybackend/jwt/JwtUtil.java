@@ -8,18 +8,24 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.jh.cavybackend.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+@Component
 public class JwtUtil {
-
+    //@Autowired
+    //private   JwtProperties properties;
+    private static  JwtProperties jwtProperties;
+    //@PostConstruct
+    //public void init() {
+    //    jwtProperties = this.properties;
+    //}
+    public JwtUtil(JwtProperties jwtProperties) {
+        JwtUtil.jwtProperties = jwtProperties;
+    }
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
-    /**
-     * 密钥
-     */
-    private static final String SECRET = "my_secret";
 
     /**
      * 过期时间
@@ -43,7 +49,7 @@ public class JwtUtil {
                                .withClaim("realName", user.getRealName())//name
                                .withExpiresAt(expireDate) //超时设置,设置过期的日期
                                .withIssuedAt(new Date()) //签发时间
-                               .sign(Algorithm.HMAC256(SECRET)); //SECRET加密 对称加密
+                               .sign(Algorithm.HMAC256(jwtProperties.getBase64Secret())); //SECRET加密 对称加密
         return token;
     }
 
@@ -52,8 +58,11 @@ public class JwtUtil {
      */
     public static Map<String, Claim> verifyToken(String token) {
         DecodedJWT jwt = null;
+        if (token.startsWith(jwtProperties.getTokenStartWith())) {
+            token = token.replaceFirst(jwtProperties.getTokenStartWith()+" ", "");
+        }
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(jwtProperties.getBase64Secret())).build();
             jwt = verifier.verify(token);
         } catch (Exception e) {
             logger.error(e.getMessage());

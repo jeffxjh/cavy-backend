@@ -1,6 +1,8 @@
 package com.jh.cavybackend;
 
 import com.jh.cavybackend.domain.User;
+import com.jh.cavybackend.elasticsearch.Book;
+import com.jh.cavybackend.elasticsearch.repositories.BookRepository;
 import com.jh.cavybackend.redis.CacheService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import java.util.List;
 class CavyBackendApplicationTests {
     @Autowired
     private CacheService cacheService;
+    @Autowired
+    private BookRepository bookRepository;
     @Test
     void contextLoads() {
         cacheService.set("key2", "value3");
@@ -27,5 +31,11 @@ class CavyBackendApplicationTests {
         System.out.println(cacheService.get("key2"));
 
     }
+    @Test
+    public  void esTest(){
 
+        Book book=new Book();
+        bookRepository.save(book);
+
+    }
 }
