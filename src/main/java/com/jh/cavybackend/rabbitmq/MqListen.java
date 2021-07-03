@@ -51,8 +51,10 @@ public class MqListen {
             @QueueBinding(value = @Queue(value = RabbitMqConfig.TOPIC_QUEUE_TWO, durable = "true"),
                     exchange = @Exchange(value = RabbitMqConfig.TOPIC_EXCHANGE, type = ExchangeTypes.TOPIC),
                     key = RabbitMqConfig.TOPIC_ROUTING_KEY_TWO)})
-    public void receiverMqExchangeTwo(String msg) {
+    public void receiverMqExchangeTwo(String msg, Channel channel, Message message) throws IOException {
+
         log.info("接收到{} 交换机，{} 队列，{} key,消息:{}", RabbitMqConfig.TOPIC_EXCHANGE, RabbitMqConfig.TOPIC_QUEUE_TWO, RabbitMqConfig.TOPIC_ROUTING_KEY_TWO, msg);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 
     @RabbitListener(queues = RabbitMqConfig.FANOUT_QUEUE_ONE)

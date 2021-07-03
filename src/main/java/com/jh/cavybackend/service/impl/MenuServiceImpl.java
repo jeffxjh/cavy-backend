@@ -82,6 +82,7 @@ public class MenuServiceImpl implements MenuService {
             Map<String, Object> extra = new HashMap<>();
             extra.put("code", menu.getMenuCode());
             extra.put("icon", menu.getIcon());
+            extra.put("url", menu.getUrl());
             integerTreeNode.setExtra(extra);
             nodeList.add(integerTreeNode);
         }
@@ -100,6 +101,7 @@ public class MenuServiceImpl implements MenuService {
             tree.setName(treeNode.getName());
             tree.putExtra("code", treeNode.getExtra().get("code"));
             tree.putExtra("icon", treeNode.getExtra().get("icon"));
+            tree.putExtra("url", treeNode.getExtra().get("url"));
         });
         return build;
     }

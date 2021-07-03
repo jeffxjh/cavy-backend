@@ -1,20 +1,19 @@
 package com.jh.cavybackend.api;
 
+import cn.hutool.core.util.StrUtil;
 import com.jh.cavybackend.domain.User;
 import com.jh.cavybackend.jwt.JwtTokenUtil;
 import com.jh.cavybackend.jwt.JwtUser;
 import com.jh.cavybackend.jwt.JwtUtil;
 import com.jh.cavybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @RequestMapping("/user")
 @RestController
@@ -47,6 +46,14 @@ public class UserApi {
             boolean b = jwtTokenUtil.validateToken(token, jwtUser);
             response.addCookie(new Cookie("token", token));
         }
+        return token;
+    }
+
+    @GetMapping("/login4")
+    public String login4(@RequestBody Map<String, Object> params) {
+        String token = "";
+        String name = StrUtil.toString(params.get("name"));
+        int length = name.length();
         return token;
     }
 }
