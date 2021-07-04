@@ -1,6 +1,10 @@
 package com.jh.cavybackend.service;
 
 import com.jh.cavybackend.domain.User;
+import com.jh.cavybackend.vo.UserVO;
+import com.jh.cavybackend.web.Result.ResultPage;
+import com.jh.cavybackend.web.param.UserParam;
+
 public interface UserService{
 
 
@@ -18,4 +22,5 @@ public interface UserService{
 
     User getByUserName(String userName);
 
+    ResultPage<UserVO> findUserPage(UserParam userParam);
 }

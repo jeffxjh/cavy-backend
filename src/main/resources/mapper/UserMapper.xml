@@ -164,4 +164,11 @@
       updateUser = #{updateuser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findByPage" resultType="com.jh.cavybackend.vo.UserVO" >
+    select
+            id, user_name, `password`, real_name, gender, phone, email, addTime, addUser, updateTime,
+            updateUser
+    from t_sys_user ${ew.customSqlSegment}
+  </select>
 </mapper>

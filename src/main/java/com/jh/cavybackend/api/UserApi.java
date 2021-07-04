@@ -6,6 +6,9 @@ import com.jh.cavybackend.jwt.JwtTokenUtil;
 import com.jh.cavybackend.jwt.JwtUser;
 import com.jh.cavybackend.jwt.JwtUtil;
 import com.jh.cavybackend.service.UserService;
+import com.jh.cavybackend.vo.UserVO;
+import com.jh.cavybackend.web.Result.ResultPage;
+import com.jh.cavybackend.web.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,5 +58,10 @@ public class UserApi {
         String name = StrUtil.toString(params.get("name"));
         int length = name.length();
         return token;
+    }
+
+    @GetMapping("")
+    public ResultPage<UserVO> list(@ModelAttribute UserParam userParam) {
+        return userService.findUserPage(userParam);
     }
 }

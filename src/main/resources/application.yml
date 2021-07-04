@@ -89,3 +89,6 @@ logging:
 cavy:
   init-database: cavy1
   init-file: init
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
