@@ -21,6 +21,9 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object data, MethodParameter returnType, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request, ServerHttpResponse response) {
+        if (data instanceof ResultVO) {
+            return data;
+        }
         // String类型不能直接包装，所以要进行些特别的处理
         if (returnType.getGenericParameterType().equals(String.class)) {
             ObjectMapper objectMapper = new ObjectMapper();

@@ -1,13 +1,16 @@
 package com.jh.cavybackend.api;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jh.cavybackend.domain.User;
 import com.jh.cavybackend.jwt.JwtTokenUtil;
 import com.jh.cavybackend.jwt.JwtUser;
-import com.jh.cavybackend.jwt.JwtUtil;
 import com.jh.cavybackend.service.UserService;
+import com.jh.cavybackend.vo.UserInfoVO;
 import com.jh.cavybackend.vo.UserVO;
 import com.jh.cavybackend.web.Result.ResultPage;
+import com.jh.cavybackend.web.Result.ResultVO;
+import com.jh.cavybackend.web.param.LoginParam;
 import com.jh.cavybackend.web.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,30 +29,34 @@ public class UserApi {
     @Resource
     private UserService userService;
 
-    @GetMapping("/login")
-    public String login(@RequestParam String userName, @RequestParam String passWord, HttpServletResponse response) {
-        String token = "";
-        User user = userService.getByUserName(userName);
-        if (user != null) {
-            token = JwtUtil.createToken(user);
-            response.addCookie(new Cookie("token", token));
-        }
-        return token;
-    }
+    //@GetMapping("/login")
+    //public String login(@RequestParam String userName, @RequestParam String passWord, HttpServletResponse response) {
+    //    String token = "";
+    //    User user = userService.getByUserName(userName);
+    //    if (user != null) {
+    //        token = JwtUtil.createToken(user);
+    //        response.addCookie(new Cookie("token", token));
+    //    }
+    //    return token;
+    //}
 
-    @GetMapping("/login2")
-    public String login2(@RequestParam String userName, @RequestParam String passWord, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/login")
+    public ResultVO<UserInfoVO> login(@RequestBody LoginParam loginParam, HttpServletRequest request, HttpServletResponse response) {
         String token = "";
-        User user = userService.getByUserName(userName);
+        User user = userService.getByUserName(loginParam.getUsername());
         if (user != null) {
             JwtUser jwtUser = new JwtUser();
-            jwtUser.setAccount("zhangsan");
-            jwtUser.setUsername("zhangsna");
+            jwtUser.setAccount(user.getUserName());
+            jwtUser.setUsername(user.getRealName());
             token = jwtTokenUtil.generateToken(jwtUser);
-            boolean b = jwtTokenUtil.validateToken(token, jwtUser);
+            //boolean b = jwtTokenUtil.validateToken(token, jwtUser);
             response.addCookie(new Cookie("token", token));
+            UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
+            userInfoVO.setToken(token);
+            return new ResultVO<>(1000, "登录成功", userInfoVO);
+        } else {
+            return new ResultVO<>(2000, "用户不存在", new UserInfoVO());
         }
-        return token;
     }
 
     @GetMapping("/login4")
