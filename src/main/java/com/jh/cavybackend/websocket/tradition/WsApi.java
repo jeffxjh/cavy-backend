@@ -1,6 +1,7 @@
-package com.jh.cavybackend.websocket;
+package com.jh.cavybackend.websocket.tradition;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api")
 public class WsApi {
     @Autowired
+    @Qualifier(value = "WebSocketTradition")
     private WebSocket webSocket;
 
     @RequestMapping("/sendAllWebSocket")

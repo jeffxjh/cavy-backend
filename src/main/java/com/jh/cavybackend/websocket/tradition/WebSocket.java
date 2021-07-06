@@ -1,4 +1,4 @@
-package com.jh.cavybackend.websocket;
+package com.jh.cavybackend.websocket.tradition;
 
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@Component
+@Component(value = "WebSocketTradition")
 @ServerEndpoint("/websocket/{shopId}")
 //此注解相当于设置访问URL
 public class WebSocket {
