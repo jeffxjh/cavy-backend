@@ -54,11 +54,12 @@ public class FileHandler {
     /**
      * 下载文件
      */
-    public void downLoad(String fileName, String filePath, HttpServletResponse response) {
-        if (StrUtil.isNotBlank(fileName) && StrUtil.isNotBlank(filePath)) {
+    public void downLoad(String id, HttpServletResponse response) {
+        File file = fileMapper.selectById(id);
+        if (file!=null&&StrUtil.isNotBlank(file.getFileName()) && StrUtil.isNotBlank(file.getFilePath())) {
             try {
-                InputStream inputStream = minioUtil.downloadFile(filePath);
-                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+                InputStream inputStream = minioUtil.downloadFile(file.getFilePath());
+                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(file.getFileName(), "UTF-8"));
                 response.setCharacterEncoding("UTF-8");
                 IoUtil.copy(inputStream, response.getOutputStream());
             } catch (Exception e) {

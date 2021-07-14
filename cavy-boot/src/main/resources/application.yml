@@ -102,11 +102,11 @@ management:
 file:
   type: minio
 minio:
-  endpoint: http://localhost:9000/
+  endpoint: ${minio-endpoint:"http://localhost:9000/"}
   port: 9000
   accessKey: Mingmei
   secretKey: Mingmei/K7MDENG/bPxRfiCYEXAMPLEKEY
   secure: false
   bucketName: "images"
   configDir: "/root/data"
-  webUrl: http://localhost:9000/
+  webUrl: ${minio-weburl:"http://localhost:9000/"}
