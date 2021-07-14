@@ -1,0 +1,112 @@
+server:
+  port: 8011
+  servlet:
+    context-path: /cavy
+spring:
+  application:
+    name: cavy-boot
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3307/cavy?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      validationQuery: select 1
+      validationQueryTimeout: 5
+      testOnBorrow: false
+      testOnReturn: false
+      testWhileIdle: true
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
+      filters: stat
+      webStatFilter:
+        enabled: true
+        urlPattern: /api/*
+        sessionStatEnable: true
+        sessionStatMaxCount: 1000
+        profileEnable: true
+      statViewServlet:
+        enabled: true
+        urlPattern: /druid/*
+        resetEnable: false
+        loginUsername: admin
+        loginPassword: admin
+      filter:
+        stat:
+          enabled: true
+          mergeSql: true
+        commons-log:
+          connection-logger-name: stat,wall,log4j
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtualHost: /
+    #开启发送失败返回
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+      #开启ack
+      direct:
+        acknowledge-mode: manual
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    timeout: 1000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 30MB
+
+mybatis:
+  mapper-locations: classpath:mapper/*xml
+  type-aliases-package: com.jh.cavymanage.domain
+logging:
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+cavy:
+  init-database: cavy1
+  init-file: init
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        exclude: shutdown
+file:
+  type: minio
+minio:
+  endpoint: http://localhost:9000/
+  port: 9000
+  accessKey: Mingmei
+  secretKey: Mingmei/K7MDENG/bPxRfiCYEXAMPLEKEY
+  secure: false
+  bucketName: "images"
+  configDir: "/root/data"
+  webUrl: http://localhost:9000/
