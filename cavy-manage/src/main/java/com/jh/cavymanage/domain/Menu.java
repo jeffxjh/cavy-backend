@@ -1,5 +1,7 @@
 package com.jh.cavymanage.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("t_sys_menu")
 public class Menu {
+    @TableId(value = "id",type = IdType.AUTO)
     @ApiModelProperty(value = "")
     private Integer id;
 

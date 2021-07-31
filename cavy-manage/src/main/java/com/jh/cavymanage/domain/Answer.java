@@ -13,37 +13,34 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 系统配置表
+ * 回答表
  */
-@ApiModel(value = "com-jh-manage-domain-Config")
+@ApiModel(value = "com-jh-cavymanage-domain-Answer")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_sys_config")
-public class Config {
+@TableName(value = "t_bus_answer")
+public class Answer  {
     @TableId(value = "id",type = IdType.AUTO)
     @ApiModelProperty(value = "")
     private Integer id;
 
     @ApiModelProperty(value = "")
-    private String code;
+    private Integer questionId;
 
     @ApiModelProperty(value = "")
-    private String codeValue;
-
-    @ApiModelProperty(value = "")
-    private String name;
-
-    @ApiModelProperty(value = "")
-    private Date addtime;
+    private String content;
 
     @ApiModelProperty(value = "")
     private String adduser;
 
     @ApiModelProperty(value = "")
-    private Date updatetime;
+    private Date addtime;
 
     @ApiModelProperty(value = "")
     private String updateuser;
+
+    @ApiModelProperty(value = "")
+    private Date updatetime;
 }

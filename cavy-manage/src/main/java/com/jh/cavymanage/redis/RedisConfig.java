@@ -102,9 +102,6 @@ public class RedisConfig {
         return template;
     }
 
-    @Bean
-    CacheService cache(RedisTemplate redisTemplate) {
-        return new RedisHandle(redisTemplate);
-    }
+
 
 }

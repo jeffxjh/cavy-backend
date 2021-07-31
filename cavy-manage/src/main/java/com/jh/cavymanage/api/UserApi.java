@@ -1,10 +1,11 @@
 package com.jh.cavymanage.api;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.jh.cavymanage.domain.User;
+import com.jh.cavymanage.jwt.JwtProperties;
 import com.jh.cavymanage.jwt.JwtTokenUtil;
 import com.jh.cavymanage.jwt.JwtUser;
+import com.jh.cavymanage.redis.RedisHandle;
 import com.jh.cavymanage.service.UserService;
 import com.jh.cavymanage.vo.UserInfoVO;
 import com.jh.cavymanage.vo.UserVO;
@@ -19,7 +20,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @RequestMapping("/user")
 @RestController
@@ -28,9 +28,13 @@ public class UserApi {
     private JwtTokenUtil jwtTokenUtil;
     @Resource
     private UserService userService;
+    @Resource
+    private RedisHandle redisHandle;
+    @Resource
+    private JwtProperties jwtProperties;
 
     //@GetMapping("/login")
-    //public String login(@RequestParam String userName, @RequestParam String passWord, HttpServletResponse response) {
+    //public String auth0Login(@RequestParam String userName, @RequestParam String passWord, HttpServletResponse response) {
     //    String token = "";
     //    User user = userService.getByUserName(userName);
     //    if (user != null) {
@@ -41,7 +45,7 @@ public class UserApi {
     //}
 
     @PostMapping("/login")
-    public ResultVO<UserInfoVO> login(@RequestBody LoginParam loginParam, HttpServletRequest request, HttpServletResponse response) {
+    public ResultVO<UserInfoVO> jjwtLogin(@RequestBody LoginParam loginParam, HttpServletRequest request, HttpServletResponse response) {
         String token = "";
         User user = userService.getByUserName(loginParam.getUsername());
         if (user != null) {
@@ -51,6 +55,7 @@ public class UserApi {
             token = jwtTokenUtil.generateToken(jwtUser);
             //boolean b = jwtTokenUtil.validateToken(token, jwtUser);
             response.addCookie(new Cookie("token", token));
+            redisHandle.hset(jwtProperties.getRedisKey(), token, jwtUser,jwtProperties.getTokenValidityInSeconds());
             UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
             userInfoVO.setToken(token);
             return new ResultVO<>(1000, "登录成功", userInfoVO);
@@ -59,15 +64,15 @@ public class UserApi {
         }
     }
 
-    @GetMapping("/login4")
-    public String login4(@RequestBody Map<String, Object> params) {
-        String token = "";
-        String name = StrUtil.toString(params.get("name"));
-        int length = name.length();
-        return token;
-    }
+    //@GetMapping("/login4")
+    //public String login4(@RequestBody Map<String, Object> params) {
+    //    String token = "";
+    //    String name = StrUtil.toString(params.get("name"));
+    //    int length = name.length();
+    //    return token;
+    //}
 
-    @GetMapping("")
+    @GetMapping()
     public ResultPage<UserVO> list(@ModelAttribute UserParam userParam) {
         return userService.findUserPage(userParam);
     }

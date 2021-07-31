@@ -1,8 +1,7 @@
 package com.jh.cavymanage.redis;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -10,11 +9,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-@Getter
-@AllArgsConstructor
+
+@Component
 public final class RedisHandle implements CacheService {
 
     private final RedisTemplate<String, Object> redisTemplate;
+
+    public RedisHandle(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+    @Override
+    public RedisTemplate<String, Object> getRedisTemplate() {
+        return this.redisTemplate;
+    }
 
     @Override
     public boolean expire(String key, long time) {
@@ -409,5 +416,4 @@ public final class RedisHandle implements CacheService {
             e.printStackTrace();
         }
     }
-
 }

@@ -7,25 +7,13 @@
         <groupId>com.jh</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <packaging>jar</packaging>
-    <artifactId>cavy-file</artifactId>
+    <groupId>com.jh</groupId>
+    <artifactId>cavy-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cavy-file</name>
-    <description>Demo project for Spring Boot</description>
-
-
+    <name>cavy-core</name>
+    <packaging>jar</packaging>
     <dependencies>
-        <!-- minio客户端 -->
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
 
     <build>

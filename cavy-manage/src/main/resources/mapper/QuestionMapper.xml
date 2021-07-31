@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.cavymanage.mapper.QuestionMapper">
+  <resultMap id="BaseResultMap" type="com.jh.cavymanage.domain.Question">
+    <!--@mbg.generated-->
+    <!--@Table t_bus_question-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="addUser" jdbcType="VARCHAR" property="adduser" />
+    <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="updateUser" jdbcType="VARCHAR" property="updateuser" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, title, content, addUser, addTime, updateUser, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from t_bus_question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from t_bus_question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavymanage.domain.Question" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_bus_question (title, content, addUser, 
+      addTime, updateUser, updateTime
+      )
+    values (#{title,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{adduser,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavymanage.domain.Question" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_bus_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="adduser != null">
+        addUser,
+      </if>
+      <if test="addtime != null">
+        addTime,
+      </if>
+      <if test="updateuser != null">
+        updateUser,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adduser != null">
+        #{adduser,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuser != null">
+        #{updateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavymanage.domain.Question">
+    <!--@mbg.generated-->
+    update t_bus_question
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adduser != null">
+        addUser = #{adduser,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuser != null">
+        updateUser = #{updateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jh.cavymanage.domain.Question">
+    <!--@mbg.generated-->
+    update t_bus_question
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      addUser = #{adduser,jdbcType=VARCHAR},
+      addTime = #{addtime,jdbcType=TIMESTAMP},
+      updateUser = #{updateuser,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="questionVOList" resultType="com.jh.cavymanage.vo.QuestionVO">
+    select  <include refid="Base_Column_List" /> ,b.question_id as hasAnswer
+    from t_bus_question a left join (select c.question_id from t_bus_answer c group by c.question_id ) b on a.id=b.question_id
+    ${ew.customSqlSegment}
+  </select>
+</mapper>

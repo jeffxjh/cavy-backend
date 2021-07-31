@@ -1,21 +1,27 @@
-package com.jh.cavybackend.jwt;
+package com.jh.cavymanage.jwt;
 
-import com.auth0.jwt.interfaces.Claim;
+import com.jh.cavycore.RequestHeadHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 //@Component//无需添加此注解，在启动类添加@ServletComponentScan注解后，会自动将带有@WebFilter的注解进行注入！
 @Slf4j
 @Component
 @WebFilter(filterName = "JwtFilter", urlPatterns = "/*")
 public class JwtFilter implements Filter {
+    @Resource
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Resource
+    private JwtProperties jwtProperties;
+
     @Override
     public void init(FilterConfig filterConfig) {
     }
@@ -49,17 +55,28 @@ public class JwtFilter implements Filter {
                 response.getWriter().write("missing token！");
                 return;
             }
+            //auth0login走下面逻辑
+            //Map<String, Claim> userData = JwtUtil.verifyToken(token);
+            //if (userData == null) {
+            //    response.getWriter().write("illegality token！");
+            //    return;
+            //}
+            //Integer id = userData.get("id").asInt();
+            //String realName = userData.get("realName").asString();
+            //String userName = userData.get("userName").asString();
 
-            Map<String, Claim> userData = JwtUtil.verifyToken(token);
-            if (userData == null) {
+            //jjwtlogin走下面逻辑
+            JwtUser jwtUser = jwtTokenUtil.validateToken(jwtTokenUtil.getToken(request));
+            if (jwtUser == null) {
                 response.getWriter().write("illegality token！");
                 return;
             }
-            Integer id = userData.get("id").asInt();
-            String realName = userData.get("realName").asString();
-            String userName = userData.get("userName").asString();
+            String realName = jwtUser.getUsername();
+            String userName = jwtUser.getAccount();
+            RequestHeadHolder.setAccount(userName);
+            RequestHeadHolder.setRealName(realName);
             //拦截器 拿到用户信息，放到request中
-            request.setAttribute("id", id);
+            //request.setAttribute("id", id);
             request.setAttribute("realName", realName);
             request.setAttribute("userName", userName);
             chain.doFilter(req, res);

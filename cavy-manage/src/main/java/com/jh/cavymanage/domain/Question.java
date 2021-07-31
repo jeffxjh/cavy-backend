@@ -1,8 +1,6 @@
 package com.jh.cavymanage.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,37 +11,34 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 系统配置表
+ * 问题表
  */
-@ApiModel(value = "com-jh-manage-domain-Config")
+@ApiModel(value = "com-jh-cavymanage-domain-Question")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_sys_config")
-public class Config {
+@TableName(value = "t_bus_question")
+public class Question {
     @TableId(value = "id",type = IdType.AUTO)
     @ApiModelProperty(value = "")
     private Integer id;
 
     @ApiModelProperty(value = "")
-    private String code;
+    private String title;
 
     @ApiModelProperty(value = "")
-    private String codeValue;
-
-    @ApiModelProperty(value = "")
-    private String name;
-
-    @ApiModelProperty(value = "")
-    private Date addtime;
-
+    private String content;
+    @TableField(value = "addUser", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "")
     private String adduser;
-
+    @TableField(value = "addTime", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "")
-    private Date updatetime;
-
+    private Date addtime;
+    @TableField(value = "updateUser", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "")
     private String updateuser;
+    @TableField(value = "updateTime", fill = FieldFill.INSERT_UPDATE)
+    @ApiModelProperty(value = "")
+    private Date updatetime;
 }

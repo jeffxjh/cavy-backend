@@ -1,5 +1,6 @@
 package com.jh.cavymanage.jwt;
 
+import com.jh.cavymanage.redis.RedisHandle;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
@@ -21,6 +23,8 @@ public class JwtTokenUtil implements InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(JwtTokenUtil.class);
     private final JwtProperties jwtProperties;
     private Key key;
+    @Resource
+    private RedisHandle redisHandle;
 
     @Autowired
     public JwtTokenUtil(JwtProperties jwtProperties) {
@@ -158,6 +162,28 @@ public class JwtTokenUtil implements InitializingBean {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public JwtUser validateToken(String token) {
+        try {
+            JwtUser jwtUser = (JwtUser) redisHandle.hget(jwtProperties.getRedisKey(), token);
+            String username = getUsernameFromToken(token);
+            Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token);
+            return (username.equals(jwtUser.getUsername())) && (!isTokenExpired(token)) ? jwtUser : null;
+        } catch (SecurityException | MalformedJwtException e) {
+            log.info("Invalid JWT signature.");
+            e.printStackTrace();
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT token.");
+            e.printStackTrace();
+        } catch (UnsupportedJwtException e) {
+            log.info("Unsupported JWT token.");
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            log.info("JWT token compact of handler are invalid.");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean validateToken(String token, JwtUser jwtUser) {

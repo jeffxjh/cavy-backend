@@ -1,4 +1,4 @@
-package com.jh.cavymanage.config;
+package com.jh.cavycore.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,22 +22,26 @@ public class DataBaseInitConfig {
     /**
      * com.mysql.cj.jdbc.Driver
      */
-    @Value("${spring.datasource.druid.driverClassName}")
+    //@Value("${spring.datasource.druid.driverClassName}")
+    @Value("${spring.datasource.driver-class-name}")
     private String driver;
     /**
      * jdbc_url
      */
-    @Value("${spring.datasource.druid.url}")
+    //@Value("${spring.datasource.druid.url}")
+    @Value("${spring.datasource.url}")
     private String url;
     /**
      * 账号名称
      */
-    @Value("${spring.datasource.druid.username}")
+    //@Value("${spring.datasource.druid.username}")
+    @Value("${spring.datasource.username}")
     private String username;
     /**
      * 账号密码
      */
-    @Value("${spring.datasource.druid.password}")
+    //@Value("${spring.datasource.druid.password}")
+    @Value("${spring.datasource.password}")
     private String password;
     /**
      * 需要创建的数据名称

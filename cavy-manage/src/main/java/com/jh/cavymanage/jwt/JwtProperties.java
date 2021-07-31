@@ -25,6 +25,7 @@ public class JwtProperties {
     private String codeKey;
     private String cookieKey;
     private Integer filterOrder;
+    private String redisKey = "token";
     @NotNull
     private String appScope;
 
