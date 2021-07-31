@@ -88,7 +88,9 @@ mybatis:
   type-aliases-package: com.jh.cavymanage.domain
 logging:
   level:
+    root: INFO
     org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.springframework.data.convert.CustomConversions: ERROR
 cavy:
   init-database: cavy
   init-file: init

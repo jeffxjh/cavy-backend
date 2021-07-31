@@ -1,4 +1,4 @@
-package com.jh.cavymanage.common.exception;
+package com.jh.cavycore.common.exception;
 
 import lombok.Getter;
 

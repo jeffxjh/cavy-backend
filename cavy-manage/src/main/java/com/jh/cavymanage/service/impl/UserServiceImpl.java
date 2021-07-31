@@ -6,8 +6,8 @@ import com.jh.cavymanage.domain.User;
 import com.jh.cavymanage.mapper.UserMapper;
 import com.jh.cavymanage.service.UserService;
 import com.jh.cavymanage.vo.UserVO;
-import com.jh.cavymanage.web.Result.ResultPage;
-import com.jh.cavymanage.web.param.UserParam;
+import com.jh.cavycore.common.Result.ResultPage;
+import com.jh.cavymanage.param.UserParam;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -9,10 +9,10 @@ import com.jh.cavymanage.redis.RedisHandle;
 import com.jh.cavymanage.service.UserService;
 import com.jh.cavymanage.vo.UserInfoVO;
 import com.jh.cavymanage.vo.UserVO;
-import com.jh.cavymanage.web.Result.ResultPage;
-import com.jh.cavymanage.web.Result.ResultVO;
-import com.jh.cavymanage.web.param.LoginParam;
-import com.jh.cavymanage.web.param.UserParam;
+import com.jh.cavycore.common.Result.ResultPage;
+import com.jh.cavycore.common.Result.ResultVO;
+import com.jh.cavymanage.param.LoginParam;
+import com.jh.cavymanage.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

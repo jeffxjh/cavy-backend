@@ -2,7 +2,7 @@ package com.jh.cavymanage.service;
 
 import com.jh.cavymanage.domain.Answer;
 import com.jh.cavymanage.vo.AnswerVO;
-import com.jh.cavymanage.web.Result.ResultPage;
+import com.jh.cavycore.common.Result.ResultPage;
 
 public interface AnswerService {
 

@@ -111,7 +111,7 @@ public class DataBaseInitConfig {
 
             } else {
                 String databaseName = resultSet.getString(SCHEMA_NAME);
-                LOG.warn("已初始化数据库({})", databaseName);
+                LOG.info("已初始化数据库({})", databaseName);
             }
             if (resultSet.isClosed()) {
                 resultSet.close();

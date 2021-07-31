@@ -2,8 +2,8 @@ package com.jh.cavymanage.api;
 
 import com.jh.cavymanage.service.QuestionService;
 import com.jh.cavymanage.vo.QuestionVO;
-import com.jh.cavymanage.web.Result.ResultPage;
-import com.jh.cavymanage.web.param.QuestionParam;
+import com.jh.cavycore.common.Result.ResultPage;
+import com.jh.cavymanage.param.QuestionParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

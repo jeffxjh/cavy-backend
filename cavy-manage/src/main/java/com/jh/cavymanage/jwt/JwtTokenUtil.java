@@ -60,6 +60,9 @@ public class JwtTokenUtil implements InitializingBean {
         Claims claims = null;
         try {
             claims = Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            log.error("token过期 请重新登录");
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -124,6 +127,8 @@ public class JwtTokenUtil implements InitializingBean {
     public Boolean isTokenExpired(String token) {
         try {
             Claims claims = getClaimsFromToken(token);
+            if (claims == null)
+                return Boolean.TRUE;
             Date expiration = claims.getExpiration();
             return expiration.before(new Date());
         } catch (Exception e) {
@@ -166,6 +171,10 @@ public class JwtTokenUtil implements InitializingBean {
 
     public JwtUser validateToken(String token) {
         try {
+            if (isTokenExpired(token)) {
+                log.info("Expired JWT token.");
+                return null;
+            }
             JwtUser jwtUser = (JwtUser) redisHandle.hget(jwtProperties.getRedisKey(), token);
             String username = getUsernameFromToken(token);
             Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token);

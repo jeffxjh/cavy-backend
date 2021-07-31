@@ -1,8 +1,8 @@
-package com.jh.cavymanage.web.Result;
+package com.jh.cavycore.common.Result;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jh.cavymanage.common.exception.APIException;
+import com.jh.cavycore.common.exception.APIException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

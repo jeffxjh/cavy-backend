@@ -1,4 +1,4 @@
-package com.jh.cavymanage.web.param;
+package com.jh.cavymanage.param;
 
 import lombok.Data;
 

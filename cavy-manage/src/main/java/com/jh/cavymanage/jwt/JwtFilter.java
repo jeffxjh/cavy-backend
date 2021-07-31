@@ -1,6 +1,7 @@
 package com.jh.cavymanage.jwt;
 
 import com.jh.cavycore.RequestHeadHolder;
+import com.jh.cavycore.common.Result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 //@Component//无需添加此注解，在启动类添加@ServletComponentScan注解后，会自动将带有@WebFilter的注解进行注入！
 @Slf4j
@@ -68,7 +70,14 @@ public class JwtFilter implements Filter {
             //jjwtlogin走下面逻辑
             JwtUser jwtUser = jwtTokenUtil.validateToken(jwtTokenUtil.getToken(request));
             if (jwtUser == null) {
-                response.getWriter().write("illegality token！");
+                //下面这种这两种方式返回前端会出现跨域问题 只能重定向到异常处理接口再统一异常处理中处理
+                //response.getWriter().write("illegality token！");
+                //returnJson(response, JSON.toJSONString(new ResultVO<>(ResultCode.TOKEN_EXPIRED.getCode(), "登录信息已失效,请重新登录")));
+                //return;
+                // 异常捕获，发送到expiredJwtException
+                request.setAttribute("exception", ResultCode.TOKEN_EXPIRED.getCode());
+                //将异常分发到/expiredJwtException控制器
+                request.getRequestDispatcher("/expiredjwtexception").forward(request, response);
                 return;
             }
             String realName = jwtUser.getUsername();
@@ -80,6 +89,22 @@ public class JwtFilter implements Filter {
             request.setAttribute("realName", realName);
             request.setAttribute("userName", userName);
             chain.doFilter(req, res);
+        }
+    }
+
+    private void returnJson(ServletResponse response, String json) {
+        PrintWriter writer = null;
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        try {
+            writer = response.getWriter();
+            writer.print(json);
+
+        } catch (IOException e) {
+            log.error("response error", e);
+        } finally {
+            if (writer != null)
+                writer.close();
         }
     }
 

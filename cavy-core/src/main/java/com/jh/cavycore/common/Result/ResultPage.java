@@ -1,4 +1,4 @@
-package com.jh.cavymanage.web.Result;
+package com.jh.cavycore.common.Result;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Getter;

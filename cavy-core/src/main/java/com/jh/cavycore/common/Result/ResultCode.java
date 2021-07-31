@@ -1,4 +1,4 @@
-package com.jh.cavymanage.web.Result;
+package com.jh.cavycore.common.Result;
 
 import lombok.Getter;
 
@@ -11,7 +11,9 @@ public enum ResultCode {
 
     VALIDATE_FAILED(1002, "参数校验失败"),
 
-    ERROR(5000, "未知错误");
+    ERROR(5000, "未知错误"),
+
+    TOKEN_EXPIRED(5001, "token过期 请重新登录");
 
     private int code;
     private String msg;

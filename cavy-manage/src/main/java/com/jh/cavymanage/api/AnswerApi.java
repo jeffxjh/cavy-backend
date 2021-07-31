@@ -2,7 +2,7 @@ package com.jh.cavymanage.api;
 
 import com.jh.cavymanage.service.AnswerService;
 import com.jh.cavymanage.vo.AnswerVO;
-import com.jh.cavymanage.web.Result.ResultPage;
+import com.jh.cavycore.common.Result.ResultPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

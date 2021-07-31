@@ -1,6 +1,6 @@
-package com.jh.cavymanage.common.exception;
+package com.jh.cavycore.common.exception;
 
-import com.jh.cavymanage.web.Result.ResultVO;
+import com.jh.cavycore.common.Result.ResultVO;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,5 +20,10 @@ public class ExceptionControllerAdvice {
         ObjectError objectError = e.getBindingResult().getAllErrors().get(0);
         // 注意哦，这里返回类型是自定义响应体
         return new ResultVO<>(1001, "参数校验失败", objectError.getDefaultMessage());
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResultVO<String> ExpiredJwtExceptionHandler(ExpiredJwtException e) {
+        return new ResultVO<>(e.getCode(), "登录信息已失效,请重新登录");
     }
 }

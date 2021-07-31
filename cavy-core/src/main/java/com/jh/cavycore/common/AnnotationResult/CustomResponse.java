@@ -1,4 +1,4 @@
-package com.jh.cavymanage.web.AnnotationResult;
+package com.jh.cavycore.common.AnnotationResult;
 
 import java.lang.annotation.*;
 

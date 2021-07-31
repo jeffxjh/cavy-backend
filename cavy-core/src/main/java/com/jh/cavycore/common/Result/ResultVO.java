@@ -1,4 +1,4 @@
-package com.jh.cavymanage.web.Result;
+package com.jh.cavycore.common.Result;
 
 import lombok.Getter;
 
@@ -20,7 +20,10 @@ public class ResultVO<T> {
     public ResultVO(T data) {
         this(1000, "success", data);
     }
-
+    public ResultVO(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
     public ResultVO(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
