@@ -1,6 +1,7 @@
 package com.jh.cavycore.jwt;
 
 import cn.hutool.core.util.StrUtil;
+import com.jh.cavycore.HttpRequestHeaders;
 import com.jh.cavycore.common.Resquest.RequestHeadHolder;
 import com.jh.cavycore.common.Result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,11 @@ public class JwtFilter implements Filter {
     public void init(FilterConfig filterConfig) {
     }
 
+    private boolean isWebSocketRequest(HttpServletRequest req) {
+        return ("websocket".equalsIgnoreCase(req.getHeader(HttpRequestHeaders.Upgrade.getName()))
+                        && "upgrade".equalsIgnoreCase(req.getHeader(HttpRequestHeaders.Connection.getName())));
+    }
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) req;
@@ -54,14 +60,21 @@ public class JwtFilter implements Filter {
         }
         // Except OPTIONS, other request should be checked by JWT
         else {
-            //前端将token放在请求头Sec-WebSocket-Protocol中
-            String protocol = request.getHeader("Sec-WebSocket-Protocol");
             //判断是否websocket
-            if (StrUtil.isNotBlank(protocol)) {
-                token = protocol;
-                //new WebSocket("ws://localhost:8011",[tokenValue]);
-                //如果前端使用这种方式传递token  response必须设置下面的head 将token返回
-                response.addHeader("Sec-WebSocket-Protocol", protocol);
+            if (isWebSocketRequest(request)){
+                //前端将token放在请求头Sec-WebSocket-Protocol中
+                String protocol = request.getHeader("Sec-WebSocket-Protocol");
+                if (StrUtil.isNotBlank(protocol)) {
+                    token = protocol;
+                    //new WebSocket("ws://localhost:8011",[tokenValue]);
+                    //如果前端使用这种方式传递token  response必须设置下面的head 将token返回
+                    response.addHeader("Sec-WebSocket-Protocol", protocol);
+                }
+                if (StrUtil.isBlank(token)) {
+                    log.error("websocket missing token！");
+                    response.getWriter().write("websocket missing token！");
+                    return;
+                }
             }
             if (StrUtil.isBlank(token)) {
                 log.error("missing token！");
