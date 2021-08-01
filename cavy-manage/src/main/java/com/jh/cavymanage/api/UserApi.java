@@ -2,10 +2,10 @@ package com.jh.cavymanage.api;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.jh.cavymanage.domain.User;
-import com.jh.cavymanage.jwt.JwtProperties;
-import com.jh.cavymanage.jwt.JwtTokenUtil;
-import com.jh.cavymanage.jwt.JwtUser;
-import com.jh.cavymanage.redis.RedisHandle;
+import com.jh.cavycore.jwt.JwtProperties;
+import com.jh.cavycore.jwt.JwtTokenUtil;
+import com.jh.cavycore.jwt.JwtUser;
+import com.jh.cavycore.redis.RedisHandle;
 import com.jh.cavymanage.service.UserService;
 import com.jh.cavymanage.vo.UserInfoVO;
 import com.jh.cavymanage.vo.UserVO;

@@ -1,4 +1,4 @@
-package com.jh.cavymanage.redis;
+package com.jh.cavycore.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

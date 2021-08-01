@@ -1,6 +1,7 @@
-package com.jh.cavymanage.jwt;
+package com.jh.cavycore.jwt;
 
-import com.jh.cavycore.RequestHeadHolder;
+import cn.hutool.core.util.StrUtil;
+import com.jh.cavycore.common.Resquest.RequestHeadHolder;
 import com.jh.cavycore.common.Result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -45,7 +46,7 @@ public class JwtFilter implements Filter {
 
         response.setCharacterEncoding("UTF-8");
         //获取 header里的token
-        final String token = request.getHeader("authorization");
+        String token = jwtTokenUtil.getToken(request);
 
         if ("OPTIONS".equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
@@ -53,7 +54,17 @@ public class JwtFilter implements Filter {
         }
         // Except OPTIONS, other request should be checked by JWT
         else {
-            if (token == null) {
+            //前端将token放在请求头Sec-WebSocket-Protocol中
+            String protocol = request.getHeader("Sec-WebSocket-Protocol");
+            //判断是否websocket
+            if (StrUtil.isNotBlank(protocol)) {
+                token = protocol;
+                //new WebSocket("ws://localhost:8011",[tokenValue]);
+                //如果前端使用这种方式传递token  response必须设置下面的head 将token返回
+                response.addHeader("Sec-WebSocket-Protocol", protocol);
+            }
+            if (StrUtil.isBlank(token)) {
+                log.error("missing token！");
                 response.getWriter().write("missing token！");
                 return;
             }
@@ -68,7 +79,7 @@ public class JwtFilter implements Filter {
             //String userName = userData.get("userName").asString();
 
             //jjwtlogin走下面逻辑
-            JwtUser jwtUser = jwtTokenUtil.validateToken(jwtTokenUtil.getToken(request));
+            JwtUser jwtUser = jwtTokenUtil.validateToken(token);
             if (jwtUser == null) {
                 //下面这种这两种方式返回前端会出现跨域问题 只能重定向到异常处理接口再统一异常处理中处理
                 //response.getWriter().write("illegality token！");
@@ -88,7 +99,7 @@ public class JwtFilter implements Filter {
             //request.setAttribute("id", id);
             request.setAttribute("realName", realName);
             request.setAttribute("userName", userName);
-            chain.doFilter(req, res);
+            chain.doFilter(request, response);
         }
     }
 

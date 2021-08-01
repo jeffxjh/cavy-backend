@@ -1,4 +1,4 @@
-package com.jh.cavymanage.config;
+package com.jh.cavycore.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

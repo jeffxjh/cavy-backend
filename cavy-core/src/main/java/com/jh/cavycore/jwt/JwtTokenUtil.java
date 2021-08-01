@@ -1,6 +1,7 @@
-package com.jh.cavymanage.jwt;
+package com.jh.cavycore.jwt;
 
-import com.jh.cavymanage.redis.RedisHandle;
+
+import com.jh.cavycore.redis.RedisHandle;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -176,6 +177,10 @@ public class JwtTokenUtil implements InitializingBean {
                 return null;
             }
             JwtUser jwtUser = (JwtUser) redisHandle.hget(jwtProperties.getRedisKey(), token);
+            if (jwtUser == null) {
+                log.info("Invalid JWT token.");
+                return null;
+            }
             String username = getUsernameFromToken(token);
             Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token);
             return (username.equals(jwtUser.getUsername())) && (!isTokenExpired(token)) ? jwtUser : null;

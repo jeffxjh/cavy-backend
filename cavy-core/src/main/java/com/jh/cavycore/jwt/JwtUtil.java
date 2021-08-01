@@ -1,11 +1,10 @@
-package com.jh.cavymanage.jwt;
+package com.jh.cavycore.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.jh.cavymanage.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class JwtUtil {
     /**
      * 生成用户token,设置token超时时间
      */
-    public static String createToken(User user) {
+    public static String createToken(JwtUser user) {
         //过期时间
         Date expireDate = new Date(System.currentTimeMillis() + EXPIRATION * 1000);
         Map<String, Object> map = new HashMap<>();
@@ -45,8 +44,8 @@ public class JwtUtil {
                                .withHeader(map)// 添加头部
                                //可以将基本信息放到claims中
                                .withClaim("id", user.getId())//userId
-                               .withClaim("userName", user.getUserName())//userName
-                               .withClaim("realName", user.getRealName())//name
+                               .withClaim("userName", user.getAccount())//userName
+                               .withClaim("realName", user.getUsername())//name
                                .withExpiresAt(expireDate) //超时设置,设置过期的日期
                                .withIssuedAt(new Date()) //签发时间
                                .sign(Algorithm.HMAC256(jwtProperties.getBase64Secret())); //SECRET加密 对称加密

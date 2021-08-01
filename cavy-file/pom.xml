@@ -7,10 +7,9 @@
         <groupId>com.jh</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <packaging>jar</packaging>
     <artifactId>cavy-file</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>cavy-file</name>
+    <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
 
 
@@ -24,7 +23,7 @@
         <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

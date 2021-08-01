@@ -1,4 +1,4 @@
-package com.jh.cavycore;
+package com.jh.cavycore.common.Resquest;
 
 import lombok.Getter;
 import lombok.Setter;

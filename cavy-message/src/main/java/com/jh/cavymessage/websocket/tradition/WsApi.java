@@ -1,14 +1,14 @@
-package com.jh.cavymanage.websocket.tradition;
+package com.jh.cavymessage.websocket.tradition;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("api")
+import javax.annotation.Resource;
+
+//@RestController
+//@RequestMapping("api")
 public class WsApi {
-    @Autowired
+    @Resource
     @Qualifier(value = "WebSocketTradition")
     private WebSocket webSocket;
 

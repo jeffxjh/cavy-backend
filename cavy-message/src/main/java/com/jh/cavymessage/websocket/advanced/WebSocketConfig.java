@@ -1,4 +1,4 @@
-package com.jh.cavymanage.websocket.advanced;
+package com.jh.cavymessage.websocket.advanced;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
@@ -21,6 +21,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
         registry.addHandler(new MyWebSocketHandler(), "/ws/serverTwo")//设置连接路径和处理
                 .setAllowedOrigins("*")
                 .addInterceptors(new MyWebSocketInterceptor());//设置拦截器
+        //registry.addHandler(new MyWebSocketHandler(), "/sockjs/wsservice").setAllowedOrigins("*").addInterceptors(new MyWebSocketInterceptor()).withSockJS();
     }
 
     /**

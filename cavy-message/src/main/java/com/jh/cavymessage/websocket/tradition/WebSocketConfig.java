@@ -1,10 +1,9 @@
-package com.jh.cavymanage.websocket.tradition;
+package com.jh.cavymessage.websocket.tradition;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
-@Configuration(value = "WebSocketConfigTradition")
+//@Configuration(value = "WebSocketConfigTradition")
 public class WebSocketConfig {
     /**
      * 注入ServerEndpointExporter，

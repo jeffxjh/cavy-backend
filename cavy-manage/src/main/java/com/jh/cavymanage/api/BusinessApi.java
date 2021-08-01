@@ -1,7 +1,7 @@
 package com.jh.cavymanage.api;
 
 import cn.hutool.core.util.StrUtil;
-import com.jh.cavymanage.redis.CacheService;
+import com.jh.cavycore.redis.CacheService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

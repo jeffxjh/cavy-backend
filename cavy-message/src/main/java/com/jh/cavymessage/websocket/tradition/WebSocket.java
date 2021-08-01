@@ -1,6 +1,4 @@
-package com.jh.cavymanage.websocket.tradition;
-
-import org.springframework.stereotype.Component;
+package com.jh.cavymessage.websocket.tradition;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -12,9 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@Component(value = "WebSocketTradition")
-@ServerEndpoint("/websocket/{shopId}")
+
 //此注解相当于设置访问URL
+@ServerEndpoint("/websocket/{shopId}")
+//@Component(value = "WebSocketTradition")
 public class WebSocket {
 
     private Session session;

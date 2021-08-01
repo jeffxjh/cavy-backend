@@ -8,7 +8,6 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>cavy-task</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>cavy-task</name>
     <description>定时任务模块</description>
     <packaging>jar</packaging>
@@ -17,7 +16,7 @@
         <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

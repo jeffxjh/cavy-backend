@@ -1,4 +1,4 @@
-package com.jh.cavymanage.jwt;
+package com.jh.cavycore.jwt;
 
 import com.sun.istack.internal.NotNull;
 import lombok.Getter;

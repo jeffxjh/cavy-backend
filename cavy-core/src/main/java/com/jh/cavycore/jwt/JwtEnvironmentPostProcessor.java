@@ -1,4 +1,4 @@
-package com.jh.cavymanage.jwt;
+package com.jh.cavycore.jwt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;

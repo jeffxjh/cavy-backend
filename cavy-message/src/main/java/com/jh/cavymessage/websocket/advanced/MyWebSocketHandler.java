@@ -1,4 +1,4 @@
-package com.jh.cavymanage.websocket.advanced;
+package com.jh.cavymessage.websocket.advanced;
 
 import org.springframework.web.socket.*;
 

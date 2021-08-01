@@ -8,29 +8,33 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>cavy-boot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>cavy-boot</name>
     <description>启动类</description>
-<packaging>jar</packaging>
+    <packaging>jar</packaging>
     <properties>
-
+        <modle.version>1.0.0-SNAPSHOT</modle.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-manage</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${modle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-task</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${modle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-file</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${modle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jh</groupId>
+            <artifactId>cavy-message</artifactId>
+            <version>${modle.version}</version>
         </dependency>
     </dependencies>
 

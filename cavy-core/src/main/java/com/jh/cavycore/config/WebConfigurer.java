@@ -1,4 +1,4 @@
-package com.jh.cavymanage.config;
+package com.jh.cavycore.config;
 
 import com.jh.cavycore.common.AnnotationResult.CustomResponseReturnValueHandler;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.jh.cavymanage.redis;
+package com.jh.cavycore.redis;
 
 
 import org.springframework.data.redis.core.RedisTemplate;
