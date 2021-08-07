@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/cavy?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: root
-    password: 123456
+    url: jdbc:mysql://${mysql.host:localhost}:${mysql.port:3307}/${mysql.db:cavy}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: ${mysql.username:root}
+    password: ${mysql.password:123456}
   #    type: com.alibaba.druid.pool.DruidDataSource
 #    druid:
 #      driverClassName: com.mysql.cj.jdbc.Driver
@@ -51,8 +51,8 @@ spring:
 #          connection-logger-name: stat,wall,log4j
 
   rabbitmq:
-    host: localhost
-    port: 5672
+    host: ${rabbitmq.host:localhost}
+    port: ${rabbitmq.port:5672}
     username: guest
     password: guest
     virtualHost: /
@@ -66,8 +66,8 @@ spring:
         acknowledge-mode: manual
   redis:
     database: 0
-    host: 127.0.0.1
-    port: 6379
+    host: ${redis.host:127.0.0.1}
+    port: ${redis.port:6379}
     password: 123456
     timeout: 1000
     jedis:
@@ -80,6 +80,10 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 30MB
+  jackson:
+      date-format: 'yyyy-MM-dd HH:mm:ss'
+      time-zone: 'GMT+8'
+      serialization.write-dates-as-timestamps: false
 
 mybatis:
   mapper-locations: classpath:mapper/*xml
@@ -108,7 +112,7 @@ file:
   type: minio
 minio:
   endpoint: ${minio-endpoint:"http://localhost:9000/"}
-  port: 9000
+  port: ${minio-port:9000}
   accessKey: Mingmei
   secretKey: Mingmei/K7MDENG/bPxRfiCYEXAMPLEKEY
   secure: false
