@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jh.cavycore.jwt.JwtConfig
+  com.jh.cavy.jwt.jwt.JwtConfig
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.jh.cavycore.jwt.JwtEnvironmentPostProcessor
+  com.jh.cavy.jwt.jwt.JwtEnvironmentPostProcessor

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jh.cavytask.mapper.TaskMapper">
-  <resultMap id="BaseResultMap" type="com.jh.cavytask.domain.Task">
+<mapper namespace="com.jh.cavy.task.mapper.TaskMapper">
+  <resultMap id="BaseResultMap" type="com.jh.cavy.task.domain.Task">
     <!--@mbg.generated-->
     <!--@Table t_sys_task-->
     <result column="id" jdbcType="INTEGER" property="id" />
@@ -20,7 +20,7 @@
     id, cron_expression, method_name, is_concurrent, description, bean_name, `trigger_name`,
     job_status, spring_bean, job_name
   </sql>
-  <insert id="insert" parameterType="com.jh.cavytask.domain.Task">
+  <insert id="insert" parameterType="com.jh.cavy.task.domain.Task">
     <!--@mbg.generated-->
     insert into t_sys_task (id, cron_expression, method_name,
       is_concurrent, description, bean_name, 
@@ -31,7 +31,7 @@
       #{triggerName,jdbcType=VARCHAR}, #{jobStatus,jdbcType=INTEGER}, #{springBean,jdbcType=VARCHAR}, 
       #{jobName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jh.cavytask.domain.Task">
+  <insert id="insertSelective" parameterType="com.jh.cavy.task.domain.Task">
     <!--@mbg.generated-->
     insert into t_sys_task
     <trim prefix="(" suffix=")" suffixOverrides=",">

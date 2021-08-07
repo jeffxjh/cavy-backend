@@ -6,14 +6,13 @@
         <groupId>com.jh</groupId>
         <artifactId>cavy-backend</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>cavy-boot</artifactId>
-    <name>cavy-boot</name>
-    <description>启动类</description>
+
+
     <packaging>jar</packaging>
-    <properties>
-        <modle.version>1.0.0-SNAPSHOT</modle.version>
-    </properties>
+
 
     <dependencies>
         <dependency>
@@ -36,27 +35,54 @@
             <artifactId>cavy-message</artifactId>
             <version>${modle.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.jh</groupId>
+            <artifactId>cavy-cache</artifactId>
+            <version>${modle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jh</groupId>
+            <artifactId>cavy-jwt</artifactId>
+            <version>${modle.version}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.jh</groupId>-->
+<!--            <artifactId>cavy-search</artifactId>-->
+<!--            <version>${modle.version}</version>-->
+<!--        </dependency>-->
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
-        <finalName>cavy-boot</finalName>
+        <finalName>cavy-boot-${modle.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.7.RELEASE</version>
+                <configuration>
+                    <mainClass>com.jh.cavy.boot.CavyBootApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

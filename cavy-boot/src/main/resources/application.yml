@@ -3,8 +3,6 @@ server:
   servlet:
     context-path: /cavy
 spring:
-  application:
-    name: cavy-boot
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3307/cavy?useUnicode=true&characterEncoding=UTF-8&useSSL=false
@@ -82,26 +80,6 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 30MB
-  cloud:
-    nacos:
-      config:
-        contextPath: /nacos
-        server-addr: 127.0.0.1:8848
-        password: nacos
-        username: nacos
-        shared-configs[0]:
-          data-id: redis.yml
-          group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
-          refresh: true   # 是否动态刷新，默认为false
-        shared-configs[1]:
-          data-id: file.yml
-          group: DEFAULT_GROUP
-          refresh: true
-      discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: public
-        password: nacos
-        username: nacos
 
 mybatis:
   mapper-locations: classpath:mapper/*xml

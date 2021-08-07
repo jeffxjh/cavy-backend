@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jh.cavyfile.minio.mapper.FileMapper">
-  <resultMap id="BaseResultMap" type="com.jh.cavyfile.minio.domain.File">
+<mapper namespace="com.jh.cavy.file.minio.mapper.FileMapper">
+  <resultMap id="BaseResultMap" type="com.jh.cavy.file.minio.domain.File">
     <!--@mbg.generated-->
     <!--@Table t_sys_file-->
     <result column="id" jdbcType="INTEGER" property="id" />
@@ -14,14 +14,14 @@
     <!--@mbg.generated-->
     id, file_code, file_name, file_path, web_url
   </sql>
-  <insert id="insert" parameterType="com.jh.cavyfile.minio.domain.File">
+  <insert id="insert" parameterType="com.jh.cavy.file.minio.domain.File">
     <!--@mbg.generated-->
     insert into t_sys_file (id, file_code, file_name, 
       file_path, web_url)
     values (#{id,jdbcType=INTEGER}, #{fileCode,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
       #{filePath,jdbcType=VARCHAR}, #{webUrl,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jh.cavyfile.minio.domain.File">
+  <insert id="insertSelective" parameterType="com.jh.cavy.file.minio.domain.File">
     <!--@mbg.generated-->
     insert into t_sys_file
     <trim prefix="(" suffix=")" suffixOverrides=",">

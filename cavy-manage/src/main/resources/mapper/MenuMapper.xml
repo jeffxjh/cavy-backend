@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jh.cavymanage.mapper.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.jh.cavymanage.domain.Menu">
+<mapper namespace="com.jh.cavy.manage.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.jh.cavy.manage.domain.Menu">
     <!--@mbg.generated-->
     <!--@Table t_sys_menu-->
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -30,7 +30,7 @@
     delete from t_sys_menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavymanage.domain.Menu" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_sys_menu (menu_name, parent_id, `sort`,
       is_default, addTime, addUser, 
@@ -39,7 +39,7 @@
       #{isDefault,jdbcType=BIT}, #{addtime,jdbcType=TIMESTAMP}, #{adduser,jdbcType=VARCHAR}, 
       #{updatetime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavymanage.domain.Menu" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_sys_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -95,7 +95,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavymanage.domain.Menu">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.manage.domain.Menu">
     <!--@mbg.generated-->
     update t_sys_menu
     <set>
@@ -126,7 +126,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jh.cavymanage.domain.Menu">
+  <update id="updateByPrimaryKey" parameterType="com.jh.cavy.manage.domain.Menu">
     <!--@mbg.generated-->
     update t_sys_menu
     set menu_name = #{menuName,jdbcType=VARCHAR},

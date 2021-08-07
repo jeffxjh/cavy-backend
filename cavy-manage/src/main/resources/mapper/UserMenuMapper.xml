@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jh.cavymanage.mapper.UserMenuMapper">
-  <resultMap id="BaseResultMap" type="com.jh.cavymanage.domain.UserMenu">
+<mapper namespace="com.jh.cavy.manage.mapper.UserMenuMapper">
+  <resultMap id="BaseResultMap" type="com.jh.cavy.manage.domain.UserMenu">
     <!--@mbg.generated-->
     <!--@Table t_sys_user_menu-->
     <result column="id" jdbcType="INTEGER" property="id" />
@@ -16,7 +16,7 @@
     <!--@mbg.generated-->
     id, user_id, menu_id, addTime, addUser, updateTime, updateUser
   </sql>
-  <insert id="insert" parameterType="com.jh.cavymanage.domain.UserMenu">
+  <insert id="insert" parameterType="com.jh.cavy.manage.domain.UserMenu">
     <!--@mbg.generated-->
     insert into t_sys_user_menu (id, user_id, menu_id, 
       addTime, addUser, updateTime, 
@@ -25,7 +25,7 @@
       #{addtime,jdbcType=TIMESTAMP}, #{adduser,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
       #{updateuser,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jh.cavymanage.domain.UserMenu">
+  <insert id="insertSelective" parameterType="com.jh.cavy.manage.domain.UserMenu">
     <!--@mbg.generated-->
     insert into t_sys_user_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">

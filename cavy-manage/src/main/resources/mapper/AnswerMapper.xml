@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jh.cavymanage.mapper.AnswerMapper">
-  <resultMap id="BaseResultMap" type="com.jh.cavymanage.domain.Answer">
+<mapper namespace="com.jh.cavy.manage.mapper.AnswerMapper">
+  <resultMap id="BaseResultMap" type="com.jh.cavy.manage.domain.Answer">
     <!--@mbg.generated-->
     <!--@Table t_bus_answer-->
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -28,7 +28,7 @@
     delete from t_bus_answer
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavymanage.domain.Answer" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Answer" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_bus_answer (question_id, content, adduser,
     addtime, updateuser, updatetime
@@ -37,7 +37,7 @@
     #{addtime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}
     )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavymanage.domain.Answer" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Answer" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_bus_answer
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -81,7 +81,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavymanage.domain.Answer">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.manage.domain.Answer">
     <!--@mbg.generated-->
     update t_bus_answer
     <set>
@@ -106,7 +106,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jh.cavymanage.domain.Answer">
+  <update id="updateByPrimaryKey" parameterType="com.jh.cavy.manage.domain.Answer">
     <!--@mbg.generated-->
     update t_bus_answer
     set question_id = #{questionId,jdbcType=INTEGER},
@@ -118,7 +118,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="findAnswerByQuestionId" resultType="com.jh.cavymanage.vo.AnswerVO">
+  <select id="findAnswerByQuestionId" resultType="com.jh.cavy.manage.vo.AnswerVO">
     select <include refid="Base_Column_List"/>
     from t_bus_answer
     ${ew.customSqlSegment}
