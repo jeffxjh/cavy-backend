@@ -22,6 +22,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.jh</groupId>
+            <artifactId>cavy-common</artifactId>
+            <version>${modle.version}</version>
+        </dependency>
     </dependencies>
 
 

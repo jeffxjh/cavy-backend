@@ -25,7 +25,11 @@
             <artifactId>cavy-cache</artifactId>
             <version>${modle.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.jh</groupId>
+            <artifactId>cavy-common</artifactId>
+            <version>${modle.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

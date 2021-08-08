@@ -8,7 +8,7 @@ import com.jh.cavy.manage.domain.Answer;
 import com.jh.cavy.manage.mapper.AnswerMapper;
 import com.jh.cavy.manage.service.AnswerService;
 import com.jh.cavy.manage.vo.AnswerVO;
-import com.jh.cavy.jwt.common.Result.ResultPage;
+import com.jh.cavy.common.Result.ResultPage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

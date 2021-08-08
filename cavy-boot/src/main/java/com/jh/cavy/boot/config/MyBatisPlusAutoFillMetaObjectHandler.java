@@ -1,7 +1,7 @@
 package com.jh.cavy.boot.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.jh.cavy.jwt.common.Resquest.RequestHeadHolder;
+import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;

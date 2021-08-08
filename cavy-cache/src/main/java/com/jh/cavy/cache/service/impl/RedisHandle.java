@@ -3,6 +3,7 @@ package com.jh.cavy.cache.service.impl;
 import com.jh.cavy.cache.service.CacheService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -416,5 +417,10 @@ public class RedisHandle implements CacheService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Number execute(DefaultRedisScript<Number> script, List keys, Object... args) {
+        return redisTemplate.execute(script, keys, args);
     }
 }

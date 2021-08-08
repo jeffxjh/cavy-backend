@@ -2,7 +2,7 @@ package com.jh.cavy.manage.service;
 
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.vo.UserVO;
-import com.jh.cavy.jwt.common.Result.ResultPage;
+import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.param.UserParam;
 
 public interface UserService{

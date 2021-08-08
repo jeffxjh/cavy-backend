@@ -2,6 +2,7 @@ package com.jh.cavy.cache.service;
 
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 
 import java.util.List;
 import java.util.Map;
@@ -374,4 +375,6 @@ public interface CacheService {
      * @return
      */
     RedisTemplate getRedisTemplate();
+
+    Number execute(DefaultRedisScript<Number> script, List keys, Object... args);
 }

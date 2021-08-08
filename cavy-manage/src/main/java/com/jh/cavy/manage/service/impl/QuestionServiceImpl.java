@@ -10,7 +10,7 @@ import com.jh.cavy.manage.domain.Question;
 import com.jh.cavy.manage.mapper.QuestionMapper;
 import com.jh.cavy.manage.service.QuestionService;
 import com.jh.cavy.manage.vo.QuestionVO;
-import com.jh.cavy.jwt.common.Result.ResultPage;
+import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.param.QuestionParam;
 import org.springframework.stereotype.Service;
 

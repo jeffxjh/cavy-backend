@@ -28,6 +28,8 @@
         <module>cavy-cache</module>
         <module>cavy-message</module>
         <module>cavy-search</module>
+        <module>cavy-gateway</module>
+        <module>cavy-common</module>
     </modules>
 
     <dependencies>

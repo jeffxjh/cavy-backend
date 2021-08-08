@@ -1,6 +1,6 @@
 package com.jh.cavy.jwt.web;
 
-import com.jh.cavy.jwt.common.AnnotationResult.CustomResponseReturnValueHandler;
+import com.jh.cavy.common.AnnotationResult.CustomResponseReturnValueHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

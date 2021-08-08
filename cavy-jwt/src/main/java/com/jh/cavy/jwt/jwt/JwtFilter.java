@@ -2,8 +2,8 @@ package com.jh.cavy.jwt.jwt;
 
 import cn.hutool.core.util.StrUtil;
 import com.jh.cavy.jwt.web.HttpRequestHeaders;
-import com.jh.cavy.jwt.common.Resquest.RequestHeadHolder;
-import com.jh.cavy.jwt.common.Result.ResultCode;
+import com.jh.cavy.common.Resquest.RequestHeadHolder;
+import com.jh.cavy.common.Result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

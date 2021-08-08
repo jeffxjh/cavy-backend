@@ -2,8 +2,8 @@ package com.jh.cavy.manage.api;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.jh.cavy.cache.service.CacheService;
-import com.jh.cavy.jwt.common.Result.ResultPage;
-import com.jh.cavy.jwt.common.Result.ResultVO;
+import com.jh.cavy.common.Result.ResultPage;
+import com.jh.cavy.common.Result.ResultVO;
 import com.jh.cavy.jwt.jwt.JwtProperties;
 import com.jh.cavy.jwt.jwt.JwtTokenUtil;
 import com.jh.cavy.jwt.jwt.JwtUser;
