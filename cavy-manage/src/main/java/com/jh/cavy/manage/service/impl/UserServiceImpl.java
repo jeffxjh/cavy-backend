@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         //Page<User> page = new Page<>(userParam.getPageIndex(),userParam.getPageSize());
         //Page<User> userPage = userMapper.selectPage(page, queryWrapper);
         queryWrapper.like("user_name", userParam.getUserName());
-        Page<UserVO> userVOPage = userMapper.findByPage(new Page<>(userParam.getPageIndex(),userParam.getPageSize()), queryWrapper);
+        Page<UserVO> userVOPage = userMapper.findByPage(new Page<>(userParam.getPageIndex(), userParam.getPageSize()), queryWrapper);
         return new ResultPage<>(userVOPage);
     }
 
