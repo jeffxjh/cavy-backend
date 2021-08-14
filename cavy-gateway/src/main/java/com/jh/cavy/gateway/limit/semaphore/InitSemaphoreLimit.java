@@ -1,4 +1,4 @@
-package com.jh.cavy.gateway.limit.Semaphore;
+package com.jh.cavy.gateway.limit.semaphore;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;

@@ -1,8 +1,8 @@
 package com.jh.cavy.gateway.limit;
 
 import com.jh.cavy.cache.config.RedisLock;
-import com.jh.cavy.gateway.limit.RateLimiter.RateLimit;
-import com.jh.cavy.gateway.limit.Semaphore.SemaphoreLimit;
+import com.jh.cavy.gateway.limit.rateLimiter.RateLimit;
+import com.jh.cavy.gateway.limit.semaphore.SemaphoreLimit;
 import com.jh.cavy.gateway.limit.redis.RedisRateLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

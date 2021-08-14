@@ -44,6 +44,7 @@ public class JwtFilter implements Filter {
         if (uri.contains("/user/login") || uri.contains("/user/logout") || uri.contains("/user/register") || uri.contains("/verify")
                     || uri.contains("swagger")
                     || uri.contains("druid")
+                    || uri.contains("/home")
                     || uri.endsWith(".jpg") || uri.endsWith(".css") || uri.endsWith(".jpeg") || uri.endsWith(".js")) {
             //放过这些不需要检查的资源文件
             chain.doFilter(request, response);
@@ -61,7 +62,7 @@ public class JwtFilter implements Filter {
         // Except OPTIONS, other request should be checked by JWT
         else {
             //判断是否websocket
-            if (isWebSocketRequest(request)){
+            if (isWebSocketRequest(request)) {
                 //前端将token放在请求头Sec-WebSocket-Protocol中
                 String protocol = request.getHeader("Sec-WebSocket-Protocol");
                 if (StrUtil.isNotBlank(protocol)) {

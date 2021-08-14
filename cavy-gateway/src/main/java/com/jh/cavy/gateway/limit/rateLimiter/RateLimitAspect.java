@@ -1,4 +1,4 @@
-package com.jh.cavy.gateway.limit.RateLimiter;
+package com.jh.cavy.gateway.limit.rateLimiter;
 
 import com.google.common.util.concurrent.RateLimiter;
 import com.jh.cavy.cache.service.CacheService;
@@ -34,7 +34,7 @@ public class RateLimitAspect {
     /**
      * 业务层切点
      */
-    @Pointcut("@annotation(com.jh.cavy.gateway.limit.RateLimiter.RateLimit)")
+    @Pointcut("@annotation(com.jh.cavy.gateway.limit.rateLimiter.RateLimit)")
     public void ServiceAspect() { }
 
     @Around("ServiceAspect()")

@@ -1,4 +1,4 @@
-package com.jh.cavy.gateway.limit.Semaphore;
+package com.jh.cavy.gateway.limit.semaphore;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -33,7 +33,7 @@ public class SemaphoreLimitAspect {
     /**
      * 业务层切点
      */
-    @Pointcut("@annotation(com.jh.cavy.gateway.limit.Semaphore.SemaphoreLimit)")
+    @Pointcut("@annotation(com.jh.cavy.gateway.limit.semaphore.SemaphoreLimit)")
     public void ServiceAspect() {
 
     }

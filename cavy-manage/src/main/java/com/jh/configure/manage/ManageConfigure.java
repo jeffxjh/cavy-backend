@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = {"com.jh.cavy"})
+@ComponentScan(basePackages = {"com.jh.cavy.manage"})
 @MapperScan(basePackages = {"com.jh.cavy.manage.mapper"})
 public class ManageConfigure {
 }

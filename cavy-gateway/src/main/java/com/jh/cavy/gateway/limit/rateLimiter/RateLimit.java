@@ -1,4 +1,4 @@
-package com.jh.cavy.gateway.limit.RateLimiter;
+package com.jh.cavy.gateway.limit.rateLimiter;
 
 import java.lang.annotation.*;
 
