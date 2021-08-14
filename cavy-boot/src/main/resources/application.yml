@@ -93,6 +93,7 @@ logging:
     root: INFO
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     org.springframework.data.convert.CustomConversions: ERROR
+   # com.jh.cavy.common.Result.ResponseControllerAdvice: debug
 cavy:
   init-database: cavy
   init-file: init
