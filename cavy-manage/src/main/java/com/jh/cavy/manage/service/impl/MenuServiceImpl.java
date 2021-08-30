@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jh.cavy.manage.domain.Menu;
 import com.jh.cavy.manage.mapper.MenuMapper;
+import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.service.MenuService;
 import org.springframework.stereotype.Service;
 
@@ -104,6 +105,11 @@ public class MenuServiceImpl implements MenuService {
             tree.putExtra("url", treeNode.getExtra().get("url"));
         });
         return build;
+    }
+
+    @Override
+    public void add(MenuAddParam menuAddParam) {
+
     }
 
 }

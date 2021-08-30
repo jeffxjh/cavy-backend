@@ -3,6 +3,7 @@ package com.jh.cavy.manage.service;
 import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jh.cavy.manage.domain.Menu;
+import com.jh.cavy.manage.param.MenuAddParam;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public interface MenuService {
 
     List<Tree<Integer>> findMenusTree();
 
+    void add(MenuAddParam menuAddParam);
 }
 
 

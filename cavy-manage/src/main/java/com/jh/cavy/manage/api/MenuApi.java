@@ -2,6 +2,7 @@ package com.jh.cavy.manage.api;
 
 import cn.hutool.core.lang.tree.Tree;
 import com.jh.cavy.manage.domain.Menu;
+import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,7 +19,7 @@ import java.util.stream.Stream;
 
 @RequestMapping("/menu")
 @RestController
-@Api(value = "菜单",tags = {"菜单"})
+@Api(value = "菜单", tags = {"菜单"})
 public class MenuApi {
     @Autowired
     private MenuService menuService;
@@ -54,6 +56,9 @@ public class MenuApi {
         return menuService.findMenusTree();
     }
 
-
+    @PostMapping
+    public void add(@Valid @RequestBody MenuAddParam menuAddParam) {
+        menuService.add(menuAddParam);
+    }
 
 }
