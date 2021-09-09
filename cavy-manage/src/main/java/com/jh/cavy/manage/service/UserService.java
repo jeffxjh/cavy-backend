@@ -5,7 +5,7 @@ import com.jh.cavy.manage.vo.UserVO;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.param.UserParam;
 
-public interface UserService{
+public interface UserService {
 
 
     int deleteByPrimaryKey(Integer id);
@@ -24,3 +24,4 @@ public interface UserService{
 
     ResultPage<UserVO> findUserPage(UserParam userParam);
 }
+

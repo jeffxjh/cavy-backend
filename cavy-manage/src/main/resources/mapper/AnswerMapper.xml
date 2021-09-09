@@ -7,14 +7,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="question_id" jdbcType="INTEGER" property="questionId" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
-    <result column="adduser" jdbcType="VARCHAR" property="adduser" />
-    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
-    <result column="updateuser" jdbcType="VARCHAR" property="updateuser" />
-    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, question_id, content, adduser, addtime, updateuser, updatetime
+    id, question_id, content, add_user, add_time, update_user, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -30,11 +30,11 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Answer" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into t_bus_answer (question_id, content, adduser,
-    addtime, updateuser, updatetime
+    insert into t_bus_answer (question_id, content, add_user,
+    add_time, update_user, update_time
     )
-    values (#{questionId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, #{adduser,jdbcType=VARCHAR},
-    #{addtime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}
+    values (#{questionId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, #{addUser,jdbcType=VARCHAR},
+    #{addTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
     )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Answer" useGeneratedKeys="true">
@@ -47,17 +47,17 @@
       <if test="content != null">
         content,
       </if>
-      <if test="adduser != null">
-        adduser,
+      <if test="addUser != null">
+        add_user,
       </if>
-      <if test="addtime != null">
-        addtime,
+      <if test="addTime != null">
+        add_time,
       </if>
-      <if test="updateuser != null">
-        updateuser,
+      <if test="updateUser != null">
+        update_user,
       </if>
-      <if test="updatetime != null">
-        updatetime,
+      <if test="updateTime != null">
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -67,17 +67,17 @@
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
-      <if test="adduser != null">
-        #{adduser,jdbcType=VARCHAR},
+      <if test="addUser != null">
+        #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="addtime != null">
-        #{addtime,jdbcType=TIMESTAMP},
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateuser != null">
-        #{updateuser,jdbcType=VARCHAR},
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -91,17 +91,17 @@
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
-      <if test="adduser != null">
-        adduser = #{adduser,jdbcType=VARCHAR},
+      <if test="addUser != null">
+        add_user = #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="addtime != null">
-        addtime = #{addtime,jdbcType=TIMESTAMP},
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateuser != null">
-        updateuser = #{updateuser,jdbcType=VARCHAR},
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -111,10 +111,10 @@
     update t_bus_answer
     set question_id = #{questionId,jdbcType=INTEGER},
     content = #{content,jdbcType=LONGVARCHAR},
-    adduser = #{adduser,jdbcType=VARCHAR},
-    addtime = #{addtime,jdbcType=TIMESTAMP},
-    updateuser = #{updateuser,jdbcType=VARCHAR},
-    updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    add_user = #{addUser,jdbcType=VARCHAR},
+    add_time = #{addTime,jdbcType=TIMESTAMP},
+    update_user = #{updateUser,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

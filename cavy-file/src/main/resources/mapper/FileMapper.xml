@@ -4,30 +4,45 @@
   <resultMap id="BaseResultMap" type="com.jh.cavy.file.minio.domain.File">
     <!--@mbg.generated-->
     <!--@Table t_sys_file-->
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="file_code" jdbcType="VARCHAR" property="fileCode" />
     <result column="file_name" jdbcType="VARCHAR" property="fileName" />
     <result column="file_path" jdbcType="VARCHAR" property="filePath" />
     <result column="web_url" jdbcType="VARCHAR" property="webUrl" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, file_code, file_name, file_path, web_url
+    id, file_code, file_name, file_path, web_url, add_user, add_time, update_user, update_time
   </sql>
-  <insert id="insert" parameterType="com.jh.cavy.file.minio.domain.File">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    insert into t_sys_file (id, file_code, file_name, 
-      file_path, web_url)
-    values (#{id,jdbcType=INTEGER}, #{fileCode,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
-      #{filePath,jdbcType=VARCHAR}, #{webUrl,jdbcType=VARCHAR})
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_file
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from t_sys_file
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.file.minio.domain.File" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_sys_file (file_code, file_name, file_path, 
+      web_url, add_user, add_time, 
+      update_user, update_time)
+    values (#{fileCode,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, 
+      #{webUrl,jdbcType=VARCHAR}, #{addUser,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jh.cavy.file.minio.domain.File">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.file.minio.domain.File" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_sys_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="fileCode != null">
         file_code,
       </if>
@@ -40,11 +55,20 @@
       <if test="webUrl != null">
         web_url,
       </if>
+      <if test="addUser != null">
+        add_user,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="fileCode != null">
         #{fileCode,jdbcType=VARCHAR},
       </if>
@@ -57,6 +81,62 @@
       <if test="webUrl != null">
         #{webUrl,jdbcType=VARCHAR},
       </if>
+      <if test="addUser != null">
+        #{addUser,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.file.minio.domain.File">
+    <!--@mbg.generated-->
+    update t_sys_file
+    <set>
+      <if test="fileCode != null">
+        file_code = #{fileCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null">
+        web_url = #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addUser != null">
+        add_user = #{addUser,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jh.cavy.file.minio.domain.File">
+    <!--@mbg.generated-->
+    update t_sys_file
+    set file_code = #{fileCode,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      web_url = #{webUrl,jdbcType=VARCHAR},
+      add_user = #{addUser,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

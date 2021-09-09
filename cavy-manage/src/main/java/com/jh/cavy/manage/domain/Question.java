@@ -1,6 +1,8 @@
 package com.jh.cavy.manage.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,32 +15,53 @@ import java.util.Date;
 /**
  * 问题表
  */
-@ApiModel(value = "com-jh-cavymanage-domain-Question")
+@ApiModel(value = "com-jh-cavy-manage-domain-Question")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "t_bus_question")
 public class Question {
+    /**
+     * id
+     */
     @TableId(value = "id",type = IdType.AUTO)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "id")
     private Integer id;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 标题
+     */
+    @ApiModelProperty(value = "标题")
     private String title;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 内容
+     */
+    @ApiModelProperty(value = "内容")
     private String content;
-    @TableField(value = "addUser", fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value = "")
-    private String adduser;
-    @TableField(value = "addTime", fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value = "")
-    private Date addtime;
-    @TableField(value = "updateUser", fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value = "")
-    private String updateuser;
-    @TableField(value = "updateTime", fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value = "")
-    private Date updatetime;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    private Date addTime;
+
+    /**
+     * 创建人
+     */
+    @ApiModelProperty(value = "创建人")
+    private String addUser;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    private Date updateTime;
+
+    /**
+     * 修改人
+     */
+    @ApiModelProperty(value = "修改人")
+    private String updateUser;
 }

@@ -15,44 +15,77 @@ import java.util.Date;
 /**
  * 用户表
  */
-@ApiModel(value = "com-jh-manage-domain-User")
+@ApiModel(value = "com-jh-cavy-manage-domain-User")
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @TableName("t_sys_user")
 public class User {
+    /**
+     * id
+     */
     @TableId(value = "id",type = IdType.AUTO)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "id")
     private Integer id;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 账号
+     */
+    @ApiModelProperty(value = "账号")
     private String userName;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 密码
+     */
+    @ApiModelProperty(value = "密码")
     private String password;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 真实姓名
+     */
+    @ApiModelProperty(value = "真实姓名")
     private String realName;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 性别
+     */
+    @ApiModelProperty(value = "性别")
     private Integer gender;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 电话
+     */
+    @ApiModelProperty(value = "电话")
     private String phone;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 邮件
+     */
+    @ApiModelProperty(value = "邮件")
     private String email;
 
-    @ApiModelProperty(value = "")
-    private Date addtime;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    private Date addTime;
 
-    @ApiModelProperty(value = "")
-    private String adduser;
+    /**
+     * 创建人
+     */
+    @ApiModelProperty(value = "创建人")
+    private String addUser;
 
-    @ApiModelProperty(value = "")
-    private Date updatetime;
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    private Date updateTime;
 
-    @ApiModelProperty(value = "")
-    private String updateuser;
+    /**
+     * 修改人
+     */
+    @ApiModelProperty(value = "修改人")
+    private String updateUser;
 }

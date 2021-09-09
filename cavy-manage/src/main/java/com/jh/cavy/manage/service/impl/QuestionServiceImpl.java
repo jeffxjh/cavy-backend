@@ -57,7 +57,7 @@ public class QuestionServiceImpl implements QuestionService {
     public ResultPage<QuestionVO> questionVOList(QuestionParam questionParam) {
         LambdaQueryWrapper<Question> lambdaQuery = Wrappers.lambdaQuery(Question.class);
         lambdaQuery.eq(StrUtil.isNotEmpty(questionParam.getTitle()), Question::getTitle, questionParam.getTitle());
-        lambdaQuery.orderBy(true, false, Question::getAddtime, Question::getId);
+        lambdaQuery.orderBy(true, false, Question::getAddTime, Question::getId);
         Page<QuestionVO> questionPage = questionMapper.questionVOList(new Page<>(questionParam.getPageIndex(), questionParam.getPageSize()), lambdaQuery);
         return new ResultPage<>(questionPage);
     }
@@ -79,3 +79,4 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
 }
+

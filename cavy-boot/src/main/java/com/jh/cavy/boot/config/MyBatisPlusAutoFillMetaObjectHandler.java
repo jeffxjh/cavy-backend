@@ -14,14 +14,14 @@ public class MyBatisPlusAutoFillMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.strictInsertFill(metaObject, "adduser", String.class,  RequestHeadHolder.getAccount());
-        this.strictUpdateFill(metaObject, "addtime", Date.class, new Date());
+        this.strictInsertFill(metaObject, "addUser", String.class,  RequestHeadHolder.getAccount());
+        this.strictUpdateFill(metaObject, "addTime", Date.class, new Date());
 
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.strictInsertFill(metaObject, "updateuser", String.class,  RequestHeadHolder.getAccount());
-        this.strictUpdateFill(metaObject, "updatetime", Date.class, new Date());
+        this.strictInsertFill(metaObject, "updateUser", String.class,  RequestHeadHolder.getAccount());
+        this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
     }
 }

@@ -22,3 +22,4 @@ public interface ConfigService {
     List<Config> getAll();
 }
 
+

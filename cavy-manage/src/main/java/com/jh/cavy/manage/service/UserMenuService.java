@@ -1,7 +1,8 @@
 package com.jh.cavy.manage.service;
 
 import com.jh.cavy.manage.domain.UserMenu;
-public interface UserMenuService{
+
+public interface UserMenuService {
 
 
     int insert(UserMenu record);
@@ -9,3 +10,4 @@ public interface UserMenuService{
     int insertSelective(UserMenu record);
 
 }
+

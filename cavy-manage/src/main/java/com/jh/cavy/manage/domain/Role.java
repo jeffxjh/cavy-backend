@@ -1,8 +1,5 @@
 package com.jh.cavy.manage.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,39 +10,31 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 系统配置表
+ * 角色表
  */
-@ApiModel(value = "com-jh-cavy-manage-domain-Config")
+@ApiModel(value = "com-jh-cavy-manage-domain-Role")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_sys_config")
-public class Config {
+public class Role {
     /**
      * id
      */
-    @TableId(value = "id",type = IdType.AUTO)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "id")
     private Integer id;
 
     /**
-     * 编号
+     * 角色名称
      */
-    @ApiModelProperty(value = "编号")
-    private String code;
+    @ApiModelProperty(value = "角色名称")
+    private String roleName;
 
     /**
-     * 编号名称
+     * 菜单id
      */
-    @ApiModelProperty(value = "编号名称")
-    private String codeValue;
-
-    /**
-     * 名称
-     */
-    @ApiModelProperty(value = "名称")
-    private String name;
+    @ApiModelProperty(value = "菜单id")
+    private Integer menuId;
 
     /**
      * 创建时间

@@ -28,9 +28,9 @@ public class UserVO implements Serializable {
     private String email;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "")
-    private Date addtime;
+    private Date addTime;
 
     @ApiModelProperty(value = "")
-    private String adduser;
+    private String addUser;
 
 }

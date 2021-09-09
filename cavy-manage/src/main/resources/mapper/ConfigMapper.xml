@@ -8,18 +8,18 @@
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="code_value" jdbcType="VARCHAR" property="codeValue" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
-    <result column="addUser" jdbcType="VARCHAR" property="adduser" />
-    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
-    <result column="updateUser" jdbcType="VARCHAR" property="updateuser" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, code, code_value, `name`, addTime, addUser, updateTime, updateUser
+    id, code, code_value, `name`, add_time, add_user, update_time, update_user
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_sys_config
     where id = #{id,jdbcType=INTEGER}
@@ -29,22 +29,19 @@
     delete from t_sys_config
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jh.cavy.manage.domain.Config">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Config" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into t_sys_config (id, code, code_value, 
-      `name`, addTime, addUser, 
-      updateTime, updateUser)
-    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{codeValue,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{adduser,jdbcType=VARCHAR}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR})
+    insert into t_sys_config (code, code_value, `name`,
+    add_time, add_user, update_time,
+    update_user)
+    values (#{code,jdbcType=VARCHAR}, #{codeValue,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+    #{updateUser,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.jh.cavy.manage.domain.Config">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Config" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_sys_config
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="code != null">
         code,
       </if>
@@ -54,23 +51,20 @@
       <if test="name != null">
         `name`,
       </if>
-      <if test="addtime != null">
-        addTime,
+      <if test="addTime != null">
+        add_time,
       </if>
-      <if test="adduser != null">
-        addUser,
+      <if test="addUser != null">
+        add_user,
       </if>
-      <if test="updatetime != null">
-        updateTime,
+      <if test="updateTime != null">
+        update_time,
       </if>
-      <if test="updateuser != null">
-        updateUser,
+      <if test="updateUser != null">
+        update_user,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
@@ -80,17 +74,17 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="addtime != null">
-        #{addtime,jdbcType=TIMESTAMP},
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="adduser != null">
-        #{adduser,jdbcType=VARCHAR},
+      <if test="addUser != null">
+        #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateuser != null">
-        #{updateuser,jdbcType=VARCHAR},
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -107,17 +101,17 @@
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="addtime != null">
-        addTime = #{addtime,jdbcType=TIMESTAMP},
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="adduser != null">
-        addUser = #{adduser,jdbcType=VARCHAR},
+      <if test="addUser != null">
+        add_user = #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null">
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateuser != null">
-        updateUser = #{updateuser,jdbcType=VARCHAR},
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -126,12 +120,12 @@
     <!--@mbg.generated-->
     update t_sys_config
     set code = #{code,jdbcType=VARCHAR},
-      code_value = #{codeValue,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      addTime = #{addtime,jdbcType=TIMESTAMP},
-      addUser = #{adduser,jdbcType=VARCHAR},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      updateUser = #{updateuser,jdbcType=VARCHAR}
+    code_value = #{codeValue,jdbcType=VARCHAR},
+    `name` = #{name,jdbcType=VARCHAR},
+    add_time = #{addTime,jdbcType=TIMESTAMP},
+    add_user = #{addUser,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    update_user = #{updateUser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

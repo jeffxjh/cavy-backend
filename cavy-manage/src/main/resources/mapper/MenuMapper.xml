@@ -5,22 +5,29 @@
     <!--@mbg.generated-->
     <!--@Table t_sys_menu-->
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
     <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="hidden" jdbcType="INTEGER" property="hidden" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="is_default" jdbcType="BIT" property="isDefault" />
-    <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
-    <result column="addUser" jdbcType="VARCHAR" property="adduser" />
-    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
-    <result column="updateUser" jdbcType="VARCHAR" property="updateuser" />
+    <result column="is_default" jdbcType="INTEGER" property="isDefault" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, menu_name, parent_id, sort, is_default, addTime, addUser, updateTime, updateUser
+    id, menu_id, menu_code, menu_name, parent_id, icon, url, hidden, weight, sort, is_default,
+    add_time, add_user, update_time, update_user
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_sys_menu
     where id = #{id,jdbcType=INTEGER}
@@ -32,22 +39,44 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into t_sys_menu (menu_name, parent_id, `sort`,
-      is_default, addTime, addUser, 
-      updateTime, updateUser)
-    values (#{menuName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
-      #{isDefault,jdbcType=BIT}, #{addtime,jdbcType=TIMESTAMP}, #{adduser,jdbcType=VARCHAR}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR})
+    insert into t_sys_menu (menu_id, menu_code, menu_name,
+    parent_id, icon, url,
+    hidden, weight, sort,
+    is_default, add_time, add_user,
+    update_time, update_user)
+    values (#{menuId,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR},
+    #{parentId,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+    #{hidden,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
+    #{isDefault,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR},
+    #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_sys_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="menuCode != null">
+        menu_code,
+      </if>
       <if test="menuName != null">
         menu_name,
       </if>
       <if test="parentId != null">
         parent_id,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="weight != null">
+        weight,
       </if>
       <if test="sort != null">
         sort,
@@ -55,43 +84,61 @@
       <if test="isDefault != null">
         is_default,
       </if>
-      <if test="addtime != null">
-        addTime,
+      <if test="addTime != null">
+        add_time,
       </if>
-      <if test="adduser != null">
-        addUser,
+      <if test="addUser != null">
+        add_user,
       </if>
-      <if test="updatetime != null">
-        updateTime,
+      <if test="updateTime != null">
+        update_time,
       </if>
-      <if test="updateuser != null">
-        updateUser,
+      <if test="updateUser != null">
+        update_user,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuCode != null">
+        #{menuCode,jdbcType=VARCHAR},
+      </if>
       <if test="menuName != null">
         #{menuName,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null">
         #{parentId,jdbcType=INTEGER},
       </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
       </if>
       <if test="isDefault != null">
-        #{isDefault,jdbcType=BIT},
+        #{isDefault,jdbcType=INTEGER},
       </if>
-      <if test="addtime != null">
-        #{addtime,jdbcType=TIMESTAMP},
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="adduser != null">
-        #{adduser,jdbcType=VARCHAR},
+      <if test="addUser != null">
+        #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateuser != null">
-        #{updateuser,jdbcType=VARCHAR},
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -99,29 +146,47 @@
     <!--@mbg.generated-->
     update t_sys_menu
     <set>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuCode != null">
+        menu_code = #{menuCode,jdbcType=VARCHAR},
+      </if>
       <if test="menuName != null">
         menu_name = #{menuName,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="hidden != null">
+        hidden = #{hidden,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
       </if>
       <if test="isDefault != null">
-        is_default = #{isDefault,jdbcType=BIT},
+        is_default = #{isDefault,jdbcType=INTEGER},
       </if>
-      <if test="addtime != null">
-        addTime = #{addtime,jdbcType=TIMESTAMP},
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="adduser != null">
-        addUser = #{adduser,jdbcType=VARCHAR},
+      <if test="addUser != null">
+        add_user = #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null">
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateuser != null">
-        updateUser = #{updateuser,jdbcType=VARCHAR},
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -129,14 +194,20 @@
   <update id="updateByPrimaryKey" parameterType="com.jh.cavy.manage.domain.Menu">
     <!--@mbg.generated-->
     update t_sys_menu
-    set menu_name = #{menuName,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=INTEGER},
-      sort = #{sort,jdbcType=INTEGER},
-      is_default = #{isDefault,jdbcType=BIT},
-      addTime = #{addtime,jdbcType=TIMESTAMP},
-      addUser = #{adduser,jdbcType=VARCHAR},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      updateUser = #{updateuser,jdbcType=VARCHAR}
+    set menu_id = #{menuId,jdbcType=INTEGER},
+    menu_code = #{menuCode,jdbcType=VARCHAR},
+    menu_name = #{menuName,jdbcType=VARCHAR},
+    parent_id = #{parentId,jdbcType=INTEGER},
+    icon = #{icon,jdbcType=VARCHAR},
+    url = #{url,jdbcType=VARCHAR},
+    hidden = #{hidden,jdbcType=INTEGER},
+    weight = #{weight,jdbcType=INTEGER},
+    sort = #{sort,jdbcType=INTEGER},
+    is_default = #{isDefault,jdbcType=INTEGER},
+    add_time = #{addTime,jdbcType=TIMESTAMP},
+    add_user = #{addUser,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    update_user = #{updateUser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

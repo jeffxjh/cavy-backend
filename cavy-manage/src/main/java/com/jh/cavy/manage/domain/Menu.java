@@ -15,50 +15,101 @@ import java.util.Date;
 /**
  * 菜单表
  */
-@ApiModel(value = "com-jh-manage-domain-Menu")
+@ApiModel(value = "com-jh-cavy-manage-domain-Menu")
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @TableName("t_sys_menu")
 public class Menu {
+    /**
+     * id
+     */
     @TableId(value = "id",type = IdType.AUTO)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "id")
     private Integer id;
 
+    /**
+     * 菜单id
+     */
+    @ApiModelProperty(value = "菜单id")
+    private Integer menuId;
+
+    /**
+     * 菜单编号
+     */
     @ApiModelProperty(value = "菜单编号")
     private String menuCode;
 
+    /**
+     * 菜单名称
+     */
     @ApiModelProperty(value = "菜单名称")
     private String menuName;
 
-    @ApiModelProperty(value = "菜单图标")
-    private String icon;
-
-    @ApiModelProperty(value = "菜单地址")
-    private String url;
-
-    @ApiModelProperty(value = "")
+    /**
+     * 父id
+     */
+    @ApiModelProperty(value = "父id")
     private Integer parentId;
 
-    @ApiModelProperty(value = "")
-    private Integer sort;
+    /**
+     * 图标
+     */
+    @ApiModelProperty(value = "图标")
+    private String icon;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 地址
+     */
+    @ApiModelProperty(value = "地址")
+    private String url;
+
+    /**
+     * 是否隐藏
+     */
+    @ApiModelProperty(value = "是否隐藏")
+    private Integer hidden;
+
+    /**
+     * 权重
+     */
+    @ApiModelProperty(value = "权重")
     private Integer weight;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 排序
+     */
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
+
+    /**
+     * 是否默认
+     */
+    @ApiModelProperty(value = "是否默认")
     private Integer isDefault;
 
-    @ApiModelProperty(value = "")
-    private Date addtime;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    private Date addTime;
 
-    @ApiModelProperty(value = "")
-    private String adduser;
+    /**
+     * 创建人
+     */
+    @ApiModelProperty(value = "创建人")
+    private String addUser;
 
-    @ApiModelProperty(value = "")
-    private Date updatetime;
+    /**
+     * 修改人
+     */
+    @ApiModelProperty(value = "修改人")
+    private Date updateTime;
 
-    @ApiModelProperty(value = "")
-    private String updateuser;
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    private String updateUser;
 }

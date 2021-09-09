@@ -29,10 +29,10 @@ public class QuestionVO {
     private String content;
 
     @ApiModelProperty(value = "")
-    private String adduser;
+    private String addUser;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "")
-    private Date addtime;
+    private Date addTime;
     @ApiModelProperty(value = "")
     private String hasAnswer;
 

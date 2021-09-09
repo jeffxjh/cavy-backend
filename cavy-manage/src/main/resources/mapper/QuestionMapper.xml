@@ -7,18 +7,18 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
-    <result column="addUser" jdbcType="VARCHAR" property="adduser" />
-    <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
-    <result column="updateUser" jdbcType="VARCHAR" property="updateuser" />
-    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, title, content, addUser, addTime, updateUser, updateTime
+    id, title, content, add_time, add_user, update_time, update_user
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_bus_question
     where id = #{id,jdbcType=INTEGER}
@@ -30,12 +30,12 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Question" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into t_bus_question (title, content, addUser, 
-      addTime, updateUser, updateTime
-      )
-    values (#{title,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{adduser,jdbcType=VARCHAR}, 
-      #{addtime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}
-      )
+    insert into t_bus_question (title, content, add_time,
+    add_user, update_time, update_user
+    )
+    values (#{title,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{addTime,jdbcType=TIMESTAMP},
+    #{addUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}
+    )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Question" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -47,17 +47,17 @@
       <if test="content != null">
         content,
       </if>
-      <if test="adduser != null">
-        addUser,
+      <if test="addTime != null">
+        add_time,
       </if>
-      <if test="addtime != null">
-        addTime,
+      <if test="addUser != null">
+        add_user,
       </if>
-      <if test="updateuser != null">
-        updateUser,
+      <if test="updateTime != null">
+        update_time,
       </if>
-      <if test="updatetime != null">
-        updateTime,
+      <if test="updateUser != null">
+        update_user,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -67,17 +67,17 @@
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
-      <if test="adduser != null">
-        #{adduser,jdbcType=VARCHAR},
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="addtime != null">
-        #{addtime,jdbcType=TIMESTAMP},
+      <if test="addUser != null">
+        #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateuser != null">
-        #{updateuser,jdbcType=VARCHAR},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,17 +91,17 @@
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
-      <if test="adduser != null">
-        addUser = #{adduser,jdbcType=VARCHAR},
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="addtime != null">
-        addTime = #{addtime,jdbcType=TIMESTAMP},
+      <if test="addUser != null">
+        add_user = #{addUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateuser != null">
-        updateUser = #{updateuser,jdbcType=VARCHAR},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null">
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -110,11 +110,11 @@
     <!--@mbg.generated-->
     update t_bus_question
     set title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR},
-      addUser = #{adduser,jdbcType=VARCHAR},
-      addTime = #{addtime,jdbcType=TIMESTAMP},
-      updateUser = #{updateuser,jdbcType=VARCHAR},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    content = #{content,jdbcType=LONGVARCHAR},
+    add_time = #{addTime,jdbcType=TIMESTAMP},
+    add_user = #{addUser,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    update_user = #{updateUser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

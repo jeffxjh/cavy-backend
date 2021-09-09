@@ -26,21 +26,27 @@ public class Answer  {
     @ApiModelProperty(value = "")
     private Integer id;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 问题id
+     */
+    @ApiModelProperty(value = "问题id")
     private Integer questionId;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 内容
+     */
+    @ApiModelProperty(value = "内容")
     private String content;
 
     @ApiModelProperty(value = "")
-    private String adduser;
+    private String addUser;
 
     @ApiModelProperty(value = "")
-    private Date addtime;
+    private Date addTime;
 
     @ApiModelProperty(value = "")
-    private String updateuser;
+    private String updateUser;
 
     @ApiModelProperty(value = "")
-    private Date updatetime;
+    private Date updateTime;
 }

@@ -15,32 +15,53 @@ import java.util.Date;
 /**
  * 用户菜单表
  */
-@ApiModel(value = "com-jh-manage-domain-UserMenu")
+@ApiModel(value = "com-jh-cavy-manage-domain-UserMenu")
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @TableName("t_sys_user_menu")
 public class UserMenu {
+    /**
+     * id
+     */
     @TableId(value = "id",type = IdType.AUTO)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "id")
     private Integer id;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 用户id
+     */
+    @ApiModelProperty(value = "用户id")
     private Integer userId;
 
-    @ApiModelProperty(value = "")
+    /**
+     * 菜单id
+     */
+    @ApiModelProperty(value = "菜单id")
     private Integer menuId;
 
-    @ApiModelProperty(value = "")
-    private Date addtime;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    private Date addTime;
 
-    @ApiModelProperty(value = "")
-    private String adduser;
+    /**
+     * 创建人
+     */
+    @ApiModelProperty(value = "创建人")
+    private String addUser;
 
-    @ApiModelProperty(value = "")
-    private Date updatetime;
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    private Date updateTime;
 
-    @ApiModelProperty(value = "")
-    private String updateuser;
+    /**
+     * 修改人
+     */
+    @ApiModelProperty(value = "修改人")
+    private String updateUser;
 }

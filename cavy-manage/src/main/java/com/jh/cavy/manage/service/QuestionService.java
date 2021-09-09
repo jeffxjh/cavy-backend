@@ -5,7 +5,7 @@ import com.jh.cavy.manage.vo.QuestionVO;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.param.QuestionParam;
 
-public interface QuestionService{
+public interface QuestionService {
 
 
     int deleteByPrimaryKey(Integer id);
@@ -27,3 +27,4 @@ public interface QuestionService{
 
     void addQuestion(QuestionParam questionParam);
 }
+

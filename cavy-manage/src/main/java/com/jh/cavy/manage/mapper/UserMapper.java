@@ -21,5 +21,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     int updateByPrimaryKey(User record);
 
-    Page<UserVO> findByPage(Page<UserVO> page,  @Param(Constants.WRAPPER)QueryWrapper<User> queryWrapper);
+    Page<UserVO> findByPage(Page<UserVO> page, @Param(Constants.WRAPPER) QueryWrapper<User> queryWrapper);
 }
