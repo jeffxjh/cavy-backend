@@ -4,17 +4,18 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.domain.Answer;
 import com.jh.cavy.manage.mapper.AnswerMapper;
 import com.jh.cavy.manage.service.AnswerService;
 import com.jh.cavy.manage.vo.AnswerVO;
-import com.jh.cavy.common.Result.ResultPage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
-public class AnswerServiceImpl implements AnswerService {
+public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer> implements AnswerService {
 
     @Resource
     private AnswerMapper answerMapper;

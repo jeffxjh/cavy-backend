@@ -1,15 +1,21 @@
-package com.jh.cavy.manage.api;
+package com.jh.cavy.file.minio.api;
 
+import com.jh.cavy.file.minio.service.FileService;
+import com.jh.cavy.file.minio.vo.FileVO;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @RestController
 public class FileApi {
+    @Resource
+    private FileService fileService;
     //实现接收的方法
     @CrossOrigin
     @PostMapping(value = "/api/uploadVidoe3")
@@ -46,5 +52,11 @@ public class FileApi {
             return  resultMap ;
 
         }
+    }
+
+
+    @PostMapping("batchUpload")
+    public List<FileVO> batchUpload() {
+        return fileService.batchUpload();
     }
 }

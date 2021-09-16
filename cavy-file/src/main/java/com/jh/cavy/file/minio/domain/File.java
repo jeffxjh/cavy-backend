@@ -1,5 +1,7 @@
 package com.jh.cavy.file.minio.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,6 +25,7 @@ public class File {
     /**
     * id
     */
+    @TableId(value = "id",type = IdType.AUTO)
     @ApiModelProperty(value="id")
     private Integer id;
 
