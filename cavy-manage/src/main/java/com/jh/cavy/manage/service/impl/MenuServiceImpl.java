@@ -5,25 +5,37 @@ import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jh.cavy.common.Resquest.RequestHeadHolder;
+import com.jh.cavy.common.Result.ResultPage;
+import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.manage.domain.Menu;
+import com.jh.cavy.manage.domain.UserMenu;
 import com.jh.cavy.manage.mapper.MenuMapper;
+import com.jh.cavy.manage.mapper.UserMenuMapper;
+import com.jh.cavy.manage.param.MenuAO;
 import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.service.MenuService;
+import com.jh.cavy.manage.vo.MenuVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuServiceImpl implements MenuService {
 
     @Resource
     private MenuMapper menuMapper;
+    @Resource
+    private UserMenuMapper userMenuMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -63,9 +75,12 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> findMenuByUser() {
-        QueryWrapper<Menu> q = new QueryWrapper<>();
-        return menuMapper.selectList(q);
+    public List<Menu> findMenuByCurrentUser() {
+        LambdaQueryWrapper<UserMenu> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(UserMenu::getUserId, RequestHeadHolder.getUserIdString());
+        List<UserMenu> userMenus = userMenuMapper.selectList(queryWrapper);
+        return menuMapper.selectList(Wrappers.<Menu>lambdaQuery()
+                                             .in(Menu::getId, userMenus.stream().map(UserMenu::getMenuId).collect(Collectors.toSet())));
     }
 
     @Override
@@ -75,7 +90,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Tree<Integer>> findMenusTree() {
-        List<Menu> menuByUser = findMenuByUser();
+        List<Menu> menuByUser = findMenuByCurrentUser();
         // 构建node列表
         List<TreeNode<Integer>> nodeList = CollUtil.newArrayList();
         for (Menu menu : menuByUser) {
@@ -110,6 +125,15 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void add(MenuAddParam menuAddParam) {
 
+    }
+
+    @Override
+    public ResultPage<MenuVO> page(MenuAO menuAO) {
+        LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.like(Menu::getMenuName, menuAO.getMenuName());
+        queryWrapper.like(Menu::getMenuCode, menuAO.getMenuCode());
+        Page<MenuVO> userVOPage = menuMapper.page(PageUtil.newPage(menuAO), queryWrapper);
+        return new ResultPage<>(userVOPage);
     }
 
 }

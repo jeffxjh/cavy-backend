@@ -1,10 +1,10 @@
-package com.jh.cavy.manage.param;
+package com.jh.cavy.common.Resquest;
 
 import java.io.Serializable;
 
 public class BaseParam implements Serializable {
-    private Long pageIndex;
-    private Long pageSize;
+    private Long pageIndex=1L;
+    private Long pageSize=10L;
 
     public Long getPageIndex() {
         return pageIndex;

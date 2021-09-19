@@ -107,8 +107,10 @@ public class JwtFilter implements Filter {
             }
             String realName = jwtUser.getUsername();
             String userName = jwtUser.getAccount();
+            Long userId = jwtUser.getId();
             RequestHeadHolder.setAccount(userName);
             RequestHeadHolder.setRealName(realName);
+            RequestHeadHolder.setUserId(userId);
             //拦截器 拿到用户信息，放到request中
             //request.setAttribute("id", id);
             request.setAttribute("realName", realName);

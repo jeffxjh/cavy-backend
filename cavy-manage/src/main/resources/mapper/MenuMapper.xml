@@ -1,217 +1,227 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jh.cavy.manage.mapper.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.jh.cavy.manage.domain.Menu">
-    <!--@mbg.generated-->
-    <!--@Table t_sys_menu-->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
-    <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
-    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="hidden" jdbcType="INTEGER" property="hidden" />
-    <result column="weight" jdbcType="INTEGER" property="weight" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="is_default" jdbcType="INTEGER" property="isDefault" />
-    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, menu_id, menu_code, menu_name, parent_id, icon, url, hidden, weight, sort, is_default,
-    add_time, add_user, update_time, update_user
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select
-    <include refid="Base_Column_List" />
-    from t_sys_menu
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from t_sys_menu
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into t_sys_menu (menu_id, menu_code, menu_name,
-    parent_id, icon, url,
-    hidden, weight, sort,
-    is_default, add_time, add_user,
-    update_time, update_user)
-    values (#{menuId,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR},
-    #{parentId,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
-    #{hidden,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
-    #{isDefault,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR},
-    #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into t_sys_menu
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="menuId != null">
-        menu_id,
-      </if>
-      <if test="menuCode != null">
-        menu_code,
-      </if>
-      <if test="menuName != null">
-        menu_name,
-      </if>
-      <if test="parentId != null">
-        parent_id,
-      </if>
-      <if test="icon != null">
-        icon,
-      </if>
-      <if test="url != null">
-        url,
-      </if>
-      <if test="hidden != null">
-        hidden,
-      </if>
-      <if test="weight != null">
-        weight,
-      </if>
-      <if test="sort != null">
-        sort,
-      </if>
-      <if test="isDefault != null">
-        is_default,
-      </if>
-      <if test="addTime != null">
-        add_time,
-      </if>
-      <if test="addUser != null">
-        add_user,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="updateUser != null">
-        update_user,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="menuId != null">
-        #{menuId,jdbcType=INTEGER},
-      </if>
-      <if test="menuCode != null">
-        #{menuCode,jdbcType=VARCHAR},
-      </if>
-      <if test="menuName != null">
-        #{menuName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="hidden != null">
-        #{hidden,jdbcType=INTEGER},
-      </if>
-      <if test="weight != null">
-        #{weight,jdbcType=INTEGER},
-      </if>
-      <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="isDefault != null">
-        #{isDefault,jdbcType=INTEGER},
-      </if>
-      <if test="addTime != null">
-        #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="addUser != null">
-        #{addUser,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUser != null">
-        #{updateUser,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.manage.domain.Menu">
-    <!--@mbg.generated-->
-    update t_sys_menu
-    <set>
-      <if test="menuId != null">
-        menu_id = #{menuId,jdbcType=INTEGER},
-      </if>
-      <if test="menuCode != null">
-        menu_code = #{menuCode,jdbcType=VARCHAR},
-      </if>
-      <if test="menuName != null">
-        menu_name = #{menuName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null">
-        parent_id = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="hidden != null">
-        hidden = #{hidden,jdbcType=INTEGER},
-      </if>
-      <if test="weight != null">
-        weight = #{weight,jdbcType=INTEGER},
-      </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="isDefault != null">
-        is_default = #{isDefault,jdbcType=INTEGER},
-      </if>
-      <if test="addTime != null">
-        add_time = #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="addUser != null">
-        add_user = #{addUser,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUser != null">
-        update_user = #{updateUser,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jh.cavy.manage.domain.Menu">
-    <!--@mbg.generated-->
-    update t_sys_menu
-    set menu_id = #{menuId,jdbcType=INTEGER},
-    menu_code = #{menuCode,jdbcType=VARCHAR},
-    menu_name = #{menuName,jdbcType=VARCHAR},
-    parent_id = #{parentId,jdbcType=INTEGER},
-    icon = #{icon,jdbcType=VARCHAR},
-    url = #{url,jdbcType=VARCHAR},
-    hidden = #{hidden,jdbcType=INTEGER},
-    weight = #{weight,jdbcType=INTEGER},
-    sort = #{sort,jdbcType=INTEGER},
-    is_default = #{isDefault,jdbcType=INTEGER},
-    add_time = #{addTime,jdbcType=TIMESTAMP},
-    add_user = #{addUser,jdbcType=VARCHAR},
-    update_time = #{updateTime,jdbcType=TIMESTAMP},
-    update_user = #{updateUser,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.jh.cavy.manage.domain.Menu">
+        <!--@mbg.generated-->
+        <!--@Table t_sys_menu-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="menu_id" jdbcType="INTEGER" property="menuId"/>
+        <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="hidden" jdbcType="INTEGER" property="hidden"/>
+        <result column="weight" jdbcType="INTEGER" property="weight"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="is_default" jdbcType="INTEGER" property="isDefault"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="add_user" jdbcType="VARCHAR" property="addUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, menu_id, menu_code, menu_name, parent_id, icon, url, hidden, weight, sort, is_default,
+        add_time, add_user, update_time, update_user
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_menu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from t_sys_menu
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into t_sys_menu (menu_id, menu_code, menu_name,
+                                parent_id, icon, url,
+                                hidden, weight, sort,
+                                is_default, add_time, add_user,
+                                update_time, update_user)
+        values (#{menuId,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR},
+                #{parentId,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+                #{hidden,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
+                #{isDefault,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into t_sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+                menu_id,
+            </if>
+            <if test="menuCode != null">
+                menu_code,
+            </if>
+            <if test="menuName != null">
+                menu_name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="hidden != null">
+                hidden,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="isDefault != null">
+                is_default,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="addUser != null">
+                add_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+                #{menuId,jdbcType=INTEGER},
+            </if>
+            <if test="menuCode != null">
+                #{menuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="hidden != null">
+                #{hidden,jdbcType=INTEGER},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault,jdbcType=INTEGER},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addUser != null">
+                #{addUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.manage.domain.Menu">
+        <!--@mbg.generated-->
+        update t_sys_menu
+        <set>
+            <if test="menuId != null">
+                menu_id = #{menuId,jdbcType=INTEGER},
+            </if>
+            <if test="menuCode != null">
+                menu_code = #{menuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="menuName != null">
+                menu_name = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="hidden != null">
+                hidden = #{hidden,jdbcType=INTEGER},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault,jdbcType=INTEGER},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addUser != null">
+                add_user = #{addUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jh.cavy.manage.domain.Menu">
+        <!--@mbg.generated-->
+        update t_sys_menu
+        set menu_id     = #{menuId,jdbcType=INTEGER},
+            menu_code   = #{menuCode,jdbcType=VARCHAR},
+            menu_name   = #{menuName,jdbcType=VARCHAR},
+            parent_id   = #{parentId,jdbcType=INTEGER},
+            icon        = #{icon,jdbcType=VARCHAR},
+            url         = #{url,jdbcType=VARCHAR},
+            hidden      = #{hidden,jdbcType=INTEGER},
+            weight      = #{weight,jdbcType=INTEGER},
+            sort        = #{sort,jdbcType=INTEGER},
+            is_default  = #{isDefault,jdbcType=INTEGER},
+            add_time    = #{addTime,jdbcType=TIMESTAMP},
+            add_user    = #{addUser,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            update_user = #{updateUser,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
-  <select id="selectMenuPage" resultMap="BaseResultMap" parameterType="map">
-    SELECT id,menu_name FROM t_sys_menu WHERE is_default=#{isDefault}
-  </select>
+    <select id="selectMenuPage" resultMap="BaseResultMap" parameterType="map">
+        SELECT id, menu_name
+        FROM t_sys_menu
+        WHERE is_default = #{isDefault}
+    </select>
+    <select id="page" resultType="com.jh.cavy.manage.vo.MenuVO">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_menu
+    </select>
 </mapper>

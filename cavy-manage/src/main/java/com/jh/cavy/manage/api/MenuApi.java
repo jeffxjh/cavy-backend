@@ -1,11 +1,13 @@
 package com.jh.cavy.manage.api;
 
 import cn.hutool.core.lang.tree.Tree;
+import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.domain.Menu;
+import com.jh.cavy.manage.param.MenuAO;
 import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.service.MenuService;
+import com.jh.cavy.manage.vo.MenuVO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +52,6 @@ public class MenuApi {
     }
 
     @ApiOperation("获取用户菜单树")
-    @ApiImplicitParam(name = "id", value = "id", required = false, paramType = "query", dataType = "String")
     @GetMapping("/tree")
     public List<Tree<Integer>> getMenusTree() {
         return menuService.findMenusTree();
@@ -59,6 +60,12 @@ public class MenuApi {
     @PostMapping
     public void add(@Valid @RequestBody MenuAddParam menuAddParam) {
         menuService.add(menuAddParam);
+    }
+
+    @ApiOperation("获取菜单分页列表")
+    @PostMapping("/page")
+    public ResultPage<MenuVO> page(@RequestBody MenuAO menuAO) {
+      return menuService.page(menuAO);
     }
 
 }

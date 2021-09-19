@@ -1,9 +1,14 @@
 package com.jh.cavy.manage.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jh.cavy.manage.domain.Menu;
+import com.jh.cavy.manage.param.MenuAO;
+import com.jh.cavy.manage.vo.MenuVO;
+import org.apache.ibatis.annotations.Param;
 
 public interface MenuMapper extends BaseMapper<Menu> {
     int deleteByPrimaryKey(Integer id);
@@ -25,4 +30,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return 分页对象
      */
     IPage<Menu> selectMenuPage(Page<Menu> page, Integer isDefault);
+
+    Page<MenuVO> page(Page<MenuAO> objectPage, @Param(Constants.WRAPPER) LambdaQueryWrapper<Menu> queryWrapper);
 }

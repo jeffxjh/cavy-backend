@@ -1,5 +1,6 @@
 package com.jh.cavy.manage.param;
 
+import com.jh.cavy.common.Resquest.BaseParam;
 import lombok.Getter;
 import lombok.Setter;
 

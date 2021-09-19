@@ -2,6 +2,7 @@ package com.jh.cavy.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.mapper.UserMapper;
 import com.jh.cavy.manage.service.UserService;
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService {
         //Page<User> page = new Page<>(userParam.getPageIndex(),userParam.getPageSize());
         //Page<User> userPage = userMapper.selectPage(page, queryWrapper);
         queryWrapper.like("user_name", userParam.getUserName());
-        Page<UserVO> userVOPage = userMapper.findByPage(new Page<>(userParam.getPageIndex(), userParam.getPageSize()), queryWrapper);
+        Page<UserVO> userVOPage = userMapper.findByPage(PageUtil.newPage(userParam), queryWrapper);
         return new ResultPage<>(userVOPage);
     }
 

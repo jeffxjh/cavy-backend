@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jh.cavy.manage.domain.User;
+import com.jh.cavy.manage.param.UserParam;
 import com.jh.cavy.manage.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,5 +22,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     int updateByPrimaryKey(User record);
 
-    Page<UserVO> findByPage(Page<UserVO> page, @Param(Constants.WRAPPER) QueryWrapper<User> queryWrapper);
+    Page<UserVO> findByPage(Page<UserParam> page, @Param(Constants.WRAPPER) QueryWrapper<User> queryWrapper);
 }

@@ -52,10 +52,11 @@ public class UserApi {
             JwtUser jwtUser = new JwtUser();
             jwtUser.setAccount(user.getUserName());
             jwtUser.setUsername(user.getRealName());
+            jwtUser.setId((Long.valueOf(user.getId())));
             token = jwtTokenUtil.generateToken(jwtUser);
             //boolean b = jwtTokenUtil.validateToken(token, jwtUser);
             response.addCookie(new Cookie("token", token));
-            redisHandle.hset(jwtProperties.getRedisKey(), token, jwtUser,jwtProperties.getTokenValidityInSeconds());
+            redisHandle.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
             UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
             userInfoVO.setToken(token);
             return new ResultVO<>(1000, "登录成功", userInfoVO);
