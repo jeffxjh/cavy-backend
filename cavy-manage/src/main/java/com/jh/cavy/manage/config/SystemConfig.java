@@ -4,6 +4,7 @@ import com.jh.cavy.manage.domain.Config;
 import com.jh.cavy.manage.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
+@Order(value = 99999)
 @Configuration
 public class SystemConfig {
 

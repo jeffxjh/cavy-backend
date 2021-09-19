@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayOutputStream;
@@ -13,6 +14,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
 
+@Order(value = -1)
 @Configuration
 public class DataBaseInitConfig {
     private static final Logger LOG = LoggerFactory.getLogger(DataBaseInitConfig.class);
@@ -100,6 +102,7 @@ public class DataBaseInitConfig {
                         String[] sqlSplit = initSql.split(";");
                         for (String sql : sqlSplit) {
                             if (StringUtils.isNotBlank(sql)) {
+                                sql = sql.replace("\"", "\\\"");
                                 statement2.execute(sql);
                             }
                         }

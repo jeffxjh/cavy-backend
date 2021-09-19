@@ -102,7 +102,8 @@ spring:
       date-format: 'yyyy-MM-dd HH:mm:ss'
       time-zone: 'GMT+8'
       serialization.write-dates-as-timestamps: false
-
+es:
+  address: ${es.address:localhost:9200}
 mybatis:
   mapper-locations: classpath:mapper/*xml
   type-aliases-package: com.jh.cavymanage.domain
