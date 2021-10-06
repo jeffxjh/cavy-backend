@@ -15,6 +15,7 @@ import com.jh.cavy.manage.vo.UserInfoVO;
 import com.jh.cavy.manage.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -76,5 +77,15 @@ public class UserApi {
     @GetMapping()
     public ResultPage<UserVO> list(@ModelAttribute UserParam userParam) {
         return userService.findUserPage(userParam);
+    }
+
+
+    @GetMapping("/export")
+    public void export(@ModelAttribute UserParam userParam,HttpServletResponse response) {
+        userService.export(userParam,response);
+    }
+    @PostMapping("/import")
+    public void export(@RequestParam MultipartFile multipartFile) {
+        userService.importUser(multipartFile);
     }
 }

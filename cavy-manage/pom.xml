@@ -21,6 +21,11 @@
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
+            <artifactId>cavy-file</artifactId>
+            <version>${modle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jh</groupId>
             <artifactId>cavy-jwt</artifactId>
             <version>${modle.version}</version>
         </dependency>

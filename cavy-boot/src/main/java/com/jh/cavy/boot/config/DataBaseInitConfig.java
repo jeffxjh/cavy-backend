@@ -69,7 +69,7 @@ public class DataBaseInitConfig {
         int port = uri.getPort();
 
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port +
-                                                                         "?useUnicode=true&characterEncoding=UTF-8&useSSL=false", username, password);
+                                                                         "?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true", username, password);
              Statement statement = connection.createStatement()) {
             String sal = "select schema_name from information_schema.schemata where schema_name = " + "'" + initDatabase + "'";
 
