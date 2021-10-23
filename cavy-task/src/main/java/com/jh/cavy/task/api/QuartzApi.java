@@ -1,5 +1,8 @@
 package com.jh.cavy.task.api;
 
+import com.jh.cavy.common.Result.ResultPage;
+import com.jh.cavy.task.domain.Task;
+import com.jh.cavy.task.params.JobPageParam;
 import com.jh.cavy.task.params.JobParam;
 import com.jh.cavy.task.service.QuartzBusService;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +15,12 @@ public class QuartzApi {
     @Resource
     private QuartzBusService quartzBusService;
 
-    @PostMapping("/")
+    @PostMapping
     public void create(@RequestBody JobParam jobParam) {
         quartzBusService.addJob(jobParam);
     }
 
-    @PutMapping("/")
+    @PutMapping
     public void update(@RequestBody JobParam jobParam) {
         quartzBusService.updateJob(jobParam);
     }
@@ -41,4 +44,10 @@ public class QuartzApi {
     public void resume(@PathVariable String id) {
         quartzBusService.resumeJob(id);
     }
+
+    @PostMapping("/page")
+    public ResultPage<Task> page(@RequestBody JobPageParam jobPageParam) {
+        return quartzBusService.page(jobPageParam);
+    }
+
 }

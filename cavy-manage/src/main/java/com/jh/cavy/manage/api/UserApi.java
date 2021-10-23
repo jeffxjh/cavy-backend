@@ -85,7 +85,7 @@ public class UserApi {
         userService.export(userParam,response);
     }
     @PostMapping("/import")
-    public void export(@RequestParam MultipartFile multipartFile) {
-        userService.importUser(multipartFile);
+    public void export(@RequestParam MultipartFile file) {
+        userService.importUser(file);
     }
 }

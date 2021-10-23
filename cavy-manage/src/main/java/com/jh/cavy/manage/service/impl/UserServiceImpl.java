@@ -4,6 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.file.minio.handle.ExcelHandle;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private ExcelHandle excelHandle;
     @Resource
@@ -91,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void importUser(MultipartFile multipartFile) {
         try {
-            excelHandle.readExcel(multipartFile.getInputStream(),new UserExcelListen(), UserDTO.class);
+            excelHandle.readExcel(multipartFile.getInputStream(),new UserExcelListen(this), UserDTO.class);
         } catch (Exception e) {
             e.printStackTrace();
 

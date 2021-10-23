@@ -2,6 +2,7 @@ package com.jh.cavy.task.domain;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.jh.cavy.common.mybatisPlus.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("t_sys_task")
-public class Task {
+public class Task extends BaseEntity {
     private  int id;
     /**
      * cron 表达式

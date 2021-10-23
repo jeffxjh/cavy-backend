@@ -14,22 +14,27 @@
     <result column="job_status" jdbcType="INTEGER" property="jobStatus" />
     <result column="spring_bean" jdbcType="VARCHAR" property="springBean" />
     <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="add_user" jdbcType="VARCHAR" property="addUser" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, cron_expression, method_name, is_concurrent, description, bean_name, `trigger_name`,
-    job_status, spring_bean, job_name
+    job_status, spring_bean, job_name, add_user, add_time, update_user, update_time
   </sql>
   <insert id="insert" parameterType="com.jh.cavy.task.domain.Task">
     <!--@mbg.generated-->
     insert into t_sys_task (id, cron_expression, method_name,
       is_concurrent, description, bean_name, 
       `trigger_name`, job_status, spring_bean, 
-      job_name)
+      job_name, add_user, add_time, update_user, update_time)
     values (#{id,jdbcType=INTEGER}, #{cronExpression,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR},
       #{isConcurrent,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{beanName,jdbcType=VARCHAR}, 
       #{triggerName,jdbcType=VARCHAR}, #{jobStatus,jdbcType=INTEGER}, #{springBean,jdbcType=VARCHAR}, 
-      #{jobName,jdbcType=VARCHAR})
+      #{jobName,jdbcType=VARCHAR}, #{addUser,jdbcType=VARCHAR},
+    #{addTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jh.cavy.task.domain.Task">
     <!--@mbg.generated-->
@@ -65,6 +70,18 @@
       <if test="jobName != null">
         job_name,
       </if>
+      <if test="addUser != null">
+        add_user,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -96,6 +113,18 @@
       </if>
       <if test="jobName != null">
         #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="addUser != null">
+        #{addUser,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>

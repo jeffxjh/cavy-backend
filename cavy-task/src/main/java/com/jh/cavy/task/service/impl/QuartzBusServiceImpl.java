@@ -3,11 +3,16 @@ package com.jh.cavy.task.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.task.bean.QuartzJob;
 import com.jh.cavy.task.core.QuartzManage;
 import com.jh.cavy.task.domain.Task;
 import com.jh.cavy.task.mapper.TaskMapper;
+import com.jh.cavy.task.params.JobPageParam;
 import com.jh.cavy.task.params.JobParam;
 import com.jh.cavy.task.service.QuartzBusService;
 import lombok.extern.slf4j.Slf4j;
@@ -93,5 +98,13 @@ public class QuartzBusServiceImpl implements QuartzBusService {
     public void updateJob(JobParam jobParam) {
         UpdateWrapper<Task> wrapper = new UpdateWrapper<>();
         taskMapper.update(BeanUtil.toBean(jobParam, Task.class), wrapper);
+    }
+
+    @Override
+    public ResultPage page(JobPageParam jobPageParam) {
+        LambdaQueryWrapper<Task> lambdaQuery = Wrappers.lambdaQuery();
+        lambdaQuery.like(Task::getJobName, jobPageParam.getJobName());
+        Page<Task> taskPage = taskMapper.selectPage(new Page<Task>(jobPageParam.getPageIndex(), jobPageParam.getPageSize()), lambdaQuery);
+        return new ResultPage<>(taskPage);
     }
 }

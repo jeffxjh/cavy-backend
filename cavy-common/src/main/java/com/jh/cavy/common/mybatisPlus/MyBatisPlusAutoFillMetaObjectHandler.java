@@ -1,15 +1,13 @@
-package com.jh.cavy.boot.config;
+package com.jh.cavy.common.mybatisPlus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Slf4j
-@Component
 public class MyBatisPlusAutoFillMetaObjectHandler implements MetaObjectHandler {
 
     @Override

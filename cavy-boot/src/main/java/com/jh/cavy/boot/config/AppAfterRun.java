@@ -16,9 +16,9 @@ public class AppAfterRun implements CommandLineRunner {
     public void run(String... args) throws Exception {
         String[] names = applicationContext.getBeanDefinitionNames();
         int index = 1 ;
-        for (String name : names) {
-            log.trace("{}: {}", index++ , name );
-        }
+        //for (String name : names) {
+            //log.trace("{}: {}", index++ , name );
+        //}
         log.info("项目启动 容器注入javaBean:{}个.",names.length);
     }
 }
