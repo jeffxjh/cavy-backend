@@ -23,3 +23,6 @@
 2.
 # 延伸阅读
 
+Thanks for [JetBrains](https://www.jetbrains.com/?from=Cavy)'s `free JetBrains Open Source license(s)`
+ 
+[![LOGO](https://github.com/jeffxjh/Imgur/blob/main/jetbrains.png?raw=true)](https://www.jetbrains.com/?from=Cavy)
