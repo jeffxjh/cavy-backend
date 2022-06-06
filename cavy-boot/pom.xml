@@ -27,39 +27,29 @@
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-file</artifactId>
-            <version>${modle.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-message</artifactId>
+            <artifactId>cavy-starter-file</artifactId>
             <version>${modle.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-cache</artifactId>
+            <artifactId>cavy-starter-limiter</artifactId>
             <version>${modle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-common</artifactId>
+            <artifactId>cavy-starter-jwt</artifactId>
             <version>${modle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-jwt</artifactId>
+            <artifactId>cavy-starter-message</artifactId>
             <version>${modle.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-gateway</artifactId>
-            <version>${modle.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-search</artifactId>
-            <version>${modle.version}</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -108,49 +98,49 @@
 
 
             <!-- Docker maven plugin -->
-<!--            <plugin>-->
-<!--                <groupId>com.spotify</groupId>-->
-<!--                <artifactId>docker-maven-plugin</artifactId>-->
-<!--                <version>1.1.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>build-image</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>build</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash; 镜像名称 &ndash;&gt;-->
-<!--                    <imageName>${project.artifactId}</imageName>-->
-<!--                    &lt;!&ndash; 指定标签 &ndash;&gt;-->
-<!--                    <imageTags>-->
-<!--                        <imageTag>latest</imageTag>-->
-<!--                    </imageTags>-->
-<!--                    &lt;!&ndash; 基础镜像&ndash;&gt;-->
-<!--                    <baseImage>openjdk:8-jdk-alpine</baseImage>-->
+            <!--            <plugin>-->
+            <!--                <groupId>com.spotify</groupId>-->
+            <!--                <artifactId>docker-maven-plugin</artifactId>-->
+            <!--                <version>1.1.1</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>build-image</id>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>build</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--                <configuration>-->
+            <!--                    &lt;!&ndash; 镜像名称 &ndash;&gt;-->
+            <!--                    <imageName>${project.artifactId}</imageName>-->
+            <!--                    &lt;!&ndash; 指定标签 &ndash;&gt;-->
+            <!--                    <imageTags>-->
+            <!--                        <imageTag>latest</imageTag>-->
+            <!--                    </imageTags>-->
+            <!--                    &lt;!&ndash; 基础镜像&ndash;&gt;-->
+            <!--                    <baseImage>openjdk:8-jdk-alpine</baseImage>-->
 
-<!--                    &lt;!&ndash; 切换到容器工作目录&ndash;&gt;-->
-<!--                    <workdir>/ROOT</workdir>-->
+            <!--                    &lt;!&ndash; 切换到容器工作目录&ndash;&gt;-->
+            <!--                    <workdir>/ROOT</workdir>-->
 
-<!--                    <entryPoint>["java","-jar","${project.build.finalName}.jar"]</entryPoint>-->
+            <!--                    <entryPoint>["java","-jar","${project.build.finalName}.jar"]</entryPoint>-->
 
-<!--                    &lt;!&ndash; 指定远程 Docker API地址  &ndash;&gt;-->
-<!--                    <dockerHost>http://localhost:2375</dockerHost>-->
+            <!--                    &lt;!&ndash; 指定远程 Docker API地址  &ndash;&gt;-->
+            <!--                    <dockerHost>http://localhost:2375</dockerHost>-->
 
-<!--                    &lt;!&ndash; 复制 jar包到docker容器指定目录&ndash;&gt;-->
-<!--                    <resources>-->
-<!--                        <resource>-->
-<!--                            <targetPath>/ROOT</targetPath>-->
-<!--                            &lt;!&ndash; 用于指定需要复制的根目录，${project.build.directory}表示target目录 &ndash;&gt;-->
-<!--                            <directory>${project.build.directory}</directory>-->
-<!--                            &lt;!&ndash; 用于指定需要复制的文件，${project.build.finalName}.jar就是打包后的target目录下的jar包名称　&ndash;&gt;-->
-<!--                            <include>${project.build.finalName}.jar</include>-->
-<!--                        </resource>-->
-<!--                    </resources>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <!--                    &lt;!&ndash; 复制 jar包到docker容器指定目录&ndash;&gt;-->
+            <!--                    <resources>-->
+            <!--                        <resource>-->
+            <!--                            <targetPath>/ROOT</targetPath>-->
+            <!--                            &lt;!&ndash; 用于指定需要复制的根目录，${project.build.directory}表示target目录 &ndash;&gt;-->
+            <!--                            <directory>${project.build.directory}</directory>-->
+            <!--                            &lt;!&ndash; 用于指定需要复制的文件，${project.build.finalName}.jar就是打包后的target目录下的jar包名称　&ndash;&gt;-->
+            <!--                            <include>${project.build.finalName}.jar</include>-->
+            <!--                        </resource>-->
+            <!--                    </resources>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
             <!-- Docker maven plugin -->
 
 

@@ -4,9 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import com.jh.cavy.cache.service.CacheService;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.Result.ResultVO;
-import com.jh.cavy.jwt.jwt.JwtProperties;
-import com.jh.cavy.jwt.jwt.JwtTokenUtil;
-import com.jh.cavy.jwt.jwt.JwtUser;
+import com.jh.cavy.jwt.JwtProperties;
+import com.jh.cavy.jwt.JwtTokenUtil;
+import com.jh.cavy.jwt.JwtUser;
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.param.LoginParam;
 import com.jh.cavy.manage.param.UserParam;
@@ -29,8 +29,8 @@ public class UserApi {
     private JwtTokenUtil jwtTokenUtil;
     @Resource
     private UserService userService;
-    @Resource
-    private CacheService redisHandle;
+    @Resource(name="${cache.use}")
+    private CacheService cacheService;
     @Resource
     private JwtProperties jwtProperties;
 
@@ -57,7 +57,7 @@ public class UserApi {
             token = jwtTokenUtil.generateToken(jwtUser);
             //boolean b = jwtTokenUtil.validateToken(token, jwtUser);
             response.addCookie(new Cookie("token", token));
-            redisHandle.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
+            cacheService.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
             UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
             userInfoVO.setToken(token);
             return new ResultVO<>(1000, "登录成功", userInfoVO);

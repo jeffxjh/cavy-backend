@@ -32,7 +32,7 @@ public class SystemConfig {
 
         try {
             // 从数据库获取自定义变量列表
-            Map<String, String> collect = service.getAll().stream().collect(Collectors.toMap(Config::getCode, Config::getCodeValue));
+            Map<String, String> collect = service.getAll().stream().collect(Collectors.toMap(Config::getCode, Config::getCodeValue,(oldValue,newValue)->oldValue+","+newValue));
 
             // 将转换后的列表加入属性中
             Properties properties = new Properties();

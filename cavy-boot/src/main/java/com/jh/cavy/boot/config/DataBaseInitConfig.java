@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
@@ -16,6 +17,7 @@ import java.sql.*;
 
 @Order(value = -1)
 @Configuration
+@ConditionalOnClass(name = {"com.mysql.cj.jdbc.Driver"})
 public class DataBaseInitConfig {
     private static final Logger LOG = LoggerFactory.getLogger(DataBaseInitConfig.class);
 

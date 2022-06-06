@@ -26,3 +26,13 @@
 Thanks for [JetBrains](https://www.jetbrains.com/?from=Cavy)'s `free JetBrains Open Source license(s)`
  
 [![LOGO](https://github.com/jeffxjh/Imgur/blob/main/jetbrains.png?raw=true)](https://www.jetbrains.com/?from=Cavy)
+
+
+
+-Dminio_endpoint=http://193.149.161.195:9000/
+-Dminio_weburl=http://193.149.161.195:9000/
+-Dmysql_host=192.168.232.129
+-Drabbitmq_host=192.168.232.129
+-Dredis_host=192.168.232.129
+-Dnacos_addr=192.168.232.129:8848
+-Des_address=192.168.232.129:9200

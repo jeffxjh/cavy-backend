@@ -1,13 +1,15 @@
 package com.jh.cavy.manage.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
-import com.jh.cavy.file.minio.handle.ExcelHandle;
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.dto.UserDTO;
 import com.jh.cavy.manage.excel.UserExcelListen;
@@ -20,11 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-    @Resource
-    private ExcelHandle excelHandle;
+
     @Resource
     private UserMapper userMapper;
 
@@ -92,7 +94,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void importUser(MultipartFile multipartFile) {
         try {
-            excelHandle.readExcel(multipartFile.getInputStream(),new UserExcelListen(this), UserDTO.class);
+            this.readExcel(multipartFile.getInputStream(),new UserExcelListen(this), UserDTO.class);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -100,6 +102,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     }
-
+    public <T,M> void readExcel(InputStream inputStream, ReadListener<T> t, Class<M> module) {
+        ExcelReader excelReader = EasyExcel.read(inputStream, module, t).build();
+        ReadSheet readSheet = EasyExcel.readSheet(0).build();
+        excelReader.read(readSheet);
+        excelReader.finish();
+    }
 }
 
