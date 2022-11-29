@@ -15,10 +15,11 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
+@RequiredArgsConstructor
 public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer> implements AnswerService {
 
-    @Resource
-    private AnswerMapper answerMapper;
+    
+    private final AnswerMapper answerMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
