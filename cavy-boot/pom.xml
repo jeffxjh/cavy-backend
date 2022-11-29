@@ -72,6 +72,20 @@
                 <version>2.3.7.RELEASE</version>
                 <configuration>
                     <mainClass>com.jh.cavy.boot.CavyBootApplication</mainClass>
+                    <!--解决windows命令行窗口中文乱码-->
+                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+                    <layout>ZIP</layout>
+                    <!--配置需要打包进项目的jar-->
+                    <includes>
+                        <!--这里是填写需要包含进去的jar，
+                        	必须项目中的某些模块，会经常变动，那么就应该将其坐标写进来
+                        	如果没有则non-exists ，表示不打包依赖
+                        -->
+                        <include>
+                            <groupId>non-exists</groupId>
+                            <artifactId>non-exists</artifactId>
+                        </include>
+                    </includes>
                 </configuration>
                 <executions>
                     <execution>
@@ -82,7 +96,30 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <!-- 此插件用于将依赖包抽出-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <!--是否排除传递性-->
+                            <excludeTransitive>false</excludeTransitive>
+                            <!--是否去掉 jar 包版本信息-->
+                            <stripVersion>false</stripVersion>
+                            <!--包含范围-->
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

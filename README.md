@@ -36,3 +36,9 @@ Thanks for [JetBrains](https://www.jetbrains.com/?from=Cavy)'s `free JetBrains O
 -Dredis_host=192.168.232.129
 -Dnacos_addr=192.168.232.129:8848
 -Des_address=192.168.232.129:9200
+
+# jar包瘦身
+依赖分离
+将依赖包抽离到lib目录
+启动命令变为
+java -jar -Dloader.path=./lib cavy-boot.jar
