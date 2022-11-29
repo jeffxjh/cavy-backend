@@ -92,9 +92,9 @@ spring:
   rabbitmq:
     host: ${rabbitmq_host:localhost}
     port: ${rabbitmq_port:5672}
-    username: guest
-    password: guest
-    virtualHost: /
+    username: ${rabbitmq_username:guest}
+    password: ${rabbitmq_password:guest}
+    virtualHost: ${rabbitmq_virtualHost:/}
     #开启发送失败返回
     publisher-returns: true
     listener:
@@ -107,7 +107,7 @@ spring:
     database: 0
     host: ${redis_host:127.0.0.1}
     port: ${redis_port:6379}
-    password: 123456
+    password: ${redis_password:123456}
     timeout: 1000
     jedis:
       pool:
@@ -160,7 +160,8 @@ management:
       exposure:
         exclude: shutdown
 cache:
-  use: caffeineHandle
+  use: redisHandle
+#  use: caffeineHandle
 message:
   enable: true
 file:
