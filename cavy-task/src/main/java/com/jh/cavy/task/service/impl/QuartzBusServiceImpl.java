@@ -26,12 +26,6 @@ public class QuartzBusServiceImpl implements QuartzBusService {
     private final long workerId = 1;//为终端ID
     private final long datacenterId = 1;//数据中心ID
 
-    //@PostConstruct
-    //public void init() {
-    //    workerId = NetUtil.ipv4ToLong(NetUtil.getLocalhostStr());
-    //    log.info("当前机器的workId:{}", workerId);
-    //}
-
     @Resource
     private QuartzManage quartzManage;
     @Resource
