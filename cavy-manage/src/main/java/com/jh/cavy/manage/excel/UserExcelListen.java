@@ -40,12 +40,8 @@ public class UserExcelListen extends AnalysisEventListener<UserDTO> {
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
         if (CollUtil.isNotEmpty(list)) {
-
             //todo 验证有效性
             List<List<UserDTO>> partition = Lists.partition(list, pageSize);
-
-            
-
             userService.saveBatch(BeanUtil.copyToList(list, User.class));
             log.info(JSON.toJSONString(list));
         }
