@@ -9,11 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>cavy-boot</artifactId>
-
-
     <packaging>jar</packaging>
-
-
     <dependencies>
         <dependency>
             <groupId>com.jh</groupId>
