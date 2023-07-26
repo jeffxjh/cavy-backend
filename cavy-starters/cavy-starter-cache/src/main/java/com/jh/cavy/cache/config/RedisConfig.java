@@ -21,6 +21,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.util.StringUtils;
 import redis.clients.jedis.JedisPoolConfig;
 
 @EnableCaching
@@ -50,7 +51,9 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(host);
         redisStandaloneConfiguration.setDatabase(database);
-        redisStandaloneConfiguration.setPassword(pwd);
+        if (!StringUtils.isEmpty(pwd)) {
+            redisStandaloneConfiguration.setPassword(pwd);
+        }
         redisStandaloneConfiguration.setPort(port);
         JedisClientConfiguration.JedisPoolingClientConfigurationBuilder jpcb = (JedisClientConfiguration.JedisPoolingClientConfigurationBuilder) JedisClientConfiguration.builder();
         jpcb.poolConfig(jedisPoolConfig);
