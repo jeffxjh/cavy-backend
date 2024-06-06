@@ -1,6 +1,5 @@
 package com.jh.cavy.jwt;
 
-import com.sun.istack.internal.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -26,7 +25,6 @@ public class JwtProperties {
     private String cookieKey;
     private Integer filterOrder;
     private String redisKey = "token";
-    @NotNull
     private String appScope;
 
 }
