@@ -19,7 +19,10 @@
 --env redis.host=172.27.208.1
 --env redis.port=6379
 ````
-
+mysql_host=192.168.2.11
+mysql_port=6309
+mysql_username=root
+mysql_password=123456
 2.
 # 延伸阅读
 

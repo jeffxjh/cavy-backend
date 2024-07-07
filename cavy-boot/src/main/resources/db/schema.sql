@@ -111,15 +111,15 @@ CREATE TABLE t_sys_user
 
 CREATE TABLE t_sys_user_menu
 (
-    id          int      DEFAULT NULL AUTO_INCREMENT COMMENT 'id',
+    id      int NOT NULL AUTO_INCREMENT COMMENT 'id',
     user_id     int      DEFAULT NULL COMMENT '用户id',
     menu_id     int      DEFAULT NULL COMMENT '菜单id',
     add_time    datetime DEFAULT NULL COMMENT '创建时间',
     add_user    varchar(255) COMMENT '创建人',
     update_time datetime DEFAULT NULL COMMENT '修改时间',
-    update_user varchar(255) COMMENT '修改人'
+    update_user varchar(255) COMMENT '修改人',
+    PRIMARY KEY (id)
 );
-
 
 
 CREATE TABLE t_sys_user_role

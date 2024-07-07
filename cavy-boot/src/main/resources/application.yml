@@ -21,32 +21,32 @@ spring:
 #        username: ENC(xxxxx)
 #        password: ENC(xxxxx)
 #        driver-class-name: com.mysql.jdbc.Driver
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:file:./${spring.application.name}
+#    schema: classpath:db/schema.sql
+#    data: classpath:db/data.sql
+#    username: sa
+#    password: sa
+#    continue-on-error: true
+#    initialization-mode: never
+#    platform: h2
+#  h2:
+#    #开启console 访问 默认false
+#    console:
+#      enabled: true
+#      settings:
+#        #开启h2 console 跟踪 方便调试  默认 false
+#        trace: true
+#        #允许console 远程访问 默认false
+#        web-allow-others: false
+#        #h2 访问路径上下文
+#      path: /h2-console
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:./${spring.application.name}
-    schema: classpath:db/schema.sql
-    data: classpath:db/data.sql
-    username: sa
-    password: sa
-    continue-on-error: true
-    initialization-mode: never
-    platform: h2
-  h2:
-    #开启console 访问 默认false
-    console:
-      enabled: true
-      settings:
-        #开启h2 console 跟踪 方便调试  默认 false
-        trace: true
-        #允许console 远程访问 默认false
-        web-allow-others: false
-        #h2 访问路径上下文
-      path: /h2-console
-
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://${mysql_host:localhost}:${mysql_port:3306}/${mysql_db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=false
-#    username: ${mysql_username:root}
-#    password: ${mysql_password:123456}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${mysql_host:localhost}:${mysql_port:3306}/${mysql_db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=false
+    username: ${mysql_username:root}
+    password: ${mysql_password:123456}
   #    type: com.alibaba.druid.pool.DruidDataSource
 #    druid:
 #      driverClassName: com.mysql.cj.jdbc.Driver
