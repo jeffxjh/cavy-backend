@@ -32,5 +32,8 @@ public class UserVO implements Serializable {
 
     @ApiModelProperty(value = "")
     private String addUser;
-
+    @ApiModelProperty(name = "status")
+    private String status;
+    @ApiModelProperty(name = "defaultUser")
+    private String defaultUser;
 }

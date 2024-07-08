@@ -91,21 +91,23 @@ CREATE TABLE t_sys_role
 
 
 
-CREATE TABLE t_sys_user
-(
-    id          int NOT NULL AUTO_INCREMENT COMMENT 'id',
-    user_name   varchar(255) DEFAULT NULL COMMENT '账号',
-    password    varchar(255) DEFAULT NULL COMMENT '密码',
-    real_name   varchar(255) DEFAULT NULL COMMENT '真实姓名',
-    gender      int          DEFAULT NULL COMMENT '性别',
-    phone       varchar(255) DEFAULT NULL COMMENT '电话',
-    email       varchar(255) DEFAULT NULL COMMENT '邮件',
-    add_time    datetime     DEFAULT NULL COMMENT '创建时间',
-    add_user    varchar(255) COMMENT '创建人',
-    update_time datetime     DEFAULT NULL COMMENT '修改时间',
-    update_user varchar(255) COMMENT '修改人',
-    PRIMARY KEY (id)
-);
+
+CREATE TABLE `t_sys_user` (
+                              `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+                              `user_name` varchar(255) DEFAULT NULL COMMENT '账号',
+                              `password` varchar(255) DEFAULT NULL COMMENT '密码',
+                              `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
+                              `gender` int(11) DEFAULT NULL COMMENT '性别',
+                              `phone` varchar(255) DEFAULT NULL COMMENT '电话',
+                              `email` varchar(255) DEFAULT NULL COMMENT '邮件',
+                              `status` char(1) NOT NULL DEFAULT '0' COMMENT '状态 0已新建;1已使用;2已禁用;3已冻结',
+                              `default_user` char(1) NOT NULL DEFAULT '0' COMMENT '默认用户 0否;1是',
+                              `add_time` datetime DEFAULT NULL COMMENT '创建时间',
+                              `add_user` varchar(255) DEFAULT NULL COMMENT '创建人',
+                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+                              `update_user` varchar(255) DEFAULT NULL COMMENT '修改人',
+                              PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 
 

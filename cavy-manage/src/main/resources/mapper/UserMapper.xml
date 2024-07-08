@@ -4,27 +4,29 @@
     <resultMap id="BaseResultMap" type="com.jh.cavy.manage.domain.User">
         <!--@mbg.generated-->
         <!--@Table t_sys_user-->
-        <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="user_name" jdbcType="VARCHAR" property="userName" />
-        <result column="password" jdbcType="VARCHAR" property="password" />
-        <result column="real_name" jdbcType="VARCHAR" property="realName" />
-        <result column="gender" jdbcType="INTEGER" property="gender" />
-        <result column="phone" jdbcType="VARCHAR" property="phone" />
-        <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-        <result column="add_user" jdbcType="VARCHAR" property="addUser" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="default_user" jdbcType="VARCHAR" property="defaultUser"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="add_user" jdbcType="VARCHAR" property="addUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, user_name, `password`, real_name, gender, phone, email, add_time, add_user, update_time,
+        id, user_name, `password`, real_name, gender, phone, email,status,default_user, add_time, add_user, update_time,
         update_user
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from t_sys_user
         where id = #{id,jdbcType=INTEGER}
     </select>
@@ -33,18 +35,21 @@
         delete from t_sys_user
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
+            useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into t_sys_user (user_name, `password`, real_name,
-        gender, phone, email,
+        gender, phone, email,status,default_user,
         add_time, add_user, update_time,
         update_user)
         values (#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
-        #{gender,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{gender,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{defaultUser,jdbcType=VARCHAR},
         #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
         #{updateUser,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User" useGeneratedKeys="true">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
+            useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into t_sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -65,6 +70,12 @@
             </if>
             <if test="email != null">
                 email,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="defaultUser != null">
+                default_user,
             </if>
             <if test="addTime != null">
                 add_time,
@@ -97,6 +108,12 @@
             </if>
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultUser != null">
+                #{defaultUser,jdbcType=VARCHAR},
             </if>
             <if test="addTime != null">
                 #{addTime,jdbcType=TIMESTAMP},
@@ -134,6 +151,12 @@
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
             </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultUser != null">
+                #{defaultUser,jdbcType=VARCHAR},
+            </if>
             <if test="addTime != null">
                 add_time = #{addTime,jdbcType=TIMESTAMP},
             </if>
@@ -158,6 +181,8 @@
         gender = #{gender,jdbcType=INTEGER},
         phone = #{phone,jdbcType=VARCHAR},
         email = #{email,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        defaultUser = #{defaultUser,jdbcType=VARCHAR},
         add_time = #{addTime,jdbcType=TIMESTAMP},
         add_user = #{addUser,jdbcType=VARCHAR},
         update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -167,16 +192,18 @@
 
     <select id="findByPage" resultType="com.jh.cavy.manage.vo.UserVO">
         select id,
-               user_name,
-               `password`,
-               real_name,
-               gender,
-               phone,
-               email,
-               add_time,
-               add_user,
-               update_time,
-               update_user
+        user_name,
+        `password`,
+        real_name,
+        gender,
+        phone,
+        email,
+        add_time,
+        add_user,
+        update_time,
+        update_user,
+        status,
+        default_user
         from t_sys_user ${ew.customSqlSegment}
     </select>
 </mapper>

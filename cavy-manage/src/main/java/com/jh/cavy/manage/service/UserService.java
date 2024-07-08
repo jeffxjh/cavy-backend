@@ -8,6 +8,7 @@ import com.jh.cavy.manage.vo.UserVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public interface UserService extends IService<User> {
 
@@ -31,5 +32,9 @@ public interface UserService extends IService<User> {
     void export(UserParam userParam, HttpServletResponse response);
 
     void importUser(MultipartFile multipartFile);
+
+    void addUser(UserParam userParam);
+
+    void deleteUser(List<String> ids);
 }
 

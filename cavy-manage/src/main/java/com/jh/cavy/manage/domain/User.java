@@ -63,5 +63,15 @@ public class User extends BaseEntity {
      */
     @ApiModelProperty(value = "邮件")
     private String email;
+    /**
+     * 邮件
+     */
+    @ApiModelProperty(value = "状态 0已新建;1已使用;2已禁用;3已冻结")
+    private String status;
+    /**
+     * 默认用户
+     */
+    @ApiModelProperty(value = "默认用户 0否;1是")
+    private String defaultUser;
 
 }

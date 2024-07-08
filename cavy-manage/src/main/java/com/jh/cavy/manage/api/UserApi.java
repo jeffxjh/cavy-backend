@@ -9,6 +9,7 @@ import com.jh.cavy.jwt.JwtTokenUtil;
 import com.jh.cavy.jwt.JwtUser;
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.param.LoginParam;
+import com.jh.cavy.manage.param.QuestionParam;
 import com.jh.cavy.manage.param.UserParam;
 import com.jh.cavy.manage.service.UserService;
 import com.jh.cavy.manage.vo.UserInfoVO;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RequestMapping("/user")
 @RestController
@@ -29,7 +31,7 @@ public class UserApi {
     private JwtTokenUtil jwtTokenUtil;
     @Resource
     private UserService userService;
-    @Resource(name="${cache.use}")
+    @Resource(name = "${cache.use}")
     private CacheService cacheService;
     @Resource
     private JwtProperties jwtProperties;
@@ -79,11 +81,21 @@ public class UserApi {
         return userService.findUserPage(userParam);
     }
 
+    @PostMapping()
+    public void addUser(@RequestBody UserParam userParam) {
+        userService.addUser(userParam);
+    }
+
+    @DeleteMapping()
+    public void deleteUser(@RequestParam List<String> ids) {
+        userService.deleteUser(ids);
+    }
 
     @GetMapping("/export")
-    public void export(@ModelAttribute UserParam userParam,HttpServletResponse response) {
-        userService.export(userParam,response);
+    public void export(@ModelAttribute UserParam userParam, HttpServletResponse response) {
+        userService.export(userParam, response);
     }
+
     @PostMapping("/import")
     public void export(@RequestParam MultipartFile file) {
         userService.importUser(file);

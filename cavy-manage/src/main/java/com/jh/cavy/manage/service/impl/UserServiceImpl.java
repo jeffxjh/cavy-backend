@@ -1,5 +1,7 @@
 package com.jh.cavy.manage.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.listener.ReadListener;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -94,7 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void importUser(MultipartFile multipartFile) {
         try {
-            this.readExcel(multipartFile.getInputStream(),new UserExcelListen(this), UserDTO.class);
+            this.readExcel(multipartFile.getInputStream(), new UserExcelListen(this), UserDTO.class);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -102,7 +105,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     }
-    public <T,M> void readExcel(InputStream inputStream, ReadListener<T> t, Class<M> module) {
+
+    @Override
+    public void addUser(UserParam userParam) {
+        userMapper.insert(BeanUtil.copyProperties(userParam, User.class));
+    }
+
+    @Override
+    public void deleteUser(List<String> ids) {
+        if (CollectionUtil.isNotEmpty(ids)) {
+            userMapper.deleteBatchIds(ids);
+        }
+    }
+
+    public <T, M> void readExcel(InputStream inputStream, ReadListener<T> t, Class<M> module) {
         ExcelReader excelReader = EasyExcel.read(inputStream, module, t).build();
         ReadSheet readSheet = EasyExcel.readSheet(0).build();
         excelReader.read(readSheet);
