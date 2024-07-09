@@ -31,6 +31,22 @@ Thanks for [JetBrains](https://www.jetbrains.com/?from=Cavy)'s `free JetBrains O
 [![LOGO](https://github.com/jeffxjh/Imgur/blob/main/jetbrains.png?raw=true)](https://www.jetbrains.com/?from=Cavy)
 
 
+开发环境参数配置
+````
+-Drabbitmq_host=192.168.2.11
+-Drabbitmq_username=guest
+-Drabbitmq_password=guest
+-Drabbitmq_virtualHost=/
+-Dredis_host=192.168.2.11
+-Dredis_password=123456
+-Dredis_port=6379
+-Dmysql_host=192.168.2.11
+-Dmysql_port=3306
+-Dmysql_username=root
+-Dmysql_password=123456
+````
+
+
 
 -Dminio_endpoint=http://193.149.161.195:9000/
 -Dminio_weburl=http://193.149.161.195:9000/

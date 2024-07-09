@@ -13,6 +13,8 @@ import java.util.List;
 @ApiModel
 public class UserParam extends BaseParam {
     @ApiModelProperty(name = "userName")
+    private String id;
+    @ApiModelProperty(name = "userName")
     private String userName;
     @ApiModelProperty(name = "realName")
     private String realName;

@@ -152,10 +152,10 @@
                 email = #{email,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                #{status,jdbcType=VARCHAR},
+                status=#{status,jdbcType=VARCHAR},
             </if>
             <if test="defaultUser != null">
-                #{defaultUser,jdbcType=VARCHAR},
+                default_user = #{defaultUser,jdbcType=VARCHAR},
             </if>
             <if test="addTime != null">
                 add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -182,7 +182,7 @@
         phone = #{phone,jdbcType=VARCHAR},
         email = #{email,jdbcType=VARCHAR},
         status = #{status,jdbcType=VARCHAR},
-        defaultUser = #{defaultUser,jdbcType=VARCHAR},
+        default_user = #{defaultUser,jdbcType=VARCHAR},
         add_time = #{addTime,jdbcType=TIMESTAMP},
         add_user = #{addUser,jdbcType=VARCHAR},
         update_time = #{updateTime,jdbcType=TIMESTAMP},
