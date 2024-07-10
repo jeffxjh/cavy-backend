@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @ApiModel
@@ -20,6 +21,8 @@ public class UserInfoVO implements Serializable {
 
     @ApiModelProperty(value = "")
     private Integer gender;
+    @ApiModelProperty(value = "")
+    private String password;
 
     @ApiModelProperty(value = "")
     private String phone;
@@ -37,4 +40,6 @@ public class UserInfoVO implements Serializable {
     private String status;
     @ApiModelProperty(name = "defaultUser")
     private String defaultUser;
+    @ApiModelProperty(name = "roleList")
+    private List<RoleVO> roleList;
 }

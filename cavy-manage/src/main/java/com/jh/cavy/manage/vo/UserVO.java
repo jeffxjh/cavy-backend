@@ -19,6 +19,9 @@ public class UserVO implements Serializable {
     private String realName;
 
     @ApiModelProperty(value = "")
+    private String password;
+
+    @ApiModelProperty(value = "")
     private Integer gender;
 
     @ApiModelProperty(value = "")

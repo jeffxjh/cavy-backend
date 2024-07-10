@@ -35,7 +35,10 @@
         delete from t_sys_user
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
+    <delete id="deleteRoleReate">
+        delete from t_sys_user_role where user_id=#{userId}
+    </delete>
+    <insert id="insert"  keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into t_sys_user (user_name, `password`, real_name,
@@ -129,6 +132,10 @@
             </if>
         </trim>
     </insert>
+    <insert id="insertRoleRelate">
+        insert into t_sys_user_role(user_id,role_id) values(#{userId},#{roleId})
+    </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.manage.domain.User">
         <!--@mbg.generated-->
         update t_sys_user
@@ -205,5 +212,30 @@
         status,
         default_user
         from t_sys_user ${ew.customSqlSegment}
+    </select>
+
+
+    <resultMap id="ResultMap" type="com.jh.cavy.manage.vo.UserInfoVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="default_user" jdbcType="VARCHAR" property="defaultUser"/>
+        <collection property="roleList" ofType="com.jh.cavy.manage.vo.RoleVO">
+            <id column="role_id" property="id" jdbcType="INTEGER"/>
+            <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUser" resultMap="ResultMap"  parameterType="java.lang.Integer">
+        select a.*,c.role_name,c.id role_id
+        from t_sys_user a
+        left join t_sys_user_role b on a.id=b.user_id
+        left join t_sys_role c on b.role_id=c.id
+        where a.id = #{id,jdbcType=INTEGER}
     </select>
 </mapper>

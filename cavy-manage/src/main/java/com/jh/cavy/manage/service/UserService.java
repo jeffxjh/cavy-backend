@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.param.UserParam;
+import com.jh.cavy.manage.vo.UserInfoVO;
 import com.jh.cavy.manage.vo.UserVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,5 +37,9 @@ public interface UserService extends IService<User> {
     void addUser(UserParam userParam);
 
     void deleteUser(List<String> ids);
+
+    UserInfoVO getUser(Integer id);
+
+    void updateUser(UserParam userParam);
 }
 

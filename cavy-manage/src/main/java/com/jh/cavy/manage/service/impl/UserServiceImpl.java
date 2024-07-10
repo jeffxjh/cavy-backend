@@ -17,8 +17,11 @@ import com.jh.cavy.manage.dto.UserDTO;
 import com.jh.cavy.manage.excel.UserExcelListen;
 import com.jh.cavy.manage.mapper.UserMapper;
 import com.jh.cavy.manage.param.UserParam;
+import com.jh.cavy.manage.service.RoleService;
 import com.jh.cavy.manage.service.UserService;
+import com.jh.cavy.manage.vo.UserInfoVO;
 import com.jh.cavy.manage.vo.UserVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +32,8 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-
+    @Resource
+    private RoleService roleService;
     @Resource
     private UserMapper userMapper;
 
@@ -108,13 +112,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void addUser(UserParam userParam) {
-        userMapper.insert(BeanUtil.copyProperties(userParam, User.class));
+        if (StringUtils.isBlank(userParam.getStatus())) {
+            userParam.setStatus("0");
+        }
+        User user = BeanUtil.copyProperties(userParam, User.class);
+        userMapper.insert(user);
+        List<Integer> roleList = userParam.getRoleList();
+        if (CollectionUtil.isNotEmpty(roleList)) {
+            for (Integer roleId : roleList) {
+                userMapper.insertRoleRelate(user.getId(),roleId);
+            }
+        }
     }
 
     @Override
     public void deleteUser(List<String> ids) {
         if (CollectionUtil.isNotEmpty(ids)) {
             userMapper.deleteBatchIds(ids);
+        }
+    }
+
+    @Override
+    public UserInfoVO getUser(Integer id) {
+        return userMapper.getUser(id);
+    }
+
+    @Override
+    public void updateUser(UserParam userParam) {
+        User byId = userMapper.selectById(userParam.getId());
+        BeanUtil.copyProperties(userParam, byId);
+        userMapper.updateByPrimaryKey(byId);
+        List<Integer> roleList = userParam.getRoleList();
+        if (CollectionUtil.isNotEmpty(roleList)) {
+            userMapper.deleteRoleReate(byId.getId());
+            for (Integer roleId : roleList) {
+                userMapper.insertRoleRelate(byId.getId(),roleId);
+            }
         }
     }
 

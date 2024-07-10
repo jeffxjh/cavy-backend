@@ -23,5 +23,8 @@ public interface RoleService {
     List<RoleVO> getRoleByUserName(String userName);
 
     List<RoleVO> getRoleByMenuId(String menuId);
+
+    List<RoleVO> roleList();
+
 }
 

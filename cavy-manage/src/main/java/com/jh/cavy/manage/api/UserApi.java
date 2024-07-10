@@ -86,20 +86,20 @@ public class UserApi {
     public void addUser(@RequestBody UserParam userParam) {
         userService.addUser(userParam);
     }
+
     @GetMapping("getById")
-    public UserInfoVO getUser(String id) {
-        return BeanUtil.copyProperties(userService.getById(id), UserInfoVO.class);
+    public UserInfoVO getUser(Integer id) {
+        return userService.getUser(id);
     }
 
     @DeleteMapping()
     public void deleteUser(@RequestParam List<String> ids) {
         userService.deleteUser(ids);
     }
+
     @PutMapping()
     public void updateUser(UserParam userParam) {
-        User byId = userService.getById(userParam.getId());
-        BeanUtil.copyProperties(userParam, byId);
-        userService.updateByPrimaryKey(byId);
+        userService.updateUser(userParam);
     }
 
     @GetMapping("/export")

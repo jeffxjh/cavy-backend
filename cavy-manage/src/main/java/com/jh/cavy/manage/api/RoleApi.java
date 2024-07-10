@@ -4,10 +4,7 @@ package com.jh.cavy.manage.api;
 import com.jh.cavy.manage.service.RoleService;
 import com.jh.cavy.manage.vo.RoleVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,8 +21,14 @@ public class RoleApi {
     public List<RoleVO> getRoleByUserName(@RequestParam String userName) {
         return roleService.getRoleByUserName(userName);
     }
+
     @GetMapping("/getRoleByMenuId")
     public List<RoleVO> getRoleByMenuId(@RequestParam String menuId) {
         return roleService.getRoleByMenuId(menuId);
+    }
+
+    @PostMapping
+    public List<RoleVO> roleList() {
+        return roleService.roleList();
     }
 }

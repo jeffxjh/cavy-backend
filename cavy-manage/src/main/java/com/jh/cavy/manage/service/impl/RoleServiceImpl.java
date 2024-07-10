@@ -9,6 +9,7 @@ import com.jh.cavy.manage.vo.RoleVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -57,6 +58,12 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleVO> getRoleByMenuId(String menuId) {
         LambdaQueryWrapper<Role> queryWrapper = Wrappers.lambdaQuery();
         return roleMapper.getRoleByMenuId(queryWrapper);
+    }
+
+    @Override
+    public List<RoleVO> roleList() {
+        LambdaQueryWrapper<Role> queryWrapper = Wrappers.lambdaQuery();
+        return roleMapper.roleList(queryWrapper);
     }
 
 }

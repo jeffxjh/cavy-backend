@@ -30,5 +30,6 @@ public class UserParam extends BaseParam {
     private String status;
     @ApiModelProperty(name = "defaultUser")
     private String defaultUser;
-
+    @ApiModelProperty(name = "roleList")
+    private List<Integer> roleList;
 }
