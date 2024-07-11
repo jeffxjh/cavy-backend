@@ -22,8 +22,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/user")
 @RestController
@@ -103,12 +105,12 @@ public class UserApi {
     }
 
     @GetMapping("/export")
-    public void export(@ModelAttribute UserParam userParam, HttpServletResponse response) {
+    public void export(@ModelAttribute UserParam userParam, HttpServletResponse response) throws IOException {
         userService.export(userParam, response);
     }
 
     @PostMapping("/import")
-    public void export(@RequestParam MultipartFile file) {
-        userService.importUser(file);
+    public Map<String,Integer> importUser(@RequestParam MultipartFile file) {
+        return userService.importUser(file);
     }
 }

@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.enums.CellExtraTypeEnum;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -27,8 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -85,29 +89,36 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void export(UserParam userParam, HttpServletResponse response) {
+    public void export(UserParam userParam, HttpServletResponse response) throws IOException {
         try {
-            response.setContentType("application/vnd.ms-excel");
+            response.setContentType("application/vnd.ms-excel;charset=UTF-8;attachment;");
             response.setCharacterEncoding("utf-8");
-            response.setHeader("Content-disposition", "attachment;filename=demo.xlsx");
+            response.setHeader("Content-disposition", "attachment;filename=用户信息.xlsx");
             EasyExcel.write(response.getOutputStream(), UserDTO.class).sheet("模板")
-                    .doWrite(userMapper.selectList(Wrappers.query()));
+                    .doWrite(BeanUtil.copyToList(userMapper.selectList(Wrappers.query()), UserDTO.class));
+            response.getOutputStream().flush();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
+        }finally {
+            response.getOutputStream().close();
         }
 
     }
 
     @Override
-    public void importUser(MultipartFile multipartFile) {
+    public Map<String,Integer> importUser(MultipartFile multipartFile) {
+        Map<String, Integer> map = new HashMap<String, Integer>(){{put("success",0);}};
         try {
-            this.readExcel(multipartFile.getInputStream(), new UserExcelListen(this), UserDTO.class);
+            UserExcelListen listen = new UserExcelListen(this);
+            EasyExcel.read(multipartFile.getInputStream(), UserDTO.class,listen).sheet("Sheet1").doRead();
+            map.put("success", listen.getSuccessNum());
+            map.put("total", listen.getTotalNum());
+            map.put("fail", listen.getErrorNum());
+            return map;
         } catch (Exception e) {
-            e.printStackTrace();
-
+           log.error(e.getMessage(),e);
         }
-
-
+        return map;
     }
 
     @Override
@@ -151,11 +162,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
     }
 
-    public <T, M> void readExcel(InputStream inputStream, ReadListener<T> t, Class<M> module) {
-        ExcelReader excelReader = EasyExcel.read(inputStream, module, t).build();
-        ReadSheet readSheet = EasyExcel.readSheet(0).build();
-        excelReader.read(readSheet);
-        excelReader.finish();
-    }
 }
 

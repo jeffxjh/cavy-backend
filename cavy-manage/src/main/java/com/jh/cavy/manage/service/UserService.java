@@ -9,7 +9,9 @@ import com.jh.cavy.manage.vo.UserVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService extends IService<User> {
 
@@ -30,9 +32,9 @@ public interface UserService extends IService<User> {
 
     ResultPage<UserVO> findUserPage(UserParam userParam);
 
-    void export(UserParam userParam, HttpServletResponse response);
+    void export(UserParam userParam, HttpServletResponse response) throws IOException;
 
-    void importUser(MultipartFile multipartFile);
+    Map<String,Integer> importUser(MultipartFile multipartFile);
 
     void addUser(UserParam userParam);
 
