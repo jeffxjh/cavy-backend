@@ -1,10 +1,13 @@
 package com.jh.cavy.message.websocket.advanced;
 
+import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -14,6 +17,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Slf4j
@@ -37,10 +41,12 @@ public class WebSocketConfig implements WebSocketConfigurer {
         public boolean beforeHandshake(@NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response,
                                        @NonNull WebSocketHandler wsHandler, @NonNull Map<String, Object> attributes) throws Exception {
             log.info("==>前置拦截");
+            HttpServletRequest req = ((ServletServerHttpRequest) request).getServletRequest();
+            String authorization = req.getHeader("Sec-WebSocket-Protocol");
             //if (!(request instanceof ServletServerHttpRequest)) return true;
             //ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(((ServletServerHttpRequest) request).getServletRequest());
             //String userName = (String) requestWrapper.getSession().getAttribute("userName");
-            //attributes.put("userName", userName);
+            attributes.put("userName", RequestHeadHolder.getAccount());
             return true;
         }
 
