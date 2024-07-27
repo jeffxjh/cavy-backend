@@ -1,18 +1,22 @@
 package com.jh.cavy.message.websocket.advanced;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.lang.NonNull;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-
+@Slf4j
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
@@ -27,24 +31,23 @@ public class WebSocketConfig implements WebSocketConfigurer {
     /**
      * 自定义拦截器拦截WebSocket请求
      */
-    class MyWebSocketInterceptor implements HandshakeInterceptor {
+    static class MyWebSocketInterceptor implements HandshakeInterceptor {
         //前置拦截一般用来注册用户信息，绑定 WebSocketSession
         @Override
-        public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                                       WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-            System.out.println("前置拦截~~");
-            if (!(request instanceof ServletServerHttpRequest)) return true;
-//            HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
-//            String userName = (String) servletRequest.getSession().getAttribute("userName");
-            String userName = "Koishipyb";
-            attributes.put("userName", userName);
+        public boolean beforeHandshake(@NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response,
+                                       @NonNull WebSocketHandler wsHandler, @NonNull Map<String, Object> attributes) throws Exception {
+            log.info("==>前置拦截");
+            //if (!(request instanceof ServletServerHttpRequest)) return true;
+            //ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(((ServletServerHttpRequest) request).getServletRequest());
+            //String userName = (String) requestWrapper.getSession().getAttribute("userName");
+            //attributes.put("userName", userName);
             return true;
         }
 
         @Override
-        public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                                   WebSocketHandler wsHandler, Exception exception) {
-            System.out.println("后置拦截~~");
+        public void afterHandshake(@NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response,
+                                   @NonNull WebSocketHandler wsHandler, Exception exception) {
+            log.info("==>后置拦截");
         }
     }
 }
