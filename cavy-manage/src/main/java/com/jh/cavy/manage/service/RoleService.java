@@ -1,7 +1,10 @@
 package com.jh.cavy.manage.service;
 
+import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.domain.Role;
+import com.jh.cavy.manage.param.RoleParam;
 import com.jh.cavy.manage.vo.RoleVO;
+import com.jh.cavy.manage.vo.UserVO;
 
 import java.util.List;
 
@@ -26,5 +29,6 @@ public interface RoleService {
 
     List<RoleVO> roleList();
 
+    ResultPage<RoleVO> findRolePage(RoleParam roleParam);
 }
 

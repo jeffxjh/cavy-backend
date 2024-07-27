@@ -81,7 +81,6 @@ CREATE TABLE t_sys_role
 (
     id          int NOT NULL AUTO_INCREMENT COMMENT 'id',
     role_name   varchar(255) DEFAULT NULL COMMENT '角色名称',
-    menu_id     int          DEFAULT NULL COMMENT '菜单id',
     add_time    datetime     DEFAULT NULL COMMENT '创建时间',
     add_user    varchar(255) COMMENT '创建人',
     update_time datetime     DEFAULT NULL COMMENT '修改时间',

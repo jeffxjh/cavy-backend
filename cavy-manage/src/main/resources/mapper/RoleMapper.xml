@@ -6,7 +6,6 @@
     <!--@Table t_sys_user_menu-->
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="role_name" jdbcType="INTEGER" property="roleName" />
-    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_user" jdbcType="VARCHAR" property="addUser" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -14,13 +13,33 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, role_name, menu_id, add_time, add_user, update_time, update_user
+    id, role_name,  add_time, add_user, update_time, update_user
   </sql>
   <select id="roleList" resultType="com.jh.cavy.manage.vo.RoleVO">
     select
     <include refid="Base_Column_List"/>
     from t_sys_role ${ew.customSqlSegment}
   </select>
+<!--  <resultMap id="ResultMap" type="com.jh.cavy.manage.vo.RoleVO">-->
+<!--    <id column="id" jdbcType="INTEGER" property="id"/>-->
+<!--    <result column="user_name" jdbcType="VARCHAR" property="userName"/>-->
+<!--    <result column="password" jdbcType="VARCHAR" property="password"/>-->
+<!--    <result column="real_name" jdbcType="VARCHAR" property="realName"/>-->
+<!--    <result column="gender" jdbcType="INTEGER" property="gender"/>-->
+<!--    <result column="phone" jdbcType="VARCHAR" property="phone"/>-->
+<!--    <result column="email" jdbcType="VARCHAR" property="email"/>-->
+<!--    <result column="status" jdbcType="VARCHAR" property="status"/>-->
+<!--    <result column="default_user" jdbcType="VARCHAR" property="defaultUser"/>-->
+<!--    <collection property="roleList" ofType="com.jh.cavy.manage.vo.RoleVO">-->
+<!--      <id column="role_id" property="id" jdbcType="INTEGER"/>-->
+<!--      <result column="role_name" property="roleName" jdbcType="VARCHAR"/>-->
+<!--    </collection>-->
+<!--  </resultMap>-->
+
+
+    <select id="findByPage" resultType="com.jh.cavy.manage.vo.RoleVO">
+
+    </select>
 
 
 </mapper>

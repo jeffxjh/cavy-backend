@@ -29,10 +29,6 @@ public class Role extends BaseEntity {
     @ApiModelProperty(value = "角色名称")
     private String roleName;
 
-    /**
-     * 菜单id
-     */
-    @ApiModelProperty(value = "菜单id")
-    private Integer menuId;
+
 
 }
