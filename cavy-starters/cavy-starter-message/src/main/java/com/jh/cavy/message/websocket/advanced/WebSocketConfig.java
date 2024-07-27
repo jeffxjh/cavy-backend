@@ -46,7 +46,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
             //if (!(request instanceof ServletServerHttpRequest)) return true;
             //ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(((ServletServerHttpRequest) request).getServletRequest());
             //String userName = (String) requestWrapper.getSession().getAttribute("userName");
-            attributes.put("userName", RequestHeadHolder.getAccount());
+            attributes.put("userName", RequestHeadHolder.getRealName());
+            attributes.put("account", RequestHeadHolder.getAccount());
             attributes.put("token", token);
             return true;
         }
