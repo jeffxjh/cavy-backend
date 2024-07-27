@@ -40,6 +40,9 @@
     <select id="findByPage" resultType="com.jh.cavy.manage.vo.RoleVO">
 
     </select>
+    <select id="getRoleByUserId" resultType="com.jh.cavy.manage.vo.RoleVO">
+      select c.* from t_sys_user a left join t_sys_user_role b on a.id=b.user_id left join t_sys_role c on c.id=b.role_id where a.user_name=#{userName}
+    </select>
 
 
 </mapper>

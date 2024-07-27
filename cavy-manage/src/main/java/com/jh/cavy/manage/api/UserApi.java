@@ -11,7 +11,9 @@ import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.param.LoginParam;
 import com.jh.cavy.manage.param.QuestionParam;
 import com.jh.cavy.manage.param.UserParam;
+import com.jh.cavy.manage.service.RoleService;
 import com.jh.cavy.manage.service.UserService;
+import com.jh.cavy.manage.vo.RoleVO;
 import com.jh.cavy.manage.vo.UserInfoVO;
 import com.jh.cavy.manage.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class UserApi {
     private JwtTokenUtil jwtTokenUtil;
     @Resource
     private UserService userService;
+    @Resource
+    private RoleService roleService;
     @Resource(name = "${cache.use}")
     private CacheService cacheService;
     @Resource
@@ -65,6 +69,8 @@ public class UserApi {
             cacheService.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
             UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
             userInfoVO.setToken(token);
+            List<RoleVO> roleVOList = roleService.getRoleByUserName(userInfoVO.getUserName());
+            userInfoVO.setRoleList(roleVOList);
             return new ResultVO<>(1000, "登录成功", userInfoVO);
         } else {
             return new ResultVO<>(2000, "用户不存在", new UserInfoVO());
