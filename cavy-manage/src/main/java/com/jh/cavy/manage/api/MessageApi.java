@@ -48,4 +48,9 @@ public class MessageApi {
     public void readedMessage(String id) {
         messageService.readedMessage(id);
     }
+
+    @PutMapping("/readedAll")
+    public void readedAll() {
+        messageService.readedAll(RequestHeadHolder.getAccount());
+    }
 }

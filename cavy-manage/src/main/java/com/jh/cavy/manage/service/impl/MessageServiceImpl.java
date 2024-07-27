@@ -24,6 +24,12 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         //this.update(message,eq);
         this.update(eq);
     }
+
+    @Override
+    public void readedAll(String account) {
+        LambdaUpdateWrapper<Message> eq = Wrappers.lambdaUpdate(Message.class).set(Message::getStatus, "1").eq(Message::getReceiver, account);
+        this.update(eq);
+    }
 }
 
 
