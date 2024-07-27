@@ -132,3 +132,16 @@ CREATE TABLE t_sys_user_role
 
 );
 
+CREATE TABLE `t_sys_message` (
+                                 `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                 `receiver` varchar(100) NOT NULL COMMENT '接收人账号',
+                                 `title` varchar(255) DEFAULT NULL COMMENT '标题',
+                                 `content` varchar(500) NOT NULL COMMENT '编号名称',
+                                 `msg_level` char(1) NOT NULL COMMENT '消息等级 1：提醒；2：一般；3：重要；',
+                                 `add_time` datetime DEFAULT NULL COMMENT '创建时间',
+                                 `add_user` varchar(255) DEFAULT NULL COMMENT '创建人',
+                                 `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+                                 `update_user` varchar(255) DEFAULT NULL COMMENT '修改人',
+                                 `status` char(1) DEFAULT '0' COMMENT '状态 1已读；0未读',
+                                 PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4

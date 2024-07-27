@@ -26,9 +26,12 @@ import java.util.Map;
 public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new MyWebSocketHandler(), "/ws/serverTwo")//设置连接路径和处理
+        registry.addHandler(new MyWebSocketHandler(), "/ws/serverTwo","/ws/message")//设置连接路径和处理
                 .setAllowedOrigins("*")
                 .addInterceptors(new MyWebSocketInterceptor());//设置拦截器
+        registry.addHandler(new MessageWebSocketHandler(), "/ws/message")//设置连接路径和处理
+                .setAllowedOrigins("*")
+                .addInterceptors(new MyWebSocketInterceptor());
         //registry.addHandler(new MyWebSocketHandler(), "/sockjs/wsservice").setAllowedOrigins("*").addInterceptors(new MyWebSocketInterceptor()).withSockJS();
     }
 
