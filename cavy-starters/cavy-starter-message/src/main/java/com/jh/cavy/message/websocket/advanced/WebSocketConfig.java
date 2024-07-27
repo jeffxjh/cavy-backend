@@ -42,11 +42,12 @@ public class WebSocketConfig implements WebSocketConfigurer {
                                        @NonNull WebSocketHandler wsHandler, @NonNull Map<String, Object> attributes) throws Exception {
             log.info("==>前置拦截");
             HttpServletRequest req = ((ServletServerHttpRequest) request).getServletRequest();
-            String authorization = req.getHeader("Sec-WebSocket-Protocol");
+            String token = req.getHeader("Sec-WebSocket-Protocol");
             //if (!(request instanceof ServletServerHttpRequest)) return true;
             //ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(((ServletServerHttpRequest) request).getServletRequest());
             //String userName = (String) requestWrapper.getSession().getAttribute("userName");
             attributes.put("userName", RequestHeadHolder.getAccount());
+            attributes.put("token", token);
             return true;
         }
 
