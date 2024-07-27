@@ -43,4 +43,9 @@ public class MessageApi {
     public MessageVO getById(@PathVariable String id) {
         return BeanUtil.toBean(messageService.getById(id), MessageVO.class);
     }
+
+    @PutMapping("/readed")
+    public void readedMessage(String id) {
+        messageService.readedMessage(id);
+    }
 }

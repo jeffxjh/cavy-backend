@@ -10,4 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface MessageService extends IService<Message> {
 
+    void readedMessage(String id);
 }
