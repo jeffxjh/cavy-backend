@@ -63,6 +63,38 @@ Thanks for [JetBrains](https://www.jetbrains.com/?from=Cavy)'s `free JetBrains O
 java -jar -Dloader.path=./lib cavy-boot.jar
 
 
+### Docker开启远程API
+用vim编辑器修改docker.service文件
+````
+vi /usr/lib/systemd/system/docker.service
+````
+需要修改的部分：
+````
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+````
+修改后的部分：
+````
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock
+````
+### 让Docker支持http上传镜像
+````
+echo '{ "insecure-registries":["192.168.3.101:5000"] }' > /etc/docker/daemon.json
+````
+修改配置后需要使用如下命令使配置生效
+````
+systemctl daemon-reload
+````
+重新启动Docker服务
+````
+systemctl stop docker
+systemctl start docker
+````
+开启防火墙的Docker构建端口
+````
+firewall-cmd --zone=public --add-port=2375/tcp --permanent
+firewall-cmd --reload
+````
 ### docker启动命令
+````
 docker run -p 8011:8011 --name cavy -e rabbitmq_host=192.168.2.11 -e rabbitmq_username=guest -e rabbitmq_password=guest -e rabbitmq_virtualHost=/ -e redis_host=192.168.2.11 -e redis_password=123456 -e redis_port=6379 -e mysql_host=192.168.2.11 -e mysql_port=3306 -e mysql_username=root -e mysql_password=123456 -d cavy-backend/cavy-boot:1.0.0-SNAPSHOT
-
+````
