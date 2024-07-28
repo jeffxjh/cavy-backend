@@ -97,4 +97,8 @@ firewall-cmd --reload
 ### docker启动命令
 ````
 docker run -p 8011:8011 --name cavy -e rabbitmq_host=192.168.2.11 -e rabbitmq_username=guest -e rabbitmq_password=guest -e rabbitmq_virtualHost=/ -e redis_host=192.168.2.11 -e redis_password=123456 -e redis_port=6379 -e mysql_host=192.168.2.11 -e mysql_port=3306 -e mysql_username=root -e mysql_password=123456 -d cavy-backend/cavy-boot:1.0.0-SNAPSHOT
+
+
+简化版命令 需要docker-maven-plugin使用
+docker run -p 8011:8011 -v /opt/cavy-backend/lib:/cavy/lib --name cavy -d 镜像id --restart=always
 ````
