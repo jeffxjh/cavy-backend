@@ -87,10 +87,10 @@
                         	必须项目中的某些模块，会经常变动，那么就应该将其坐标写进来
                         	如果没有则non-exists ，表示不打包依赖
                         -->
-                        <include>
-                            <groupId>non-exists</groupId>
-                            <artifactId>non-exists</artifactId>
-                        </include>
+<!--                        <include>-->
+<!--                            <groupId>non-exists</groupId>-->
+<!--                            <artifactId>non-exists</artifactId>-->
+<!--                        </include>-->
                     </includes>
                 </configuration>
                 <executions>
