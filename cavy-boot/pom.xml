@@ -63,6 +63,16 @@
         </resources>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
@@ -93,28 +103,42 @@
                 </executions>
             </plugin>
             <!-- 此插件用于将依赖包抽出-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                <version>3.1.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-dependencies</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-dependencies</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${project.build.directory}/lib</outputDirectory>-->
+<!--                            &lt;!&ndash;是否排除传递性&ndash;&gt;-->
+<!--                            <excludeTransitive>false</excludeTransitive>-->
+<!--                            &lt;!&ndash;是否去掉 jar 包版本信息&ndash;&gt;-->
+<!--                            <stripVersion>false</stripVersion>-->
+<!--                            &lt;!&ndash;包含范围&ndash;&gt;-->
+<!--                            <includeScope>runtime</includeScope>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
+                <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <!--是否排除传递性-->
-                            <excludeTransitive>false</excludeTransitive>
-                            <!--是否去掉 jar 包版本信息-->
-                            <stripVersion>false</stripVersion>
-                            <!--包含范围-->
-                            <includeScope>runtime</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.jh.cavy.boot.CavyBootApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -178,6 +202,42 @@
             <!--                </configuration>-->
             <!--            </plugin>-->
             <!-- Docker maven plugin -->
+<!--            executions.execution.phase:此处配置了在maven打包应用时构建docker镜像；-->
+<!--            imageName：用于指定镜像名称，mall-tiny是仓库名称，${project.artifactId}为镜像名称，${project.version}为仓库名称；-->
+<!--            dockerHost：打包后上传到的docker服务器地址；-->
+<!--            baseImage：该应用所依赖的基础镜像，此处为java；-->
+<!--            entryPoint：docker容器启动时执行的命令；-->
+<!--            resources.resource.targetPath：将打包后的资源文件复制到该目录；-->
+<!--            resources.resource.directory：需要复制的文件所在目录，maven打包的应用jar包保存在target目录下面；-->
+<!--            resources.resource.include：需要复制的文件，打包好的应用jar包。-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <imageName>cavy-backend/${project.artifactId}:${project.version}</imageName>
+                    <dockerHost>http://192.168.2.11:2375</dockerHost>
+                    <baseImage>openjdk:8-jre</baseImage>
+                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]
+                    </entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
 
 
         </plugins>
