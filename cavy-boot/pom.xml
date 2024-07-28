@@ -265,7 +265,7 @@
                     <!-- 指定Dockerfile所在的路径 -->
 <!--                    <dockerDirectory>${project.basedir}/src/main/resources/docker</dockerDirectory>-->
 <!--                    <imageName>cavy-backend/${project.artifactId}:${project.version}</imageName>-->
-                    <imageName>xujh:cavy</imageName>
+                    <imageName>xujh/cavy:latest</imageName>
                     <imageTags>
                         <imageTag>${version}</imageTag>
                         <imageTag>latest</imageTag>
