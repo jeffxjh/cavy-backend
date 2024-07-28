@@ -78,7 +78,7 @@ ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock
 ````
 ### 让Docker支持http上传镜像
 ````
-echo '{ "insecure-registries":["192.168.3.101:5000"] }' > /etc/docker/daemon.json
+echo '{ "insecure-registries":["192.168.2.11:5000"] }' > /etc/docker/daemon.json
 ````
 修改配置后需要使用如下命令使配置生效
 ````
