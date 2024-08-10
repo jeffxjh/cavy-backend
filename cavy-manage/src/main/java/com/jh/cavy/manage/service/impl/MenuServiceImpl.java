@@ -147,10 +147,10 @@ public class MenuServiceImpl implements MenuService {
         // 构建node列表
         List<TreeNode<Integer>> nodeList = CollUtil.newArrayList();
         for (MenuVO menu : menuVOList) {
-            List<Menu> childrenMenuList = menuMapper.selectList(Wrappers.<Menu>lambdaQuery().eq(Menu::getMenuId, menu.getParentId()));
-            List<MenuVO> childrenMenuVOList = BeanUtil.copyToList(childrenMenuList, MenuVO.class);
-            TreeNode<Integer> integerTreeNode = new TreeNode<>(menu.getId(), menu.getParentId(), menu.getMenuName(), menu.getWeight());
+            //List<Menu> childrenMenuList = menuMapper.selectList(Wrappers.<Menu>lambdaQuery().eq(Menu::getMenuId, menu.getParentId()));
+            TreeNode<Integer> integerTreeNode = new TreeNode<>(menu.getMenuId(), menu.getParentId(), menu.getMenuName(), menu.getWeight());
             Map<String, Object> extra = new HashMap<>();
+            extra.put("id", menu.getId());
             extra.put("code", menu.getMenuCode());
             extra.put("menuId", menu.getMenuId());
             extra.put("sort", menu.getSort());
@@ -159,7 +159,6 @@ public class MenuServiceImpl implements MenuService {
             extra.put("isDefault", menu.getIsDefault());
             extra.put("icon", menu.getIcon());
             extra.put("url", menu.getUrl());
-            extra.put("children", childrenMenuVOList);
             integerTreeNode.setExtra(extra);
             nodeList.add(integerTreeNode);
         }
@@ -167,7 +166,7 @@ public class MenuServiceImpl implements MenuService {
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
         // 自定义属性名 都要默认值的
         treeNodeConfig.setWeightKey("weight");
-        treeNodeConfig.setIdKey("id");
+        treeNodeConfig.setIdKey("menuId");
         treeNodeConfig.setNameKey("menuName");
         // 最大递归深度
         treeNodeConfig.setDeep(3);
@@ -176,7 +175,6 @@ public class MenuServiceImpl implements MenuService {
             tree.setParentId(treeNode.getParentId());
             tree.setWeight(treeNode.getWeight());
             tree.setName(treeNode.getName());
-            tree.putExtra("children", treeNode.getExtra().get("children"));
             tree.putExtra("code", treeNode.getExtra().get("code"));
             tree.putExtra("menuId", treeNode.getExtra().get("menuId"));
             tree.putExtra("createTime", treeNode.getExtra().get("createTime"));
@@ -185,6 +183,7 @@ public class MenuServiceImpl implements MenuService {
             tree.putExtra("sort", treeNode.getExtra().get("sort"));
             tree.putExtra("icon", treeNode.getExtra().get("icon"));
             tree.putExtra("url", treeNode.getExtra().get("url"));
+            tree.putExtra("id", treeNode.getExtra().get("id"));
         });
         return build;
     }

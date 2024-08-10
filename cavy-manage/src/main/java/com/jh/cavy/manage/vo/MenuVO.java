@@ -3,11 +3,12 @@ package com.jh.cavy.manage.vo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class MenuVO {
+public class MenuVO implements Serializable {
     /**
      * id
      */
