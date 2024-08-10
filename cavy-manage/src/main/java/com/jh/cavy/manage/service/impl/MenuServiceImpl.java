@@ -1,5 +1,6 @@
 package com.jh.cavy.manage.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
@@ -134,6 +135,64 @@ public class MenuServiceImpl implements MenuService {
         queryWrapper.like(Menu::getMenuCode, menuAO.getMenuCode());
         Page<MenuVO> userVOPage = menuMapper.page(PageUtil.newPage(menuAO), queryWrapper);
         return new ResultPage<>(userVOPage);
+    }
+
+    @Override
+    public List<Tree<Integer>> menusTree(MenuAO menuAO) {
+        LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.like(menuAO.getMenuName()!=null,Menu::getMenuName, menuAO.getMenuName());
+        queryWrapper.like(menuAO.getMenuCode()!=null,Menu::getMenuCode, menuAO.getMenuCode());
+        List<Menu> menuList = menuMapper.selectList(queryWrapper);
+        List<MenuVO> menuVOList = BeanUtil.copyToList(menuList, MenuVO.class);
+        // 构建node列表
+        List<TreeNode<Integer>> nodeList = CollUtil.newArrayList();
+        for (MenuVO menu : menuVOList) {
+            List<Menu> childrenMenuList = menuMapper.selectList(Wrappers.<Menu>lambdaQuery().eq(Menu::getMenuId, menu.getParentId()));
+            List<MenuVO> childrenMenuVOList = BeanUtil.copyToList(childrenMenuList, MenuVO.class);
+            TreeNode<Integer> integerTreeNode = new TreeNode<>(menu.getId(), menu.getParentId(), menu.getMenuName(), menu.getWeight());
+            Map<String, Object> extra = new HashMap<>();
+            extra.put("code", menu.getMenuCode());
+            extra.put("menuId", menu.getMenuId());
+            extra.put("sort", menu.getSort());
+            extra.put("createTime", menu.getAddTime());
+            extra.put("hidden", menu.getHidden());
+            extra.put("isDefault", menu.getIsDefault());
+            extra.put("icon", menu.getIcon());
+            extra.put("url", menu.getUrl());
+            extra.put("children", childrenMenuVOList);
+            integerTreeNode.setExtra(extra);
+            nodeList.add(integerTreeNode);
+        }
+        //配置
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        // 自定义属性名 都要默认值的
+        treeNodeConfig.setWeightKey("weight");
+        treeNodeConfig.setIdKey("id");
+        treeNodeConfig.setNameKey("menuName");
+        // 最大递归深度
+        treeNodeConfig.setDeep(3);
+        List<Tree<Integer>> build = TreeUtil.build(nodeList, 0, treeNodeConfig, (treeNode, tree) -> {
+            tree.setId(treeNode.getId());
+            tree.setParentId(treeNode.getParentId());
+            tree.setWeight(treeNode.getWeight());
+            tree.setName(treeNode.getName());
+            tree.putExtra("children", treeNode.getExtra().get("children"));
+            tree.putExtra("code", treeNode.getExtra().get("code"));
+            tree.putExtra("menuId", treeNode.getExtra().get("menuId"));
+            tree.putExtra("createTime", treeNode.getExtra().get("createTime"));
+            tree.putExtra("hidden", treeNode.getExtra().get("hidden"));
+            tree.putExtra("isDefault", treeNode.getExtra().get("isDefault"));
+            tree.putExtra("sort", treeNode.getExtra().get("sort"));
+            tree.putExtra("icon", treeNode.getExtra().get("icon"));
+            tree.putExtra("url", treeNode.getExtra().get("url"));
+        });
+        return build;
+    }
+
+    @Override
+    public MenuVO getMenu(Long id) {
+        Menu menu = menuMapper.selectById(id);
+        return BeanUtil.toBean(menu, MenuVO.class);
     }
 
 }

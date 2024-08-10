@@ -62,6 +62,7 @@ CREATE TABLE t_sys_menu
     menu_code   varchar(255) COMMENT '菜单编号',
     menu_name   varchar(255) NOT NULL COMMENT '菜单名称',
     parent_id   int          DEFAULT '0' COMMENT '父id',
+    menu_type   int          DEFAULT NULL COMMENT '菜单类型 1：目录；2：菜单；3：按钮',
     icon        varchar(255) DEFAULT NULL COMMENT '图标',
     url         varchar(255) DEFAULT NULL COMMENT '地址',
     hidden      int          DEFAULT NULL COMMENT '是否隐藏',

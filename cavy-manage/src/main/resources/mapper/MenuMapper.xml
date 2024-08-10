@@ -7,6 +7,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="menu_id" jdbcType="INTEGER" property="menuId"/>
         <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
+        <result column="menu_type" jdbcType="INTEGER" property="menuType"/>
         <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
         <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
@@ -22,7 +23,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, menu_id, menu_code, menu_name, parent_id, icon, url, hidden, weight, sort, is_default,
+        id, menu_id, menu_code,menu_type, menu_name, parent_id, icon, url, hidden, weight, sort, is_default,
         add_time, add_user, update_time, update_user
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -42,12 +43,12 @@
             useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into t_sys_menu (menu_id, menu_code, menu_name,
-                                parent_id, icon, url,
+                                parent_id,menu_type, icon, url,
                                 hidden, weight, sort,
                                 is_default, add_time, add_user,
                                 update_time, update_user)
         values (#{menuId,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR},
-                #{parentId,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+                #{parentId,jdbcType=INTEGER},#{menuType,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
                 #{hidden,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
                 #{isDefault,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR},
                 #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
@@ -68,6 +69,9 @@
             </if>
             <if test="parentId != null">
                 parent_id,
+            </if>
+            <if test="menuType != null">
+                menu_type,
             </if>
             <if test="icon != null">
                 icon,
@@ -112,6 +116,9 @@
             </if>
             <if test="parentId != null">
                 #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="menuType != null">
+                #{menuType,jdbcType=INTEGER},
             </if>
             <if test="icon != null">
                 #{icon,jdbcType=VARCHAR},
@@ -161,6 +168,9 @@
             <if test="parentId != null">
                 parent_id = #{parentId,jdbcType=INTEGER},
             </if>
+            <if test="menuType != null">
+            menu_type = #{menuType,jdbcType=INTEGER},
+            </if>
             <if test="icon != null">
                 icon = #{icon,jdbcType=VARCHAR},
             </if>
@@ -201,6 +211,7 @@
             menu_code   = #{menuCode,jdbcType=VARCHAR},
             menu_name   = #{menuName,jdbcType=VARCHAR},
             parent_id   = #{parentId,jdbcType=INTEGER},
+            menu_type   = #{menuType,jdbcType=INTEGER},
             icon        = #{icon,jdbcType=VARCHAR},
             url         = #{url,jdbcType=VARCHAR},
             hidden      = #{hidden,jdbcType=INTEGER},

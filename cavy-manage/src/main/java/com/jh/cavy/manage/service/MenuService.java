@@ -36,6 +36,10 @@ public interface MenuService {
     void add(MenuAddParam menuAddParam);
 
     ResultPage<MenuVO> page(MenuAO menuAO);
+
+    List<Tree<Integer>> menusTree(MenuAO menuAO);
+
+    MenuVO getMenu(Long id);
 }
 
 

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class MenuVO {
@@ -18,7 +19,11 @@ public class MenuVO {
      */
     @ApiModelProperty(value = "菜单id")
     private Integer menuId;
-
+    /**
+     * 菜单类型 1：目录；2：菜单；3：按钮
+     */
+    @ApiModelProperty(value = "菜单id")
+    private Integer menuType;
     /**
      * 菜单编号
      */
@@ -96,4 +101,10 @@ public class MenuVO {
      */
     @ApiModelProperty(value = "修改时间")
     private String updateUser;
+
+    /**
+     * 子菜单
+     */
+    @ApiModelProperty(value = "子菜单")
+    private List<MenuVO> children;
 }

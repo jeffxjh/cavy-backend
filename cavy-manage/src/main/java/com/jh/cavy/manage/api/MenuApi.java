@@ -41,14 +41,24 @@ public class MenuApi {
         return "true".equals(booleanValue);
     }
 
-    @GetMapping("/{id}")
-    public Menu getProduct(@PathVariable Long id) {
-        return productMap.get(id);
-    }
+    //@GetMapping("/{id}")
+    //public Menu getProduct(@PathVariable Long id) {
+    //    return productMap.get(id);
+    //}
 
     @GetMapping("/list")
     public List<Menu> getMenus() {
         return menuService.findAll();
+    }
+
+    @ApiOperation("菜单管理-获取用户菜单树")
+    @PostMapping("/listTree")
+    public List<Tree<Integer>> listMenu(@RequestBody MenuAO menuAO) {
+        return menuService.menusTree(menuAO);
+    }
+    @GetMapping("/{id}")
+    public MenuVO getMenu(@PathVariable Long id) {
+        return menuService.getMenu(id);
     }
 
     @ApiOperation("获取用户菜单树")
