@@ -7,7 +7,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="menu_id" jdbcType="INTEGER" property="menuId"/>
         <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
-        <result column="menu_type" jdbcType="INTEGER" property="menuType"/>
+        <result column="menu_type" jdbcType="VARCHAR" property="menuType"/>
         <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
         <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
@@ -48,7 +48,7 @@
                                 is_default, add_time, add_user,
                                 update_time, update_user)
         values (#{menuId,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR},
-                #{parentId,jdbcType=INTEGER},#{menuType,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+                #{parentId,jdbcType=INTEGER},#{menuType,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
                 #{hidden,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
                 #{isDefault,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR},
                 #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
@@ -118,7 +118,7 @@
                 #{parentId,jdbcType=INTEGER},
             </if>
             <if test="menuType != null">
-                #{menuType,jdbcType=INTEGER},
+                #{menuType,jdbcType=VARCHAR},
             </if>
             <if test="icon != null">
                 #{icon,jdbcType=VARCHAR},
@@ -169,7 +169,7 @@
                 parent_id = #{parentId,jdbcType=INTEGER},
             </if>
             <if test="menuType != null">
-            menu_type = #{menuType,jdbcType=INTEGER},
+            menu_type = #{menuType,jdbcType=VARCHAR},
             </if>
             <if test="icon != null">
                 icon = #{icon,jdbcType=VARCHAR},
@@ -211,7 +211,7 @@
             menu_code   = #{menuCode,jdbcType=VARCHAR},
             menu_name   = #{menuName,jdbcType=VARCHAR},
             parent_id   = #{parentId,jdbcType=INTEGER},
-            menu_type   = #{menuType,jdbcType=INTEGER},
+            menu_type   = #{menuType,jdbcType=VARCHAR},
             icon        = #{icon,jdbcType=VARCHAR},
             url         = #{url,jdbcType=VARCHAR},
             hidden      = #{hidden,jdbcType=INTEGER},

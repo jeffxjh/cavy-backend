@@ -35,10 +35,10 @@ public class Menu extends BaseEntity {
     private Integer menuId;
 
     /**
-     * 菜单类型 1：目录；2：菜单；3：按钮
+     * 菜单类型 M：目录；C：菜单；F：按钮
      */
     @ApiModelProperty(value = "菜单id")
-    private Integer menuType;
+    private String menuType;
 
     /**
      * 菜单编号
