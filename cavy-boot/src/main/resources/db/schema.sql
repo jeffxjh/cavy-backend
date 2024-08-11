@@ -146,4 +146,34 @@ CREATE TABLE `t_sys_message` (
                                  `update_user` varchar(255) DEFAULT NULL COMMENT '修改人',
                                  `status` char(1) DEFAULT '0' COMMENT '状态 1已读；0未读',
                                  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+
+
+CREATE TABLE `t_sys_dict_item` (
+                                   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                   `dic_id` varchar(100) NOT NULL COMMENT '主表id',
+                                   `item` varchar(100) NOT NULL COMMENT 'key',
+                                   `label` varchar(100) NOT NULL COMMENT 'value',
+                                   `add_time` datetime DEFAULT NULL COMMENT '创建时间',
+                                   `add_user` varchar(255) DEFAULT NULL COMMENT '创建人',
+                                   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+                                   `update_user` varchar(255) DEFAULT NULL COMMENT '修改人',
+                                   PRIMARY KEY (`id`),
+                                   UNIQUE KEY `t_sys_dict_item_UN` (`dic_id`,`item`,`label`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据字典项';
+
+
+
+
+CREATE TABLE `t_sys_dict` (
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                              `code` varchar(100) DEFAULT NULL COMMENT '编码',
+                              `name` varchar(100) DEFAULT NULL COMMENT '名称',
+                              `add_time` datetime DEFAULT NULL COMMENT '创建时间',
+                              `add_user` varchar(255) DEFAULT NULL COMMENT '创建人',
+                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+                              `update_user` varchar(255) DEFAULT NULL COMMENT '修改人',
+                              PRIMARY KEY (`id`),
+                              UNIQUE KEY `t_sys_dict_UN` (`code`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据字典表';

@@ -38,7 +38,7 @@
     <delete id="deleteRoleReate">
         delete from t_sys_user_role where user_id=#{userId}
     </delete>
-    <insert id="insert"  keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into t_sys_user (user_name, `password`, real_name,
@@ -214,7 +214,7 @@
         from t_sys_user ${ew.customSqlSegment}
     </select>
 
-
+    <!--可能存在分页问题-->
     <resultMap id="ResultMap" type="com.jh.cavy.manage.vo.UserInfoVO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -231,7 +231,7 @@
         </collection>
     </resultMap>
 
-    <select id="getUser" resultMap="ResultMap"  parameterType="java.lang.Integer">
+    <select id="getUser" resultMap="ResultMap" parameterType="java.lang.Integer">
         select a.*,c.role_name,c.id role_id
         from t_sys_user a
         left join t_sys_user_role b on a.id=b.user_id

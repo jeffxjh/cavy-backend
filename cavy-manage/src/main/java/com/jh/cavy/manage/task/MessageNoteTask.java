@@ -33,7 +33,7 @@ public class MessageNoteTask {
         jsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
-    @Scheduled(fixedRate = 3000)
+    //@Scheduled(fixedRate = 3000)
     public void messageList() {
         LambdaQueryWrapper<Message> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.ne(Message::getStatus, "1").orderByDesc(Message::getAddTime);
