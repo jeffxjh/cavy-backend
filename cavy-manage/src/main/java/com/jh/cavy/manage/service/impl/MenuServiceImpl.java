@@ -22,12 +22,11 @@ import com.jh.cavy.manage.param.MenuAO;
 import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.service.MenuService;
 import com.jh.cavy.manage.vo.MenuVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -139,14 +138,43 @@ public class MenuServiceImpl implements MenuService {
         Page<MenuVO> userVOPage = menuMapper.page(PageUtil.newPage(menuAO), queryWrapper);
         return new ResultPage<>(userVOPage);
     }
-
+    public List<Menu> queryParentIds(Menu menu, List<Menu> taxCompanyList) {
+        //递归获取父级ids,不包含自己
+        List<Menu> parentIds = new ArrayList<>();
+        this.getParentIds(taxCompanyList, menu, parentIds);
+        return parentIds;
+    }
+    /**
+     * 递归获取父级ids
+     * @param menuList
+     * @param curMenu
+     * @param parentIds
+     */
+    private void getParentIds(List<Menu> menuList, Menu curMenu, List<Menu> parentIds) {
+        for (Menu menu : menuList) {
+            if (curMenu.getParentId()==null||curMenu.getParentId()==0) {
+                continue;
+            }
+            //判断是否有父节点
+            if (menu.getMenuId().equals(curMenu.getParentId())) {
+                parentIds.add(menu);
+                getParentIds(menuList, menu, parentIds);
+            }
+        }
+    }
     @Override
     public List<Tree<Integer>> menusTree(MenuAO menuAO) {
         LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.like(menuAO.getMenuName()!=null,Menu::getMenuName, menuAO.getMenuName());
-        queryWrapper.like(menuAO.getMenuCode()!=null,Menu::getMenuCode, menuAO.getMenuCode());
+        queryWrapper.eq(menuAO.getStatus()!=null,Menu::getStatus, menuAO.getStatus());
+        queryWrapper.or(StringUtils.isNotBlank(menuAO.getMenuName()), wrapper -> wrapper.eq(Menu::getMenuName, menuAO.getMenuName()).or().eq(Menu::getMenuCode, menuAO.getMenuName()));
         List<Menu> menuList = menuMapper.selectList(queryWrapper);
-        List<MenuVO> menuVOList = BeanUtil.copyToList(menuList, MenuVO.class);
+        List<Menu> resultList = new ArrayList<>();
+        List<Menu> allMenuList = menuMapper.selectList(Wrappers.<Menu>lambdaQuery());
+        for (Menu menu : menuList) {
+            resultList.addAll(queryParentIds(menu, allMenuList));
+        }
+        menuList.addAll(resultList);
+        List<MenuVO> menuVOList = BeanUtil.copyToList(new HashSet<>(menuList), MenuVO.class);
         // 构建node列表
         List<TreeNode<Integer>> nodeList = CollUtil.newArrayList();
         for (MenuVO menu : menuVOList) {
