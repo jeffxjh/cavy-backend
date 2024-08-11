@@ -42,6 +42,11 @@ public class MenuVO implements Serializable {
      */
     @ApiModelProperty(value = "父id")
     private Integer parentId;
+    /**
+     * 父name
+     */
+    @ApiModelProperty(value = "父name")
+    private String parentName;
 
     /**
      * 图标
@@ -54,6 +59,12 @@ public class MenuVO implements Serializable {
      */
     @ApiModelProperty(value = "地址")
     private String url;
+
+    @ApiModelProperty(value = "拆分的url前部")
+    private String parentUrl;
+
+    @ApiModelProperty(value = "拆分的url后部")
+    private String curUrl;
 
     /**
      * 是否隐藏
@@ -102,6 +113,9 @@ public class MenuVO implements Serializable {
      */
     @ApiModelProperty(value = "修改时间")
     private String updateUser;
+
+    @ApiModelProperty(value = "status")
+    private Integer status;
 
     /**
      * 子菜单

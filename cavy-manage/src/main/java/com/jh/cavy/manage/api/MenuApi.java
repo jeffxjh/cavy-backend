@@ -60,6 +60,10 @@ public class MenuApi {
     public MenuVO getMenu(@PathVariable Long id) {
         return menuService.getMenu(id);
     }
+    @DeleteMapping("/{id}")
+    public void delMenu(@PathVariable Long id) {
+         menuService.delMenu(id);
+    }
 
     @ApiOperation("获取用户菜单树")
     @GetMapping("/tree")
@@ -67,9 +71,13 @@ public class MenuApi {
         return menuService.findMenusTree();
     }
 
-    @PostMapping
+    @PostMapping("add")
     public void add(@Valid @RequestBody MenuAddParam menuAddParam) {
         menuService.add(menuAddParam);
+    }
+    @PostMapping("update")
+    public void update(@Valid @RequestBody MenuAddParam menuAddParam) {
+        menuService.update(menuAddParam);
     }
 
     @ApiOperation("获取菜单分页列表")

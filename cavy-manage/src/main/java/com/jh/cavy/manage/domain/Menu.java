@@ -93,5 +93,10 @@ public class Menu extends BaseEntity {
      */
     @ApiModelProperty(value = "是否默认")
     private Integer isDefault;
+    /**
+     * 菜单状态 1启用0禁用
+     */
+    @ApiModelProperty(value = "菜单状态")
+    private Integer status;
 
 }

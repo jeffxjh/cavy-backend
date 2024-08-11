@@ -125,7 +125,10 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void add(MenuAddParam menuAddParam) {
-
+        Menu menu = BeanUtil.copyProperties(menuAddParam, Menu.class);
+        menuMapper.insert(menu);
+        menu.setMenuId(menu.getId());
+        menuMapper.updateByPrimaryKeySelective(menu);
     }
 
     @Override
@@ -154,6 +157,7 @@ public class MenuServiceImpl implements MenuService {
             extra.put("code", menu.getMenuCode());
             extra.put("menuId", menu.getMenuId());
             extra.put("sort", menu.getSort());
+            extra.put("menuType", menu.getMenuType());
             extra.put("createTime", menu.getAddTime());
             extra.put("hidden", menu.getHidden());
             extra.put("isDefault", menu.getIsDefault());
@@ -177,6 +181,7 @@ public class MenuServiceImpl implements MenuService {
             tree.setName(treeNode.getName());
             tree.putExtra("code", treeNode.getExtra().get("code"));
             tree.putExtra("menuId", treeNode.getExtra().get("menuId"));
+            tree.putExtra("menuType", treeNode.getExtra().get("menuType"));
             tree.putExtra("createTime", treeNode.getExtra().get("createTime"));
             tree.putExtra("hidden", treeNode.getExtra().get("hidden"));
             tree.putExtra("isDefault", treeNode.getExtra().get("isDefault"));
@@ -191,7 +196,31 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public MenuVO getMenu(Long id) {
         Menu menu = menuMapper.selectById(id);
-        return BeanUtil.toBean(menu, MenuVO.class);
+        MenuVO bean = BeanUtil.toBean(menu, MenuVO.class);
+        Menu parentMenu = menuMapper.selectById(menu.getParentId());
+        if (parentMenu != null) {
+            bean.setParentName(parentMenu.getMenuName());
+            String parentUrl = parentMenu.getUrl();
+            String url = menu.getUrl();
+            bean.setParentUrl(parentUrl);
+            bean.setCurUrl(url.replaceFirst(parentUrl, "").substring(1));
+        }else {
+            bean.setParentName("根节点");
+        }
+        return bean;
+    }
+
+    @Override
+    public void update(MenuAddParam menuAddParam) {
+        Menu menu = BeanUtil.copyProperties(menuAddParam, Menu.class);
+        menuMapper.update(menu,Wrappers.<Menu>lambdaUpdate().eq(Menu::getMenuId, menuAddParam.getMenuId()));
+    }
+
+    @Override
+    public void delMenu(Long id) {
+        Menu menu = menuMapper.selectById(id);
+        menuMapper.deleteById(id);
+        //todo 删除子节点
     }
 
 }

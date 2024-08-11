@@ -73,6 +73,7 @@ CREATE TABLE t_sys_menu
     add_user    varchar(255) COMMENT '创建人',
     update_time datetime     DEFAULT NULL COMMENT '修改人',
     update_user varchar(255) COMMENT '修改时间',
+    status int COMMENT '菜单状态 1启用0禁用',
     PRIMARY KEY (id)
 );
 

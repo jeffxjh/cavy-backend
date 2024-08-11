@@ -8,6 +8,7 @@ import com.jh.cavy.manage.param.MenuAO;
 import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.vo.MenuVO;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public interface MenuService {
@@ -40,6 +41,10 @@ public interface MenuService {
     List<Tree<Integer>> menusTree(MenuAO menuAO);
 
     MenuVO getMenu(Long id);
+
+    void update(@Valid MenuAddParam menuAddParam);
+
+    void delMenu(Long id);
 }
 
 

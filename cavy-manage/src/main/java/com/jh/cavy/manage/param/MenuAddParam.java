@@ -18,10 +18,10 @@ import javax.validation.constraints.NotNull;
 @Validated
 @ApiModel(value = "com-jh-manage-domain-Menu")
 public class MenuAddParam {
-    @TableId(value = "id",type = IdType.AUTO)
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "id")
     private Integer id;
-
+    @ApiModelProperty(value = "menuId")
+    private Integer menuId;
     @NotBlank(message = "menuCode 不能为空")
     @ApiModelProperty(value = "菜单编号")
     private String menuCode;
@@ -30,6 +30,10 @@ public class MenuAddParam {
     @ApiModelProperty(value = "菜单名称")
     private String menuName;
 
+    @NotBlank(message = "menuType 不能为空")
+    @ApiModelProperty(value = "菜单类型")
+    private String menuType;
+
     @ApiModelProperty(value = "菜单图标")
     private String icon;
 
@@ -37,10 +41,13 @@ public class MenuAddParam {
     @ApiModelProperty(value = "菜单地址")
     private String url;
 
-    @Min(message = "长度大于0",value = 0)
+    @Min(message = "长度大于0", value = 0)
     @NotNull(message = "parentId 不能为空")
     @ApiModelProperty(value = "")
     private Integer parentId;
+
+    @ApiModelProperty(value = "是否隐藏")
+    private Integer hidden;
 
     @ApiModelProperty(value = "")
     private Integer sort;
@@ -50,5 +57,7 @@ public class MenuAddParam {
 
     @ApiModelProperty(value = "")
     private Integer isDefault;
+    @ApiModelProperty(value = "status")
+    private Integer status;
 
 }

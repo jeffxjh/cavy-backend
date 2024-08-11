@@ -20,11 +20,12 @@
         <result column="add_user" jdbcType="VARCHAR" property="addUser"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, menu_id, menu_code,menu_type, menu_name, parent_id, icon, url, hidden, weight, sort, is_default,
-        add_time, add_user, update_time, update_user
+        add_time, add_user, update_time, update_user,status
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -46,12 +47,12 @@
                                 parent_id,menu_type, icon, url,
                                 hidden, weight, sort,
                                 is_default, add_time, add_user,
-                                update_time, update_user)
+                                update_time, update_user,status)
         values (#{menuId,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR},
                 #{parentId,jdbcType=INTEGER},#{menuType,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
                 #{hidden,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
                 #{isDefault,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR},
-                #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
+                #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.Menu"
             useGeneratedKeys="true">
@@ -103,6 +104,9 @@
             <if test="updateUser != null">
                 update_user,
             </if>
+            <if test="status != null">
+                status
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="menuId != null">
@@ -149,6 +153,9 @@
             </if>
             <if test="updateUser != null">
                 #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER}
             </if>
         </trim>
     </insert>
@@ -201,6 +208,9 @@
             <if test="updateUser != null">
                 update_user = #{updateUser,jdbcType=VARCHAR},
             </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -221,7 +231,8 @@
             add_time    = #{addTime,jdbcType=TIMESTAMP},
             add_user    = #{addUser,jdbcType=VARCHAR},
             update_time = #{updateTime,jdbcType=TIMESTAMP},
-            update_user = #{updateUser,jdbcType=VARCHAR}
+            update_user = #{updateUser,jdbcType=VARCHAR},
+            status      = #{status,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
