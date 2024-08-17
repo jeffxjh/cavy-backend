@@ -1,6 +1,7 @@
 package com.jh.cavy.manage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -9,19 +10,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.domain.Dict;
 import com.jh.cavy.manage.domain.DictItem;
-import com.jh.cavy.manage.domain.Menu;
 import com.jh.cavy.manage.mapper.DictItemMapper;
 import com.jh.cavy.manage.param.DictAO;
 import com.jh.cavy.manage.param.DictItemAO;
 import com.jh.cavy.manage.service.DictService;
 import com.jh.cavy.manage.mapper.DictMapper;
+import com.jh.cavy.manage.vo.DictStoreVO;
 import com.jh.cavy.manage.vo.DictVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author jeffx
@@ -81,6 +81,14 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict>
     @Override
     public void delDictItem(String id) {
         dictItemMapper.deleteById(id);
+    }
+
+    @Override
+    public List<DictStoreVO> store(DictAO dictAO) {
+        LambdaQueryWrapper<Dict> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.in(CollectionUtil.isNotEmpty(dictAO.getCodeList()), Dict::getCode, dictAO.getCodeList());
+        queryWrapper.or(StringUtils.isNotBlank(dictAO.getName()), wrapper -> wrapper.eq(Dict::getCode, dictAO.getName()).or().eq(Dict::getName, dictAO.getName()));
+        return dictMapper.store(queryWrapper);
     }
 }
 

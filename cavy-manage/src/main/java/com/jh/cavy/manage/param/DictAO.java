@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 public class DictAO extends BaseParam {
+    private List<String> codeList;
     private Long id;
 
     /**

@@ -8,9 +8,12 @@ import com.jh.cavy.manage.domain.Dict;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.param.UserParam;
+import com.jh.cavy.manage.vo.DictStoreVO;
 import com.jh.cavy.manage.vo.DictVO;
 import com.jh.cavy.manage.vo.QuestionVO;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author jeffx
@@ -21,6 +24,8 @@ import org.apache.ibatis.annotations.Param;
 public interface DictMapper extends BaseMapper<Dict> {
 
     Page<DictVO> queryDictPage(Page<Dict> page, @Param(Constants.WRAPPER)LambdaQueryWrapper<Dict> queryWrapper);
+
+    List<DictStoreVO> store(@Param(Constants.WRAPPER)LambdaQueryWrapper<Dict> queryWrapper);
 }
 
 

@@ -6,7 +6,10 @@ import com.jh.cavy.manage.domain.Dict;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jh.cavy.manage.param.DictAO;
 import com.jh.cavy.manage.param.DictItemAO;
+import com.jh.cavy.manage.vo.DictStoreVO;
 import com.jh.cavy.manage.vo.DictVO;
+
+import java.util.List;
 
 /**
 * @author jeffx
@@ -28,4 +31,7 @@ public interface DictService extends IService<Dict> {
     void addDictItem(DictItemAO dictItem);
 
     void delDictItem(String id);
+
+    List<DictStoreVO> store(DictAO dictAO);
+
 }

@@ -38,4 +38,19 @@
     <select id="selectItemByDicId" resultType="com.jh.cavy.manage.vo.DictItemVO">
         SELECT * FROM t_sys_dict_item WHERE dic_id=#{id}
     </select>
+    <select id="selectItemByDicIdLight" resultType="com.jh.cavy.manage.vo.DictItemVO">
+        SELECT label,item FROM t_sys_dict_item WHERE dic_id=#{id}
+    </select>
+    <!--利用父子查询 直接查询会有分页数据不准确问题 但是父子查询会有N+1问题-->
+    <resultMap id="ResultMapStore" type="com.jh.cavy.manage.vo.DictVO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <collection property="childrenData" ofType="Long" column="id"
+                    select="selectItemByDicIdLight">
+        </collection>
+    </resultMap>
+    <select id="store" resultType="com.jh.cavy.manage.vo.DictVO" resultMap="ResultMapStore">
+        select a.code,a.name,a.id from t_sys_dict a ${ew.customSqlSegment}
+    </select>
 </mapper>
