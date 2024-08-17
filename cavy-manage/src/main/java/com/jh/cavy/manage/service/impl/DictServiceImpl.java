@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Result.ResultPage;
+import com.jh.cavy.common.exception.APIException;
 import com.jh.cavy.manage.domain.Dict;
 import com.jh.cavy.manage.domain.DictItem;
 import com.jh.cavy.manage.mapper.DictItemMapper;
@@ -74,6 +75,12 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict>
         List<DictItem> dictItems = dictItem.getItems();
         for (DictItem item : dictItems) {
             item.setDicId(dictItem.getDicId());
+            Integer i = dictItemMapper.selectCount(Wrappers.<DictItem>lambdaQuery()
+                                                           .eq(DictItem::getItem, item.getItem())
+                                                           .eq(DictItem::getLabel, item.getLabel()));
+            if (i > 0) {
+                throw new APIException("字典项重复");
+            }
             dictItemMapper.insert(item);
         }
     }
