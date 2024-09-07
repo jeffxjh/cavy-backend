@@ -102,3 +102,5 @@ docker run -p 8011:8011 --name cavy -e rabbitmq_host=192.168.2.11 -e rabbitmq_us
 简化版命令 需要docker-maven-plugin使用
 docker run -p 8011:8011 -v /opt/cavy-backend/lib:/cavy/lib --name cavy -d 镜像id --restart=always
 ````
+### 前端接口文档
+http://localhost:8011/cavy/springdoc/swagger-ui/index.html#/
