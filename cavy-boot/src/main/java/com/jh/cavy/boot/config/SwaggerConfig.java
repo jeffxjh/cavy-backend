@@ -1,38 +1,40 @@
 package com.jh.cavy.boot.config;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Collections;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
-    Docket docket() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                       .apiInfo(apiInfo())
-                       .select()
-                       .apis(RequestHandlerSelectors.basePackage("com.jh.cavymanage.api"))
-                       .paths(PathSelectors.any())
-                       .build();
+    public OpenAPI customOpenAPI() {
+        Contact contact = new Contact()
+                                  .name("strongmore")                             // 作者名称
+                                  .email("xxx@qq.com")                            // 作者邮箱
+                                  .url("https://www.cnblogs.com/strongmore/")     // 介绍作者的URL地址
+                                  .extensions(Collections.emptyMap());            // 使用Map配置信息（如key为"name","email","url"）
+        Info info = new Info()
+                            .title("接口文档")                               // Api接口文档标题（必填）
+                            .description("接口文档")                         // Api接口文档描述
+                            .version("1.2.1")                               // Api接口版本
+                            .contact(contact);                              // 设置联系人信息
+        return new OpenAPI()
+                       .openapi("3.0.1")                               // Open API 3.0.1(默认)
+                       .info(info);                                    // 配置Swagger3.0描述信息
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                       .title("API测试文档")
-                       .description("CAVY项目的接口测试文档")
-                       .termsOfServiceUrl("https://jeffxjh.top")
-                       .version("1.0")
-                       .contact(new Contact("jh",
-                               "https://jeffxjh.top",
-                               "jeffxjh@163.com"))
+
+    @Bean
+    public GroupedOpenApi httpApi() {
+        return GroupedOpenApi.builder()
+                       .group("http")
+                       .pathsToMatch("/**")
                        .build();
     }
 }
