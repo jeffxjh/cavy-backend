@@ -5,7 +5,7 @@ import com.jh.cavy.manage.mapper.UserMenuMapper;
 import com.jh.cavy.manage.service.UserMenuService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 @Service
 public class UserMenuServiceImpl implements UserMenuService {

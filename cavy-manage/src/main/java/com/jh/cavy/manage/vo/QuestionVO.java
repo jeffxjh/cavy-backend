@@ -1,8 +1,9 @@
 package com.jh.cavy.manage.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,27 +14,27 @@ import java.util.Date;
 /**
  * 问题表
  */
-@ApiModel(value = "com-jh-cavymanage-domain-Question")
+@Schema(name = "com-jh-cavymanage-domain-Question")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionVO {
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private Integer id;
 
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private String title;
 
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private String content;
 
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private String addUser;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private Date addTime;
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private String hasAnswer;
 
 }

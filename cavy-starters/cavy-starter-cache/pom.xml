@@ -36,6 +36,12 @@
             <groupId>com.jh</groupId>
             <artifactId>cavy-common</artifactId>
             <version>${modle.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-plugin-core</artifactId>
+                    <groupId>org.springframework.plugin</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>

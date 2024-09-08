@@ -1,7 +1,8 @@
 package com.jh.cavy.manage.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-@ApiModel(value = "com-jh-cavymanage-domain-Answer")
+@Schema(name = "com-jh-cavymanage-domain-Answer")
 @Data
 @Builder
 @AllArgsConstructor

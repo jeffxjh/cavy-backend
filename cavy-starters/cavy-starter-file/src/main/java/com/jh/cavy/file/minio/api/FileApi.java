@@ -5,7 +5,7 @@ import com.jh.cavy.file.minio.vo.FileVO;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;

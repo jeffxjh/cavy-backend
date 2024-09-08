@@ -14,7 +14,7 @@ import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.manage.param.QuestionParam;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {

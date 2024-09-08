@@ -7,10 +7,11 @@ import com.jh.cavy.manage.param.DictItemAO;
 import com.jh.cavy.manage.service.DictService;
 import com.jh.cavy.manage.vo.DictStoreVO;
 import com.jh.cavy.manage.vo.DictVO;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+
 import java.util.List;
 import java.util.Map;
 

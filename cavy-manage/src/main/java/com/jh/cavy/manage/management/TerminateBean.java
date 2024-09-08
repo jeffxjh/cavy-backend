@@ -2,7 +2,7 @@ package com.jh.cavy.manage.management;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 @Slf4j
 public class TerminateBean {
     @PreDestroy

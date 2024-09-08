@@ -6,7 +6,7 @@ import com.jh.cavy.manage.mapper.ConfigMapper;
 import com.jh.cavy.manage.service.ConfigService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 @Service

@@ -1,20 +1,21 @@
 package com.jh.cavy.manage.vo;
 
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class RoleVO {
-    @ApiModelProperty(value="")
+    @Schema(name="")
     private Integer id;
 
-    @ApiModelProperty(value="")
+    @Schema(name="")
     private String roleName;
 
 
-    @ApiModelProperty(value="",name = "")
+    @Schema(name="")
     private List<MenuVO> children;
 
 }

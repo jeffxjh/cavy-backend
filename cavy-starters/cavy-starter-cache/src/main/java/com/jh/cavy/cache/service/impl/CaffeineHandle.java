@@ -3,20 +3,20 @@ package com.jh.cavy.cache.service.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.jh.cavy.cache.service.CacheService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 
 @Configuration
+@RequiredArgsConstructor
 public class CaffeineHandle implements CacheService {
-    @Resource
-    private Cache<String, Object> caffeineCache;
+    private final Cache<String, Object> caffeineCache;
 
 
     @Override

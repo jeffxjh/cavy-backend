@@ -8,7 +8,7 @@ import com.jh.cavy.manage.param.MenuAO;
 import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.vo.MenuVO;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 public interface MenuService {

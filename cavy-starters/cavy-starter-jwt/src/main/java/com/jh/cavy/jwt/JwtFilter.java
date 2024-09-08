@@ -6,11 +6,11 @@ import com.jh.cavy.common.Result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.Resource;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -42,6 +42,7 @@ public class JwtFilter implements Filter {
         String uri = request.getRequestURI();
         if (uri.contains("/user/login") || uri.contains("/user/logout") || uri.contains("/user/register") || uri.contains("/verify")
                     || uri.contains("swagger")
+                    || uri.contains("springdoc")
                     || uri.contains("druid")
                     || uri.contains("h2-console")
                     || uri.contains("/home")

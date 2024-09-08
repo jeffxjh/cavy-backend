@@ -7,7 +7,7 @@ import com.jh.cavy.manage.param.QuestionParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 @Slf4j
 @RequestMapping("/question")

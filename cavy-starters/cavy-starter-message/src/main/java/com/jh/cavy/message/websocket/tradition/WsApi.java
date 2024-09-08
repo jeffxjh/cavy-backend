@@ -3,7 +3,7 @@ package com.jh.cavy.message.websocket.tradition;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 //@RestController
 //@RequestMapping("api")

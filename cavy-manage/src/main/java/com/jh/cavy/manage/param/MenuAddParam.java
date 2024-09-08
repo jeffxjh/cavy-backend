@@ -2,62 +2,63 @@ package com.jh.cavy.manage.param;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 菜单新增参数
  */
 @Data
 @Validated
-@ApiModel(value = "com-jh-manage-domain-Menu")
+@Schema(name = "com-jh-manage-domain-Menu")
 public class MenuAddParam {
-    @ApiModelProperty(value = "id")
+    @Schema(name = "id")
     private Integer id;
-    @ApiModelProperty(value = "menuId")
+    @Schema(name = "menuId")
     private Integer menuId;
     @NotBlank(message = "menuCode 不能为空")
-    @ApiModelProperty(value = "菜单编号")
+    @Schema(name = "菜单编号")
     private String menuCode;
 
     @NotBlank(message = "menuName 不能为空")
-    @ApiModelProperty(value = "菜单名称")
+    @Schema(name = "菜单名称")
     private String menuName;
 
     @NotBlank(message = "menuType 不能为空")
-    @ApiModelProperty(value = "菜单类型")
+    @Schema(name = "菜单类型")
     private String menuType;
 
-    @ApiModelProperty(value = "菜单图标")
+    @Schema(name = "菜单图标")
     private String icon;
 
     @NotBlank(message = "url 不能为空")
-    @ApiModelProperty(value = "菜单地址")
+    @Schema(name = "菜单地址")
     private String url;
 
     @Min(message = "长度大于0", value = 0)
     @NotNull(message = "parentId 不能为空")
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private Integer parentId;
 
-    @ApiModelProperty(value = "是否隐藏")
+    @Schema(name = "是否隐藏")
     private Integer hidden;
 
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private Integer sort;
 
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private Integer weight;
 
-    @ApiModelProperty(value = "")
+    @Schema(name = "")
     private Integer isDefault;
-    @ApiModelProperty(value = "status")
+    @Schema(name = "status")
     private Integer status;
 
 }

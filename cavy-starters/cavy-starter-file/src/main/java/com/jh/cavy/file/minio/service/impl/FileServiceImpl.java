@@ -8,7 +8,7 @@ import com.jh.cavy.file.minio.service.FileService;
 import com.jh.cavy.file.minio.vo.FileVO;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

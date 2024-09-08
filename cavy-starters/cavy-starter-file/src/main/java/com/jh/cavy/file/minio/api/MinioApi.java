@@ -4,8 +4,8 @@ import com.jh.cavy.file.minio.FileHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/file/minio")

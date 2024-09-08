@@ -7,12 +7,12 @@ import com.jh.cavy.manage.param.MenuAO;
 import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.service.MenuService;
 import com.jh.cavy.manage.vo.MenuVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 @RequestMapping("/menu")
 @RestController
-@Api(value = "菜单", tags = {"菜单"})
+@Schema(name = "菜单")
 public class MenuApi {
     @Autowired
     private MenuService menuService;
@@ -51,7 +51,7 @@ public class MenuApi {
         return menuService.findAll();
     }
 
-    @ApiOperation("菜单管理-获取用户菜单树")
+    @Schema(name="菜单管理-获取用户菜单树")
     @PostMapping("/listTree")
     public List<Tree<Integer>> listMenu(@RequestBody MenuAO menuAO) {
         return menuService.menusTree(menuAO);
@@ -65,7 +65,7 @@ public class MenuApi {
          menuService.delMenu(id);
     }
 
-    @ApiOperation("获取用户菜单树")
+    @Schema(name="获取用户菜单树")
     @GetMapping("/tree")
     public List<Tree<Integer>> getMenusTree() {
         return menuService.findMenusTree();
@@ -80,7 +80,7 @@ public class MenuApi {
         menuService.update(menuAddParam);
     }
 
-    @ApiOperation("获取菜单分页列表")
+    @Schema(name="获取菜单分页列表")
     @PostMapping("/page")
     public ResultPage<MenuVO> page(@RequestBody MenuAO menuAO) {
       return menuService.page(menuAO);

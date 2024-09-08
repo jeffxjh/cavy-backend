@@ -1,8 +1,9 @@
 package com.jh.cavy.manage.param;
 
 import com.jh.cavy.common.Resquest.BaseParam;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,26 +11,26 @@ import java.util.List;
 
 @Getter
 @Setter
-@ApiModel
+@Schema
 public class UserParam extends BaseParam {
-    @ApiModelProperty(name = "userName")
+    @Schema(name = "userName")
     private String id;
-    @ApiModelProperty(name = "userName")
+    @Schema(name = "userName")
     private String userName;
-    @ApiModelProperty(name = "realName")
+    @Schema(name = "realName")
     private String realName;
-    @ApiModelProperty(name = "password")
+    @Schema(name = "password")
     private String password;
-    @ApiModelProperty(name = "email")
+    @Schema(name = "email")
     private String email;
-    @ApiModelProperty(name = "phone")
+    @Schema(name = "phone")
     private String phone;
-    @ApiModelProperty(name = "gender")
+    @Schema(name = "gender")
     private String gender;
-    @ApiModelProperty(name = "status")
+    @Schema(name = "status")
     private String status;
-    @ApiModelProperty(name = "defaultUser")
+    @Schema(name = "defaultUser")
     private String defaultUser;
-    @ApiModelProperty(name = "roleList")
+    @Schema(name = "roleList")
     private List<Integer> roleList;
 }

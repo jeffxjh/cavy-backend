@@ -1,15 +1,16 @@
 package com.jh.cavy.manage.param;
 
 import com.jh.cavy.common.Resquest.BaseParam;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel
+@Schema
 public class RoleParam extends BaseParam {
-    @ApiModelProperty(name = "roleName")
+    @Schema(name = "roleName")
     private String roleName;
 }

@@ -21,7 +21,7 @@ import com.jh.cavy.manage.vo.DictVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**
@@ -75,7 +75,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict>
         List<DictItem> dictItems = dictItem.getItems();
         for (DictItem item : dictItems) {
             item.setDicId(dictItem.getDicId());
-            Integer i = dictItemMapper.selectCount(Wrappers.<DictItem>lambdaQuery()
+            Long i = dictItemMapper.selectCount(Wrappers.<DictItem>lambdaQuery()
                                                            .eq(DictItem::getItem, item.getItem())
                                                            .eq(DictItem::getLabel, item.getLabel()));
             if (i > 0) {
