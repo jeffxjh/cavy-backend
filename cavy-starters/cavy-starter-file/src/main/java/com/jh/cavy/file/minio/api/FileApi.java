@@ -59,4 +59,10 @@ public class FileApi {
     public List<FileVO> batchUpload() {
         return fileService.batchUpload();
     }
+
+
+    @PostMapping("ocr")
+    public void ocr(@RequestParam(name = "file") MultipartFile file) throws Exception {
+        fileService.ocr(file);
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jh.cavy.file.minio.mapper.FileMapper">
-  <resultMap id="BaseResultMap" type="com.jh.cavy.file.minio.domain.File">
+  <resultMap id="BaseResultMap" type="com.jh.cavy.file.minio.domain.CavyFile">
     <!--@mbg.generated-->
     <!--@Table t_sys_file-->
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -30,7 +30,7 @@
     delete from t_sys_file
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.file.minio.domain.File" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.file.minio.domain.CavyFile" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_sys_file (file_code, file_name, file_path, 
       web_url, add_user, add_time, 
@@ -39,7 +39,7 @@
       #{webUrl,jdbcType=VARCHAR}, #{addUser,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
       #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.file.minio.domain.File" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.file.minio.domain.CavyFile" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into t_sys_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -95,7 +95,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.file.minio.domain.File">
+  <update id="updateByPrimaryKeySelective" parameterType="com.jh.cavy.file.minio.domain.CavyFile">
     <!--@mbg.generated-->
     update t_sys_file
     <set>
@@ -126,7 +126,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jh.cavy.file.minio.domain.File">
+  <update id="updateByPrimaryKey" parameterType="com.jh.cavy.file.minio.domain.CavyFile">
     <!--@mbg.generated-->
     update t_sys_file
     set file_code = #{fileCode,jdbcType=VARCHAR},

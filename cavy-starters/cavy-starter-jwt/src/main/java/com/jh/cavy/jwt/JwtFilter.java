@@ -43,6 +43,7 @@ public class JwtFilter implements Filter {
         if (uri.contains("/user/login") || uri.contains("/user/logout") || uri.contains("/user/register") || uri.contains("/verify")
                     || uri.contains("swagger")
                     || uri.contains("springdoc")
+                    //|| uri.contains("ocr")
                     || uri.contains("druid")
                     || uri.contains("h2-console")
                     || uri.contains("/home")

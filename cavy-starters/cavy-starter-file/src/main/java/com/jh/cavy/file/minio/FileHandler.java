@@ -4,7 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.MD5;
-import com.jh.cavy.file.minio.domain.File;
+import com.jh.cavy.file.minio.domain.CavyFile;
 import com.jh.cavy.file.minio.mapper.FileMapper;
 import com.jh.cavy.file.minio.utils.MinioUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -34,19 +34,19 @@ public class FileHandler {
     public void uploadFile(MultipartFile file) {
         try {
             // 事务问题未解决
-            File fileInfo = new File();
+            CavyFile cavyFileInfo = new CavyFile();
             String filePath = minioUtil.uploadFile(file);
             String webUrl = minioUtil.getMinioProperties().getWebUrl();
             if (!webUrl.endsWith("/")) {
                 webUrl = webUrl + "/";
             }
-            fileInfo.setWebUrl( webUrl + filePath);
-            fileInfo.setFilePath(filePath);
+            cavyFileInfo.setWebUrl( webUrl + filePath);
+            cavyFileInfo.setFilePath(filePath);
             String ssha256 = SecureUtil.sha256(file.getInputStream());
             String md5 = MD5.create().digestHex(file.getBytes());
-            fileInfo.setFileCode(ssha256);
-            fileInfo.setFileName(file.getOriginalFilename());
-            fileMapper.insert(fileInfo);
+            cavyFileInfo.setFileCode(ssha256);
+            cavyFileInfo.setFileName(file.getOriginalFilename());
+            fileMapper.insert(cavyFileInfo);
         } catch (Exception e) {
             log.error("uploadFile [{}]", e.getMessage());
         }
@@ -56,11 +56,11 @@ public class FileHandler {
      * 下载文件
      */
     public void downLoad(String id, HttpServletResponse response) {
-        File file = fileMapper.selectById(id);
-        if (file!=null&&StrUtil.isNotBlank(file.getFileName()) && StrUtil.isNotBlank(file.getFilePath())) {
+        CavyFile cavyFile = fileMapper.selectById(id);
+        if (cavyFile !=null&&StrUtil.isNotBlank(cavyFile.getFileName()) && StrUtil.isNotBlank(cavyFile.getFilePath())) {
             try {
-                InputStream inputStream = minioUtil.downloadFile(file.getFilePath());
-                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(file.getFileName(), "UTF-8"));
+                InputStream inputStream = minioUtil.downloadFile(cavyFile.getFilePath());
+                response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(cavyFile.getFileName(), "UTF-8"));
                 response.setCharacterEncoding("UTF-8");
                 IoUtil.copy(inputStream, response.getOutputStream());
             } catch (Exception e) {
@@ -75,10 +75,10 @@ public class FileHandler {
      */
     public void deleteFile(String id) {
         try {
-            File file = fileMapper.selectById(id);
-            if (file != null) {
+            CavyFile cavyFile = fileMapper.selectById(id);
+            if (cavyFile != null) {
                 fileMapper.deleteById(id);
-                minioUtil.removeFile(file.getFilePath());
+                minioUtil.removeFile(cavyFile.getFilePath());
             }
         } catch (Exception e) {
             log.error("deleteFile [{}]", e.getMessage());

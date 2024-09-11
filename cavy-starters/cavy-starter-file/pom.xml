@@ -29,8 +29,39 @@
       <artifactId>cavy-starter-cache</artifactId>
       <version>${modle.version}</version>
     </dependency>
-
-
+    <!--  一般只需要引入一个，CPU端建议使用onnx，移动端建议使用ncnn     -->
+<!--    <dependency>-->
+<!--      <groupId>io.github.mymonstercat</groupId>-->
+<!--      <artifactId>rapidocr-ncnn-platform</artifactId>-->
+<!--      &lt;!&ndash;  可前往maven中央仓库https://repo1.maven.org/maven2/io/github/mymonstercat/rapidocr/，查看版本      &ndash;&gt;-->
+<!--      <version>0.0.6</version>-->
+<!--    </dependency>-->
+    <dependency>
+      <groupId>io.github.mymonstercat</groupId>
+      <artifactId>rapidocr-onnx-platform</artifactId>
+      <!--  可前往maven中央仓库https://repo1.maven.org/maven2/io/github/mymonstercat/rapidocr/，查看版本      -->
+      <version>0.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>fontbox</artifactId>
+      <version>2.0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>2.0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox-tools</artifactId>
+      <version>2.0.12</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.cssbox</groupId>
+      <artifactId>pdf2dom</artifactId>
+      <version>1.7</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -58,4 +89,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

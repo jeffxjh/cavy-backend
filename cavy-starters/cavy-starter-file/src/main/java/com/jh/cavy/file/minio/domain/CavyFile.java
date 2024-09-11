@@ -20,7 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("t_sys_file")
-public class File {
+public class CavyFile {
     /**
     * id
     */
