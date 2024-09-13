@@ -96,8 +96,8 @@ public class UserApi {
     }
 
     @GetMapping("getById")
-    public UserInfoVO getUser(Integer id) {
-        return userService.getUser(id);
+    public UserInfoVO getUser(@RequestParam("id") String id) {
+        return userService.getUser(Integer.valueOf(id));
     }
 
     @DeleteMapping()
@@ -106,7 +106,7 @@ public class UserApi {
     }
 
     @PutMapping()
-    public void updateUser(UserParam userParam) {
+    public void updateUser(@RequestParam UserParam userParam) {
         userService.updateUser(userParam);
     }
 

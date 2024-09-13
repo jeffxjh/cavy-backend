@@ -45,7 +45,7 @@ public class MessageApi {
     }
 
     @PutMapping("/readed")
-    public void readedMessage(String id) {
+    public void readedMessage(@RequestParam String id) {
         messageService.readedMessage(id);
     }
 

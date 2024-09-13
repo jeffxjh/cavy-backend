@@ -37,7 +37,7 @@ public class MenuApi {
     }
 
     @GetMapping("/boolean")
-    public Boolean getBoolean(String booleanValue) {
+    public Boolean getBoolean(@RequestParam String booleanValue) {
         return "true".equals(booleanValue);
     }
 

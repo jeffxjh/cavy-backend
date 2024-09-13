@@ -103,18 +103,19 @@ spring:
       #开启ack
       direct:
         acknowledge-mode: manual
-  redis:
-    database: 0
-    host: ${redis_host:127.0.0.1}
-    port: ${redis_port:6379}
-    password: ${redis_password:123456}
-    timeout: 1000
-    jedis:
-      pool:
-        max-active: 8
-        max-wait: -1
-        max-idle: 8
-        min-idle: 0
+  data:
+    redis:
+      database: 0
+      host: ${redis_host:127.0.0.1}
+      port: ${redis_port:6379}
+      password: ${redis_password:123456}
+      timeout: 1000
+      jedis:
+        pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
   servlet:
     multipart:
       max-file-size: 20MB

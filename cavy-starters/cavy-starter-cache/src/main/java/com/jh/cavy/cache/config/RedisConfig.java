@@ -28,18 +28,18 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
+    @Value("${spring.data.redis.host}")
     private String host;
-    @Value("${spring.redis.database}")
+    @Value("${spring.data.redis.database}")
     private Integer database;
-    @Value("${spring.redis.port}")
+    @Value("${spring.data.redis.port}")
     private Integer port;
-    @Value("${spring.redis.password}")
+    @Value("${spring.data.redis.password}")
     private String pwd;
 
     @Primary
     @Bean(name = "jedisPoolConfig")
-    @ConfigurationProperties(prefix = "spring.redis.pool")
+    @ConfigurationProperties(prefix = "spring.data.redis.pool")
     public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxWaitMillis(10000);
