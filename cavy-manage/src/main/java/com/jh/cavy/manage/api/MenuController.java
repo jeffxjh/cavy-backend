@@ -9,10 +9,12 @@ import com.jh.cavy.manage.service.MenuService;
 import com.jh.cavy.manage.vo.MenuVO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,10 +23,10 @@ import java.util.stream.Stream;
 
 @RequestMapping("/menu")
 @RestController
-@Schema(name = "菜单")
-public class MenuApi {
-    @Autowired
-    private MenuService menuService;
+@Tag(name = "菜单相关API")
+@RequiredArgsConstructor
+public class MenuController {
+    private final MenuService menuService;
 
     private static Map<Integer, Menu> productMap;
 
@@ -37,7 +39,7 @@ public class MenuApi {
     }
 
     @GetMapping("/boolean")
-    public Boolean getBoolean(@RequestParam String booleanValue) {
+    public Boolean getBoolean(@RequestParam("booleanValue") String booleanValue) {
         return "true".equals(booleanValue);
     }
 
@@ -45,45 +47,52 @@ public class MenuApi {
     //public Menu getProduct(@PathVariable Long id) {
     //    return productMap.get(id);
     //}
-
+    @Schema(name = "获取全量菜单列表")
     @GetMapping("/list")
     public List<Menu> getMenus() {
         return menuService.findAll();
     }
 
-    @Schema(name="菜单管理-获取用户菜单树")
+    @Schema(name = "菜单管理-获取全量菜单树")
     @PostMapping("/listTree")
     public List<Tree<Integer>> listMenu(@RequestBody MenuAO menuAO) {
         return menuService.menusTree(menuAO);
     }
+
+    @Schema(name = "根据菜单ID获取菜单对象")
     @GetMapping("/{id}")
-    public MenuVO getMenu(@PathVariable Long id) {
+    public MenuVO getMenu(@PathVariable("id") Long id) {
         return menuService.getMenu(id);
     }
+
+    @Schema(name = "根据菜单ID删除菜单")
     @DeleteMapping("/{id}")
-    public void delMenu(@PathVariable Long id) {
-         menuService.delMenu(id);
+    public void delMenu(@PathVariable("id")  Long id) {
+        menuService.delMenu(id);
     }
 
-    @Schema(name="获取用户菜单树")
+    @Schema(name = "获取当前用户菜单树")
     @GetMapping("/tree")
     public List<Tree<Integer>> getMenusTree() {
         return menuService.findMenusTree();
     }
 
+    @Schema(name = "新增菜单")
     @PostMapping("add")
     public void add(@Valid @RequestBody MenuAddParam menuAddParam) {
         menuService.add(menuAddParam);
     }
+
+    @Schema(name = "修改菜单")
     @PostMapping("update")
     public void update(@Valid @RequestBody MenuAddParam menuAddParam) {
         menuService.update(menuAddParam);
     }
 
-    @Schema(name="获取菜单分页列表")
+    @Schema(name = "获取菜单分页列表")
     @PostMapping("/page")
     public ResultPage<MenuVO> page(@RequestBody MenuAO menuAO) {
-      return menuService.page(menuAO);
+        return menuService.page(menuAO);
     }
 
 }

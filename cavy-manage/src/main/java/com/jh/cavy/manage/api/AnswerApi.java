@@ -22,7 +22,7 @@ public class AnswerApi {
     private AnswerService answerService;
 
     @GetMapping
-    public ResultPage<AnswerVO> findAnswerByQuestionId(@RequestParam String questionId, @RequestParam Long pageIndex,@RequestParam Long pageSize) {
+    public ResultPage<AnswerVO> findAnswerByQuestionId(@RequestParam("questionId") String questionId, @RequestParam("pageIndex") Long pageIndex,@RequestParam("pageSize") Long pageSize) {
         return answerService.findAnswerByQuestionId(questionId,pageIndex,pageSize);
     }
 

@@ -48,4 +48,7 @@ public class RoleVO {
     @Schema(name = "")
     private List<MenuVO> children;
 
+    @Schema(name = "选中的菜单ID")
+    private List<Long> selectKeys;
+
 }

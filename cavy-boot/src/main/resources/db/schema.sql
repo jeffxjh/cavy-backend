@@ -177,3 +177,50 @@ CREATE TABLE `t_sys_dict` (
                               PRIMARY KEY (`id`),
                               UNIQUE KEY `t_sys_dict_UN` (`code`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据字典表';
+
+create table t_sys_menu_resource
+(
+    id          bigint auto_increment comment '主键'
+        primary key,
+    menu_id     bigint       not null comment '菜单表主键',
+    resource_id bigint       not null comment '资源表主键',
+    add_time    datetime     null comment '创建时间',
+    add_user    varchar(255) null comment '创建人',
+    update_time datetime     null comment '修改时间',
+    update_user varchar(255) null comment '修改人',
+    constraint t_sys_menu_resource_UN
+        unique (menu_id, resource_id)
+)
+    comment '菜单资源关联表';
+
+create table t_sys_resource
+(
+    id            bigint auto_increment comment '主键'
+        primary key,
+    resource_code varchar(255) not null comment '资源编码',
+    resource_name varchar(255) not null comment '资源名称',
+    resource_path varchar(255) not null comment '资源路径',
+    add_time      datetime     null comment '创建时间',
+    add_user      varchar(255) null comment '创建人',
+    update_time   datetime     null comment '修改时间',
+    update_user   varchar(255) null comment '修改人',
+    constraint t_sys_resource_UN
+        unique (resource_code)
+)
+    comment '资源表';
+
+create table t_sys_role_menu
+(
+    id          bigint auto_increment comment '主键'
+        primary key,
+    role_id     bigint       not null comment '角色表主键',
+    menu_id     bigint       not null comment '菜单表主键',
+    add_time    datetime     null comment '创建时间',
+    add_user    varchar(255) null comment '创建人',
+    update_time datetime     null comment '修改时间',
+    update_user varchar(255) null comment '修改人',
+    constraint t_sys_role_menu_UN
+        unique (role_id, menu_id)
+)
+    comment '角色菜单关联表';
+

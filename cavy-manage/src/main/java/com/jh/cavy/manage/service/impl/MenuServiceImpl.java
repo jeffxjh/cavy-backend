@@ -11,11 +11,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
+import com.jh.cavy.manage.domain.Answer;
 import com.jh.cavy.manage.domain.Menu;
 import com.jh.cavy.manage.domain.UserMenu;
+import com.jh.cavy.manage.mapper.AnswerMapper;
 import com.jh.cavy.manage.mapper.MenuMapper;
 import com.jh.cavy.manage.mapper.UserMenuMapper;
 import com.jh.cavy.manage.param.MenuAO;
@@ -30,7 +33,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Resource
     private MenuMapper menuMapper;
@@ -164,6 +167,7 @@ public class MenuServiceImpl implements MenuService {
     }
     @Override
     public List<Tree<Integer>> menusTree(MenuAO menuAO) {
+        Boolean disabled = menuAO.getDisabled();
         LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(menuAO.getStatus()!=null,Menu::getStatus, menuAO.getStatus());
         queryWrapper.or(StringUtils.isNotBlank(menuAO.getMenuName()), wrapper -> wrapper.eq(Menu::getMenuName, menuAO.getMenuName()).or().eq(Menu::getMenuCode, menuAO.getMenuName()));
@@ -191,6 +195,9 @@ public class MenuServiceImpl implements MenuService {
             extra.put("isDefault", menu.getIsDefault());
             extra.put("icon", menu.getIcon());
             extra.put("url", menu.getUrl());
+            extra.put("label", menu.getMenuName());
+            extra.put("disabled", disabled);
+            extra.put("children", menu.getChildren());
             integerTreeNode.setExtra(extra);
             nodeList.add(integerTreeNode);
         }
@@ -216,6 +223,9 @@ public class MenuServiceImpl implements MenuService {
             tree.putExtra("sort", treeNode.getExtra().get("sort"));
             tree.putExtra("icon", treeNode.getExtra().get("icon"));
             tree.putExtra("url", treeNode.getExtra().get("url"));
+            tree.putExtra("label", treeNode.getExtra().get("label"));
+            tree.putExtra("disabled", treeNode.getExtra().get("disabled"));
+            tree.putExtra("children", treeNode.getExtra().get("children"));
             tree.putExtra("id", treeNode.getExtra().get("id"));
         });
         return build;

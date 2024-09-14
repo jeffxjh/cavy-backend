@@ -1,34 +1,30 @@
 package com.jh.cavy.manage.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jh.cavy.common.Result.ResultPage;
+import com.jh.cavy.manage.domain.Message;
 import com.jh.cavy.manage.domain.Role;
+import com.jh.cavy.manage.param.RoleAddParam;
 import com.jh.cavy.manage.param.RoleParam;
 import com.jh.cavy.manage.vo.RoleVO;
 import com.jh.cavy.manage.vo.UserVO;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
-public interface RoleService {
-
-
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Role record);
-
-    int insertSelective(Role record);
-
-    Role selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Role record);
-
-    int updateByPrimaryKey(Role record);
-
+public interface RoleService extends IService<Role> {
     List<RoleVO> getRoleByUserName(String userName);
-
-    List<RoleVO> getRoleByMenuId(String menuId);
 
     List<RoleVO> roleList();
 
     ResultPage<RoleVO> findRolePage(RoleParam roleParam);
+
+    void add(@Valid RoleAddParam roleAddParam);
+
+    void update(@Valid RoleAddParam roleAddParam);
+
+    RoleVO getRole(Integer id);
+
+    void delete(List<String> ids);
 }
 

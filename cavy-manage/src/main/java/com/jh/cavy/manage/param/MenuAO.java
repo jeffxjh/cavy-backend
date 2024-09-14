@@ -23,4 +23,9 @@ public class MenuAO extends BaseParam {
      */
     @Schema(name = "菜单状态")
     private Integer status;
+    /**
+     * 是否禁用
+     */
+    @Schema(name = "是否禁用")
+    private Boolean disabled;
 }

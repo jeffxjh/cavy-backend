@@ -24,7 +24,7 @@ public class BusinessApi {
 
 
     @GetMapping("/")
-    public Map<String, String> get(@RequestParam String uuid, HttpServletRequest request) throws InterruptedException {
+    public Map<String, String> get(@RequestParam("uuid") String uuid, HttpServletRequest request) throws InterruptedException {
         Map<String, String> result = new HashMap<>(2);
         if (StrUtil.isEmpty(uuid)) {
             uuid = request.getSession().getId();

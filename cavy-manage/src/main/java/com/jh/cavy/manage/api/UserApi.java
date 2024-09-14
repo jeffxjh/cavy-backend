@@ -101,12 +101,12 @@ public class UserApi {
     }
 
     @DeleteMapping()
-    public void deleteUser(@RequestParam List<String> ids) {
+    public void deleteUser(@RequestParam("ids") List<String> ids) {
         userService.deleteUser(ids);
     }
 
     @PutMapping()
-    public void updateUser(@RequestParam UserParam userParam) {
+    public void updateUser(@RequestParam("userParam") UserParam userParam) {
         userService.updateUser(userParam);
     }
 
@@ -116,7 +116,7 @@ public class UserApi {
     }
 
     @PostMapping("/import")
-    public Map<String,Integer> importUser(@RequestParam MultipartFile file) {
+    public Map<String,Integer> importUser(@RequestParam("file") MultipartFile file) {
         return userService.importUser(file);
     }
 }

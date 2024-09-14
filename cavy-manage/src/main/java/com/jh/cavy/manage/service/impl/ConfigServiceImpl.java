@@ -10,7 +10,7 @@ import jakarta.annotation.Resource;
 import java.util.List;
 
 @Service
-public class ConfigServiceImpl implements ConfigService {
+public class ConfigServiceImpl  implements ConfigService {
 
     @Resource
     private ConfigMapper configMapper;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.cavy.manage.mapper.ResourceMapper">
+
+    <resultMap id="BaseResultMap" type="com.jh.cavy.manage.domain.Resource">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="resourceCode" column="resource_code" jdbcType="VARCHAR"/>
+            <result property="resourceName" column="resource_name" jdbcType="VARCHAR"/>
+            <result property="resourcePath" column="resource_path" jdbcType="VARCHAR"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="addUser" column="add_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,resource_code,resource_name,
+        resource_path,add_time,add_user,
+        update_time,update_user
+    </sql>
+</mapper>
