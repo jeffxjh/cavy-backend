@@ -142,6 +142,7 @@ logging:
     org.springframework.data.convert.CustomConversions: ERROR
     o.s.boot.actuate.endpoint.EndpointId: ERROR
    # com.jh.cavy.common.Result.ResponseControllerAdvice: debug
+    com.jh.cavy.manage.mapper: debug
   file:
     path: logs
 nacos:
@@ -149,9 +150,10 @@ nacos:
 cavy:
   init-database: cavy
   init-file: init
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+# 去除该配置只在logging.level中配置mapper路径实现不打印sql结果集
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
