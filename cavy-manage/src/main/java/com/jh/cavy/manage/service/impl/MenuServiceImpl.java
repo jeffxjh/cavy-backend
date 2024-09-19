@@ -240,7 +240,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             tree.putExtra("children", treeNode.getExtra().get("children"));
             tree.putExtra("id", treeNode.getExtra().get("id"));
         });
-        return build;
+        Collections.sort(build);
+        return  build;
     }
 
     @Override
