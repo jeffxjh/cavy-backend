@@ -151,10 +151,10 @@ cavy:
   init-database: cavy
   init-file: init
 # 去除该配置只在logging.level中配置mapper路径实现不打印sql结果集
-#mybatis-plus:
-#  configuration:
+mybatis-plus:
+  configuration:
 #    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoint:

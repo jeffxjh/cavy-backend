@@ -106,7 +106,7 @@ public class UserApi {
     }
 
     @PutMapping()
-    public void updateUser(@RequestParam("userParam") UserParam userParam) {
+    public void updateUser(@RequestBody UserParam userParam) {
         userService.updateUser(userParam);
     }
 

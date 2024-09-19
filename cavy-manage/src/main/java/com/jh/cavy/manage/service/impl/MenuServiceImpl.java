@@ -2,6 +2,7 @@ package com.jh.cavy.manage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
@@ -15,30 +16,29 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
-import com.jh.cavy.manage.domain.Answer;
-import com.jh.cavy.manage.domain.Menu;
-import com.jh.cavy.manage.domain.UserMenu;
-import com.jh.cavy.manage.mapper.AnswerMapper;
-import com.jh.cavy.manage.mapper.MenuMapper;
-import com.jh.cavy.manage.mapper.UserMenuMapper;
+import com.jh.cavy.manage.domain.*;
+import com.jh.cavy.manage.mapper.*;
 import com.jh.cavy.manage.param.MenuAO;
 import com.jh.cavy.manage.param.MenuAddParam;
 import com.jh.cavy.manage.service.MenuService;
 import com.jh.cavy.manage.vo.MenuVO;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
-    @Resource
-    private MenuMapper menuMapper;
-    @Resource
-    private UserMenuMapper userMenuMapper;
+    private final MenuMapper menuMapper;
+    private final UserMenuMapper userMenuMapper;
+    private final UserRoleMapper userRoleMapper;
+    private final RoleMenuMapper roleMenuMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -82,8 +82,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         LambdaQueryWrapper<UserMenu> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(UserMenu::getUserId, RequestHeadHolder.getUserIdString());
         List<UserMenu> userMenus = userMenuMapper.selectList(queryWrapper);
+        Set<Long> menuIdList = userMenus.stream().map(a -> Long.valueOf(String.valueOf(a.getMenuId()))).collect(Collectors.toSet());
+        List<UserRole> userRoleList = userRoleMapper.selectList(Wrappers.<UserRole>lambdaQuery()
+                                                                        .eq(true, UserRole::getUserId, RequestHeadHolder.getUserIdString()));
+        if (CollectionUtil.isNotEmpty(userRoleList)) {
+            List<RoleMenu> roleMenus = roleMenuMapper.selectList(Wrappers.<RoleMenu>lambdaQuery()
+                                                                         .in(CollectionUtil.isNotEmpty(userRoleList), RoleMenu::getRoleId, userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toSet())));
+            menuIdList.addAll(roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toSet()));
+        }
         return menuMapper.selectList(Wrappers.<Menu>lambdaQuery()
-                                             .in(Menu::getId, userMenus.stream().map(UserMenu::getMenuId).collect(Collectors.toSet())));
+                                             .in(Menu::getId, menuIdList));
     }
 
     @Override
@@ -141,21 +149,24 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         Page<MenuVO> userVOPage = menuMapper.page(PageUtil.newPage(menuAO), queryWrapper);
         return new ResultPage<>(userVOPage);
     }
+
     public List<Menu> queryParentIds(Menu menu, List<Menu> taxCompanyList) {
         //递归获取父级ids,不包含自己
         List<Menu> parentIds = new ArrayList<>();
         this.getParentIds(taxCompanyList, menu, parentIds);
         return parentIds;
     }
+
     /**
      * 递归获取父级ids
+     *
      * @param menuList
      * @param curMenu
      * @param parentIds
      */
     private void getParentIds(List<Menu> menuList, Menu curMenu, List<Menu> parentIds) {
         for (Menu menu : menuList) {
-            if (curMenu.getParentId()==null||curMenu.getParentId()==0) {
+            if (curMenu.getParentId() == null || curMenu.getParentId() == 0) {
                 continue;
             }
             //判断是否有父节点
@@ -165,11 +176,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             }
         }
     }
+
     @Override
     public List<Tree<Integer>> menusTree(MenuAO menuAO) {
         Boolean disabled = menuAO.getDisabled();
         LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(menuAO.getStatus()!=null,Menu::getStatus, menuAO.getStatus());
+        queryWrapper.eq(menuAO.getStatus() != null, Menu::getStatus, menuAO.getStatus());
         queryWrapper.or(StringUtils.isNotBlank(menuAO.getMenuName()), wrapper -> wrapper.eq(Menu::getMenuName, menuAO.getMenuName()).or().eq(Menu::getMenuCode, menuAO.getMenuName()));
         List<Menu> menuList = menuMapper.selectList(queryWrapper);
         List<Menu> resultList = new ArrayList<>();
@@ -242,7 +254,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             String url = menu.getUrl();
             bean.setParentUrl(parentUrl);
             bean.setCurUrl(url.replaceFirst(parentUrl, "").substring(1));
-        }else {
+        } else {
             bean.setParentName("根节点");
         }
         return bean;
@@ -251,7 +263,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public void update(MenuAddParam menuAddParam) {
         Menu menu = BeanUtil.copyProperties(menuAddParam, Menu.class);
-        menuMapper.update(menu,Wrappers.<Menu>lambdaUpdate().eq(Menu::getMenuId, menuAddParam.getMenuId()));
+        menuMapper.update(menu, Wrappers.<Menu>lambdaUpdate().eq(Menu::getMenuId, menuAddParam.getMenuId()));
     }
 
     @Override
