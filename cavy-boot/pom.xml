@@ -15,6 +15,10 @@
             <groupId>com.jh</groupId>
             <artifactId>cavy-manage</artifactId>
             <version>${modle.version}</version>
+        </dependency> <dependency>
+            <groupId>com.jh</groupId>
+            <artifactId>cavy-favour</artifactId>
+            <version>${modle.version}</version>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.jh</groupId>-->

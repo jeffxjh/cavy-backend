@@ -224,3 +224,44 @@ create table t_sys_role_menu
 )
     comment '角色菜单关联表';
 
+create table t_bus_favour_relative
+(
+    id             int auto_increment comment '主键'
+        primary key,
+    real_name      VARCHAR(255) not null comment '亲友名称',
+    nick_name      varchar(255) null comment '亲友昵称',
+    user_id        int          not null comment '关联当前用户表主键(是谁的亲友)',
+    relate_user_id int          null comment '亲友关联的用户主键(该亲友在系统中的用户主键)',
+    add_time    datetime     null comment '创建时间',
+    add_user    varchar(255) null comment '创建人',
+    update_time datetime     null comment '修改时间',
+    update_user varchar(255) null comment '修改人'
+)
+    comment '人情管理-亲友表';
+
+create unique index t_bus_favour_relative_user_id_real_name_relate_user_id_uindex
+    on t_bus_favour_relative (user_id, real_name, relate_user_id);
+
+-- drop table t_bus_favour_record;
+
+create table t_bus_favour_record
+(
+    id              int auto_increment comment '主键'
+        primary key,
+    current_user_id int            null comment '当前用户主键(主体用户)',
+    relate_user_id  int            null comment '关联用户主键',
+    trade_type      char           not null comment '往来交易类型 1支出 0收入',
+    buss_type char(3) not null comment '交易事项 数据字典(生日,结婚,乔迁)',
+    amt             decimal(18, 2) null comment '金额',
+    add_time    datetime     null comment '创建时间',
+    add_user    varchar(255) null comment '创建人',
+    update_time datetime     null comment '修改时间',
+    update_user varchar(255) null comment '修改人'
+)
+    comment '人情管理-人情记录表';
+
+create index t_bus_favour_record_index
+    on t_bus_favour_record (relate_user_id, current_user_id, trade_type);
+
+
+

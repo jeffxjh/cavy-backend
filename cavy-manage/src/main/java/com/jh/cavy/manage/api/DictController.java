@@ -8,6 +8,7 @@ import com.jh.cavy.manage.service.DictService;
 import com.jh.cavy.manage.vo.DictStoreVO;
 import com.jh.cavy.manage.vo.DictVO;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +19,9 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/dict")
 @RestController
+@RequiredArgsConstructor
 public class DictController {
-    @Resource
-    private DictService dictService;
+    private final DictService dictService;
 
     @GetMapping("/{id}")
     public ResultPage<DictVO> getDict(@PathVariable String id) {

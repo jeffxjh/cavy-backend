@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.favour.mapper.FavourRelativeMapper">
+
+    <resultMap id="BaseResultMap" type="com.jh.favour.domain.FavourRelative">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+            <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="relateUserId" column="relate_user_id" jdbcType="INTEGER"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="addUser" column="add_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,real_name,nick_name,
+        user_id,relate_user_id,add_time,
+        add_user,update_time,update_user
+    </sql>
+</mapper>

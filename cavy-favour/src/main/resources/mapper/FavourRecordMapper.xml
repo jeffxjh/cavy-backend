@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.favour.mapper.FavourRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.jh.favour.domain.FavourRecord">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="currentUserId" column="current_user_id" jdbcType="INTEGER"/>
+            <result property="relateUserId" column="relate_user_id" jdbcType="INTEGER"/>
+            <result property="tradeType" column="trade_type" jdbcType="CHAR"/>
+            <result property="bussType" column="buss_type" jdbcType="CHAR"/>
+            <result property="amt" column="amt" jdbcType="DECIMAL"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="addUser" column="add_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,current_user_id,relate_user_id,
+        trade_type,buss_type,amt,
+        add_time,add_user,update_time,
+        update_user
+    </sql>
+</mapper>
