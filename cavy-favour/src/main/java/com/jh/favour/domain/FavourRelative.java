@@ -4,15 +4,18 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
  * 人情管理-亲友表
+ *
  * @TableName t_bus_favour_relative
  */
-@TableName(value ="t_bus_favour_relative")
+@TableName(value = "t_bus_favour_relative")
 @Data
 public class FavourRelative implements Serializable {
     /**
@@ -30,6 +33,10 @@ public class FavourRelative implements Serializable {
      * 亲友昵称
      */
     private String nickName;
+    /**
+     * 亲友关系
+     */
+    private Integer relateType;
 
     /**
      * 关联当前用户表主键(是谁的亲友)

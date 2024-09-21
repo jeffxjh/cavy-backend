@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@RequestMapping("/favour")
+@RequestMapping("/favour/relate")
 @RestController
 @RequiredArgsConstructor
 public class FavourRelativeController {

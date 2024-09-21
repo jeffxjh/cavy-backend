@@ -230,6 +230,7 @@ create table t_bus_favour_relative
         primary key,
     real_name      VARCHAR(255) not null comment '亲友名称',
     nick_name      varchar(255) null comment '亲友昵称',
+    relate_type      int null comment '亲友关系',
     user_id        int          not null comment '关联当前用户表主键(是谁的亲友)',
     relate_user_id int          null comment '亲友关联的用户主键(该亲友在系统中的用户主键)',
     add_time    datetime     null comment '创建时间',

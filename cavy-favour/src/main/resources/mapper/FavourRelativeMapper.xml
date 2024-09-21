@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="realName" column="real_name" jdbcType="VARCHAR"/>
             <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+            <result property="relateType" column="relate_type" jdbcType="INTEGER"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
             <result property="relateUserId" column="relate_user_id" jdbcType="INTEGER"/>
             <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
@@ -17,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,real_name,nick_name,
+        id,real_name,nick_name,relate_type,
         user_id,relate_user_id,add_time,
         add_user,update_time,update_user
     </sql>
