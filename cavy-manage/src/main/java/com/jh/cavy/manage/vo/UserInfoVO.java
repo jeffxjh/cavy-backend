@@ -1,7 +1,6 @@
 package com.jh.cavy.manage.vo;
 
 
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -16,6 +15,8 @@ public class UserInfoVO implements Serializable {
 
     @Schema(name = "")
     private String userName;
+    @Schema(name = "")
+    private String openid;
 
     @Schema(name = "")
     private String realName;

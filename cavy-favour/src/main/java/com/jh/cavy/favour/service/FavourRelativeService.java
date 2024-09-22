@@ -1,10 +1,10 @@
-package com.jh.favour.service;
+package com.jh.cavy.favour.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jh.favour.ao.FavourRelativeAO;
-import com.jh.favour.domain.FavourRelative;
-import com.jh.favour.vo.FavourRelativeVO;
+import com.jh.cavy.favour.ao.FavourRelativeAO;
+import com.jh.cavy.favour.domain.FavourRelative;
+import com.jh.cavy.favour.vo.FavourRelativeVO;
 
 import java.util.List;
 

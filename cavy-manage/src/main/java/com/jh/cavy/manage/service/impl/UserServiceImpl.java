@@ -7,6 +7,7 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.enums.CellExtraTypeEnum;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -79,11 +80,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    public User getByOpenid(String openid) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getOpenid, openid);
+        return userMapper.selectOne(wrapper);
+    }
+
+    @Override
     public ResultPage<UserVO> findUserPage(UserParam userParam) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         //Page<User> page = new Page<>(userParam.getPageIndex(),userParam.getPageSize());
         //Page<User> userPage = userMapper.selectPage(page, queryWrapper);
-        queryWrapper.like("user_name", userParam.getUserName());
+        queryWrapper.like(StringUtils.isNotBlank(userParam.getUserName()),"user_name", userParam.getUserName());
         Page<UserVO> userVOPage = userMapper.findByPage(PageUtil.newPage(userParam), queryWrapper);
         return new ResultPage<>(userVOPage);
     }

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jh.favour.mapper.FavourRecordMapper">
+<mapper namespace="com.jh.cavy.favour.mapper.FavourRecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.jh.favour.domain.FavourRecord">
+    <resultMap id="BaseResultMap" type="com.jh.cavy.favour.domain.FavourRecord">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="currentUserId" column="current_user_id" jdbcType="INTEGER"/>
             <result property="relateUserId" column="relate_user_id" jdbcType="INTEGER"/>

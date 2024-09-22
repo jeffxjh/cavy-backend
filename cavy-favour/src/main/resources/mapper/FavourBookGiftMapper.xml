@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.cavy.favour.mapper.FavourBookGiftMapper">
+
+    <resultMap id="BaseResultMap" type="com.jh.cavy.favour.domain.FavourBookGift">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="favourBookId" column="favour_book_id" jdbcType="INTEGER"/>
+            <result property="relateUserId" column="relate_user_id" jdbcType="INTEGER"/>
+            <result property="amt" column="amt" jdbcType="DECIMAL"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="addUser" column="add_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+            <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,favour_book_id,relate_user_id,
+        amt,add_time,add_user,
+        update_time,update_user,remarks
+    </sql>
+    <select id="queryPage" resultType="com.jh.cavy.favour.vo.FavourBookGiftVO">
+        select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name,b.nick_name,b.relate_type,c.buss_type
+        from t_bus_favour_book_gift a
+                 left join t_bus_favour_relative b on a.relate_user_id = b.id
+            left join t_bus_favour_book c on a.favour_book_id = c.id
+
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

@@ -40,7 +40,7 @@ public class JwtFilter implements Filter {
         final HttpServletResponse response = (HttpServletResponse) res;
 
         String uri = request.getRequestURI();
-        if (uri.contains("/user/login") || uri.contains("/user/logout") || uri.contains("/user/register") || uri.contains("/verify")
+        if (uri.contains("/user/login") ||uri.contains("/user/wechat/doLogin") || uri.contains("/user/logout") || uri.contains("/user/register") || uri.contains("/verify")
                     || uri.contains("swagger")
                     || uri.contains("springdoc")
                     //|| uri.contains("ocr")

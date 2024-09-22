@@ -30,6 +30,8 @@ public interface UserService extends IService<User> {
 
     User getByUserName(String userName);
 
+    User getByOpenid(String openid);
+
     ResultPage<UserVO> findUserPage(UserParam userParam);
 
     void export(UserParam userParam, HttpServletResponse response) throws IOException;

@@ -96,6 +96,7 @@ CREATE TABLE t_sys_role
 CREATE TABLE `t_sys_user` (
                               `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
                               `user_name` varchar(255) DEFAULT NULL COMMENT '账号',
+                              `openid` varchar(255) DEFAULT NULL COMMENT '微信openid',
                               `password` varchar(255) DEFAULT NULL COMMENT '密码',
                               `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
                               `gender` int(11) DEFAULT NULL COMMENT '性别',
@@ -265,4 +266,31 @@ create index t_bus_favour_record_index
     on t_bus_favour_record (relate_user_id, current_user_id, trade_type);
 
 
+create table t_bus_favour_book
+(
+    id              int auto_increment comment '主键'
+        primary key,
+    current_user_id int            null comment '主办人用户主键',
+    buss_type char(3) not null comment '礼薄事项 数据字典(生日,结婚,乔迁)',
+    amt             decimal(18, 2) null comment '总金额',
+    add_time    datetime     null comment '创建时间',
+    add_user    varchar(255) null comment '创建人',
+    update_time datetime     null comment '修改时间',
+    update_user varchar(255) null comment '修改人'
+)
+    comment '人情管理-礼薄表';
 
+create table t_bus_favour_book_gift
+(
+    id              int auto_increment comment '主键'
+        primary key,
+    favour_book_id int            null comment '礼薄表主键',
+    relate_user_id  int            null comment '送礼用户主键',
+    amt             decimal(18, 2) null comment '金额',
+    add_time    datetime     null comment '创建时间',
+    add_user    varchar(255) null comment '创建人',
+    update_time datetime     null comment '修改时间',
+    update_user varchar(255) null comment '修改人',
+        remarks varchar(255) null comment '备注'
+)
+    comment '人情管理-礼薄明细表';

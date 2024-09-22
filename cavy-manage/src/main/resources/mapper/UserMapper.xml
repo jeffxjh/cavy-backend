@@ -41,11 +41,11 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
-        insert into t_sys_user (user_name, `password`, real_name,
+        insert into t_sys_user (user_name, openid, `password`, real_name,
         gender, phone, email,status,default_user,
         add_time, add_user, update_time,
         update_user)
-        values (#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+        values (#{userName,jdbcType=VARCHAR},#{openid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
         #{gender,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{defaultUser,jdbcType=VARCHAR},
         #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
@@ -58,6 +58,8 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userName != null">
                 user_name,
+            </if>   <if test="openid != null">
+            openid,
             </if>
             <if test="password != null">
                 `password`,
@@ -96,6 +98,8 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userName != null">
                 #{userName,jdbcType=VARCHAR},
+            </if>  <if test="openid != null">
+                #{openid},
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
@@ -142,6 +146,8 @@
         <set>
             <if test="userName != null">
                 user_name = #{userName,jdbcType=VARCHAR},
+            </if>  <if test="openid != null">
+            openid = #{openid,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 `password` = #{password,jdbcType=VARCHAR},
@@ -185,6 +191,7 @@
         set user_name = #{userName,jdbcType=VARCHAR},
         `password` = #{password,jdbcType=VARCHAR},
         real_name = #{realName,jdbcType=VARCHAR},
+        openid = #{openid,jdbcType=VARCHAR},
         gender = #{gender,jdbcType=INTEGER},
         phone = #{phone,jdbcType=VARCHAR},
         email = #{email,jdbcType=VARCHAR},
@@ -200,6 +207,7 @@
     <select id="findByPage" resultType="com.jh.cavy.manage.vo.UserVO">
         select id,
         user_name,
+               openid,
         `password`,
         real_name,
         gender,
@@ -219,6 +227,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="gender" jdbcType="INTEGER" property="gender"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
@@ -232,10 +241,10 @@
     </resultMap>
 
     <select id="getUser" resultMap="ResultMap" parameterType="java.lang.Integer">
-        select a.*,c.role_name,c.id role_id
+        select a.*, c.role_name, c.id role_id
         from t_sys_user a
-        left join t_sys_user_role b on a.id=b.user_id
-        left join t_sys_role c on b.role_id=c.id
+                 left join t_sys_user_role b on a.id = b.user_id
+                 left join t_sys_role c on b.role_id = c.id
         where a.id = #{id,jdbcType=INTEGER}
     </select>
 </mapper>

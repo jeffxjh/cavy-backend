@@ -1,7 +1,7 @@
-package com.jh.favour.service;
+package com.jh.cavy.favour.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jh.favour.domain.FavourRecord;
+import com.jh.cavy.favour.domain.FavourRecord;
 
 /**
 * @author jeffx

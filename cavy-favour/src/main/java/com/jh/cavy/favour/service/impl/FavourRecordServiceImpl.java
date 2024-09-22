@@ -1,9 +1,9 @@
-package com.jh.favour.service.impl;
+package com.jh.cavy.favour.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jh.favour.domain.FavourRecord;
-import com.jh.favour.mapper.FavourRecordMapper;
-import com.jh.favour.service.FavourRecordService;
+import com.jh.cavy.favour.domain.FavourRecord;
+import com.jh.cavy.favour.mapper.FavourRecordMapper;
+import com.jh.cavy.favour.service.FavourRecordService;
 import org.springframework.stereotype.Service;
 
 /**

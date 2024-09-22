@@ -1,7 +1,7 @@
-package com.jh.favour.mapper;
+package com.jh.cavy.favour.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.jh.favour.domain.FavourRelative;
+import com.jh.cavy.favour.domain.FavourRelative;
 
 /**
 * @author jeffx

@@ -1,21 +1,23 @@
-package com.jh.favour.domain;
+package com.jh.cavy.favour.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
- * 人情管理-人情记录表
- * @TableName t_bus_favour_record
+ * 人情管理-亲友表
+ *
+ * @TableName t_bus_favour_relative
  */
-@TableName(value ="t_bus_favour_record")
+@TableName(value = "t_bus_favour_relative")
 @Data
-public class FavourRecord implements Serializable {
+public class FavourRelative implements Serializable {
     /**
      * 主键
      */
@@ -23,29 +25,28 @@ public class FavourRecord implements Serializable {
     private Integer id;
 
     /**
-     * 当前用户主键(主体用户)
+     * 亲友名称
      */
-    private Integer currentUserId;
+    private String realName;
 
     /**
-     * 关联用户主键
+     * 亲友昵称
+     */
+    private String nickName;
+    /**
+     * 亲友关系
+     */
+    private Integer relateType;
+
+    /**
+     * 关联当前用户表主键(是谁的亲友)
+     */
+    private Integer userId;
+
+    /**
+     * 亲友关联的用户主键(该亲友在系统中的用户主键)
      */
     private Integer relateUserId;
-
-    /**
-     * 往来交易类型 1支出 0收入
-     */
-    private String tradeType;
-
-    /**
-     * 交易事项 数据字典(生日,结婚,乔迁)
-     */
-    private String bussType;
-
-    /**
-     * 金额
-     */
-    private BigDecimal amt;
 
     /**
      * 创建时间

@@ -1,4 +1,4 @@
-package com.jh.favour.ao;
+package com.jh.cavy.favour.ao;
 
 import com.jh.cavy.common.Resquest.BaseParam;
 import io.swagger.v3.oas.annotations.media.Schema;

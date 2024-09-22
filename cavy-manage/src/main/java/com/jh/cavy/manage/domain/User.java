@@ -34,7 +34,11 @@ public class User extends BaseEntity {
      */
     @Schema(name = "账号")
     private String userName;
-
+    /**
+     * 微信openid
+     */
+    @Schema(name = "微信openid")
+    private String openid;
     /**
      * 密码
      */

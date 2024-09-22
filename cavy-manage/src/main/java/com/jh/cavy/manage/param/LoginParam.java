@@ -7,4 +7,6 @@ import java.io.Serializable;
 public class LoginParam implements Serializable {
     private String username;
     private String password;
+    private String openid;
+    private String token;
 }

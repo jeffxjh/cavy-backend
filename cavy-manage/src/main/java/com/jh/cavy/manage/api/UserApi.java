@@ -1,6 +1,8 @@
 package com.jh.cavy.manage.api;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.NumberUtil;
 import com.jh.cavy.cache.service.CacheService;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.Result.ResultVO;
@@ -16,6 +18,7 @@ import com.jh.cavy.manage.service.UserService;
 import com.jh.cavy.manage.vo.RoleVO;
 import com.jh.cavy.manage.vo.UserInfoVO;
 import com.jh.cavy.manage.vo.UserVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +27,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -77,13 +81,41 @@ public class UserApi {
         }
     }
 
-    //@GetMapping("/login4")
-    //public String login4(@RequestBody Map<String, Object> params) {
-    //    String token = "";
-    //    String name = StrUtil.toString(params.get("name"));
-    //    int length = name.length();
-    //    return token;
-    //}
+    @PostMapping("/wechat/doLogin")
+    public ResultVO<UserInfoVO> wechatDoLogin(@RequestBody LoginParam loginParam, HttpServletRequest request, HttpServletResponse response) {
+        if (StringUtils.isBlank(loginParam.getOpenid())) {
+            return new ResultVO<>(2000, "openid为空", new UserInfoVO());
+        }
+        //有token直接返回
+        JwtUser jwtUser = (JwtUser) cacheService.hget(jwtProperties.getRedisKey(), loginParam.getToken());
+        if (jwtUser != null) {
+            UserInfoVO userInfoVO = new UserInfoVO();
+            BeanUtil.copyProperties(jwtUser, userInfoVO);
+            userInfoVO.setToken(loginParam.getToken());
+            return new ResultVO<>(1000, "success", userInfoVO);
+        }
+        //无token 用户不存在 创建用户
+        User user = userService.getByOpenid(loginParam.getOpenid());
+        if (user == null) {
+            UserParam userParam = new UserParam();
+            userParam.setOpenid(loginParam.getOpenid());
+            userParam.setUserName(loginParam.getOpenid());
+            userParam.setStatus("1");
+            userService.addUser(userParam);
+        }
+
+        jwtUser = new JwtUser();
+        jwtUser.setAccount(loginParam.getOpenid());
+        jwtUser.setUsername(loginParam.getOpenid());
+        jwtUser.setId(IdUtil.getSnowflakeNextId());
+        String token = jwtTokenUtil.generateToken(jwtUser);
+        response.addCookie(new Cookie("token", token));
+        cacheService.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtil.copyProperties(jwtUser, userInfoVO);
+        userInfoVO.setToken(token);
+        return new ResultVO<>(1000, "success", userInfoVO);
+    }
 
     @GetMapping()
     public ResultPage<UserVO> list(@ModelAttribute UserParam userParam) {
@@ -116,7 +148,7 @@ public class UserApi {
     }
 
     @PostMapping("/import")
-    public Map<String,Integer> importUser(@RequestParam("file") MultipartFile file) {
+    public Map<String, Integer> importUser(@RequestParam("file") MultipartFile file) {
         return userService.importUser(file);
     }
 }
