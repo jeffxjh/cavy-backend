@@ -38,7 +38,7 @@ public interface UserService extends IService<User> {
 
     Map<String,Integer> importUser(MultipartFile multipartFile);
 
-    void addUser(UserParam userParam);
+    User addUser(UserParam userParam);
 
     void deleteUser(List<String> ids);
 

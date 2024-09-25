@@ -130,7 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void addUser(UserParam userParam) {
+    public User addUser(UserParam userParam) {
         if (StringUtils.isBlank(userParam.getStatus())) {
             userParam.setStatus("0");
         }
@@ -142,6 +142,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 userMapper.insertRoleRelate(user.getId(),roleId);
             }
         }
+        return user;
     }
 
     @Override

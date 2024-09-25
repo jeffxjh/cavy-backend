@@ -1,7 +1,11 @@
 package com.jh.cavy.favour.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jh.cavy.favour.ao.FavourInoutAO;
 import com.jh.cavy.favour.domain.FavourRecord;
+import com.jh.cavy.favour.vo.FavourInoutHeadVO;
+import com.jh.cavy.favour.vo.FavourInoutPageVO;
 
 /**
 * @author jeffx
@@ -10,4 +14,7 @@ import com.jh.cavy.favour.domain.FavourRecord;
 */
 public interface FavourRecordService extends IService<FavourRecord> {
 
+    Page<FavourInoutPageVO> inoutPage(FavourInoutAO favourInoutAO);
+
+    FavourInoutHeadVO inoutHead(FavourInoutHeadVO favourInoutHeadVO);
 }

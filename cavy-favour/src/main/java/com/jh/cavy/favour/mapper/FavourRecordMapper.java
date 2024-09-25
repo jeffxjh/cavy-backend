@@ -1,7 +1,14 @@
 package com.jh.cavy.favour.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jh.cavy.favour.ao.FavourInoutAO;
 import com.jh.cavy.favour.domain.FavourRecord;
+import com.jh.cavy.favour.vo.FavourInoutHeadVO;
+import com.jh.cavy.favour.vo.FavourInoutPageVO;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author jeffx
@@ -11,6 +18,7 @@ import com.jh.cavy.favour.domain.FavourRecord;
 */
 public interface FavourRecordMapper extends BaseMapper<FavourRecord> {
 
+    Page<FavourInoutPageVO> inoutPage(Page<FavourInoutAO> favourInoutAOPage, @Param(Constants.WRAPPER)  LambdaQueryWrapper<FavourRecord> queryWrapper);
 }
 
 

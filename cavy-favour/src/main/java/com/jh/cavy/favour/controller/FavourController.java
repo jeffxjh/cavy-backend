@@ -3,12 +3,12 @@ package com.jh.cavy.favour.controller;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.ao.FavourBookGiftAO;
+import com.jh.cavy.favour.ao.FavourInoutAO;
 import com.jh.cavy.favour.ao.FavourRelativeAO;
 import com.jh.cavy.favour.service.FavourBookService;
+import com.jh.cavy.favour.service.FavourRecordService;
 import com.jh.cavy.favour.service.FavourRelativeService;
-import com.jh.cavy.favour.vo.FavourBookGiftVO;
-import com.jh.cavy.favour.vo.FavourBookVO;
-import com.jh.cavy.favour.vo.FavourRelativeVO;
+import com.jh.cavy.favour.vo.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +22,7 @@ import java.util.List;
 public class FavourController {
     private final FavourRelativeService favourRelativeService;
     private final FavourBookService favourBookService;
+    private final FavourRecordService favourRecordService;
 
     @PostMapping("/relate")
     public ResultPage<FavourRelativeVO> queryDictPage(@RequestBody FavourRelativeAO favourRelativeAO) {
@@ -71,5 +72,14 @@ public class FavourController {
     @PostMapping("/book/update")
     public void modifyBook(@RequestBody FavourBookAO favourBookAO) {
         favourBookService.modifyBook(favourBookAO);
+    }
+
+    @PostMapping("/inout/inoutPage")
+    public ResultPage<FavourInoutPageVO> inoutPage(@RequestBody FavourInoutAO favourInoutAO) {
+        return new ResultPage<>(favourRecordService.inoutPage(favourInoutAO));
+    }
+    @PostMapping("/inout/inoutHead")
+    public FavourInoutHeadVO inoutHead(@RequestBody FavourInoutHeadVO favourInoutHeadVO) {
+        return favourRecordService.inoutHead(favourInoutHeadVO);
     }
 }

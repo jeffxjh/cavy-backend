@@ -87,7 +87,7 @@ public class UserApi {
             return new ResultVO<>(2000, "openid为空", new UserInfoVO());
         }
         //有token直接返回
-        JwtUser jwtUser = (JwtUser) cacheService.hget(jwtProperties.getRedisKey(), loginParam.getToken());
+        JwtUser jwtUser = jwtTokenUtil.validateToken(loginParam.getToken());
         if (jwtUser != null) {
             UserInfoVO userInfoVO = new UserInfoVO();
             BeanUtil.copyProperties(jwtUser, userInfoVO);
@@ -101,13 +101,13 @@ public class UserApi {
             userParam.setOpenid(loginParam.getOpenid());
             userParam.setUserName(loginParam.getOpenid());
             userParam.setStatus("1");
-            userService.addUser(userParam);
+            user = userService.addUser(userParam);
         }
 
         jwtUser = new JwtUser();
         jwtUser.setAccount(loginParam.getOpenid());
         jwtUser.setUsername(loginParam.getOpenid());
-        jwtUser.setId(IdUtil.getSnowflakeNextId());
+        jwtUser.setId(Long.valueOf(user.getId()));
         String token = jwtTokenUtil.generateToken(jwtUser);
         response.addCookie(new Cookie("token", token));
         cacheService.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
