@@ -2,6 +2,7 @@ package com.jh.cavy.favour.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jh.cavy.favour.ao.FavourBookAO;
@@ -9,7 +10,10 @@ import com.jh.cavy.favour.domain.FavourBookGift;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jh.cavy.favour.vo.FavourBookGiftVO;
 import com.jh.cavy.favour.vo.FavourBookVO;
+import com.jh.cavy.favour.vo.FavourRecordVO;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author jeffx
@@ -20,6 +24,8 @@ import org.apache.ibatis.annotations.Param;
 public interface FavourBookGiftMapper extends BaseMapper<FavourBookGift> {
 
     Page<FavourBookGiftVO> queryPage(Page<FavourBookAO> page, @Param(Constants.WRAPPER) Wrapper<FavourBookGift> wrapper);
+
+    List<FavourRecordVO> getGiftByUserId(@Param(Constants.WRAPPER)QueryWrapper<FavourBookGift> queryWrapper);
 }
 
 

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jh.cavy.favour.ao.FavourRelativeAO;
 import com.jh.cavy.favour.domain.FavourRelative;
+import com.jh.cavy.favour.vo.FavourRecordVO;
+import com.jh.cavy.favour.vo.FavourRelativeRecordDetailVO;
 import com.jh.cavy.favour.vo.FavourRelativeVO;
 
 import java.util.List;
@@ -22,4 +24,8 @@ public interface FavourRelativeService extends IService<FavourRelative> {
     void del(List<Integer> ids);
 
     void modify(FavourRelativeAO favourRelativeAO);
+
+    List<FavourRelativeVO> listRelative(FavourRelativeAO favourRelativeAO);
+
+    FavourRelativeRecordDetailVO listRecord(FavourRelativeAO favourRelativeAO);
 }

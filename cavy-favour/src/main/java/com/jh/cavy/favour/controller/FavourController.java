@@ -82,4 +82,13 @@ public class FavourController {
     public FavourInoutHeadVO inoutHead(@RequestBody FavourInoutHeadVO favourInoutHeadVO) {
         return favourRecordService.inoutHead(favourInoutHeadVO);
     }
+
+    @PostMapping("/relative/list")
+    public List<FavourRelativeVO> listRelative(@RequestBody FavourRelativeAO favourRelativeAO) {
+        return favourRelativeService.listRelative(favourRelativeAO);
+    }
+    @PostMapping("/relative/listRecord")
+    public FavourRelativeRecordDetailVO listRecord(@RequestBody FavourRelativeAO favourRelativeAO) {
+        return favourRelativeService.listRecord(favourRelativeAO);
+    }
 }

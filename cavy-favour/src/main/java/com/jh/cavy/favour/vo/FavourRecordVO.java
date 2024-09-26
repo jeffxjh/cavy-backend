@@ -1,18 +1,15 @@
 package com.jh.cavy.favour.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.jh.cavy.common.mybatisPlus.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
 @Setter
-public class FavourInoutPageVO extends BaseEntity {
+public class FavourRecordVO extends BaseEntity {
     /**
      * 主键
      */
@@ -41,10 +38,32 @@ public class FavourInoutPageVO extends BaseEntity {
      */
     private String bussType;
     private String bussTypeName;
+    private String relateType;
+    private String relateTypeName;
+    private String remarks;
 
     /**
      * 金额
      */
     private BigDecimal amt;
 
+    /**
+     * 创建时间
+     */
+    private Date addTime;
+
+    /**
+     * 创建人
+     */
+    private String addUser;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
+
+    /**
+     * 修改人
+     */
+    private String updateUser;
 }

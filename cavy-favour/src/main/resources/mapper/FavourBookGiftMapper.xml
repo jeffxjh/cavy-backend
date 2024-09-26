@@ -24,9 +24,25 @@
     <select id="queryPage" resultType="com.jh.cavy.favour.vo.FavourBookGiftVO">
         select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name,b.nick_name,b.relate_type,c.buss_type
         from t_bus_favour_book_gift a
-                 left join t_bus_favour_relative b on a.relate_user_id = b.id
-            left join t_bus_favour_book c on a.favour_book_id = c.id
+        left join t_bus_favour_relative b on a.relate_user_id = b.id
+        left join t_bus_favour_book c on a.favour_book_id = c.id
+        <if test="true">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
 
-        ${ew.customSqlSegment}
+    <select id="getGiftByUserId" resultType="com.jh.cavy.favour.vo.FavourRecordVO">
+        select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name relate_user_name,b.relate_type,c.buss_type,
+        d.label buss_type_name,
+        '收入' trade_type_name,
+        f.label relate_type_name
+        from t_bus_favour_book_gift a
+        left join t_bus_favour_relative b on a.relate_user_id = b.id
+        left join t_bus_favour_book c on a.favour_book_id = c.id
+        left join (select item,label from t_sys_dict_item where dic_id='17' ) d on d.item=c.buss_type
+        left join (select item,label from t_sys_dict_item where dic_id='18' ) f on f.item=b.relate_type
+        <if test="true">
+            ${ew.customSqlSegment}
+        </if>
     </select>
 </mapper>

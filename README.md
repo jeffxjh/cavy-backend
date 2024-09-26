@@ -18,6 +18,16 @@
 --env rabbitmq.port=5672
 --env redis.host=172.27.208.1
 --env redis.port=6379
+
+
+-Drabbitmq_host=gull.rmq.cloudamqp.com
+-Drabbitmq_username=yaxusosp
+-Drabbitmq_password=zJjIiIpISf6mVMI6ZeaBlBsrG0vIxJKs
+-Drabbitmq_virtualHost=yaxusosp
+-Dredis_host=apn1-viable-slug-34095.upstash.io
+-Dredis_password=b1e8d8fb94604eefa9293ae38576a0ce
+-Dredis_port=34095
+
 ````
 mysql_host=192.168.2.11
 mysql_port=6309
@@ -104,3 +114,12 @@ docker run -p 8011:8011 -v /opt/cavy-backend/lib:/cavy/lib --name cavy -d 镜像
 ````
 ### 前端接口文档
 http://localhost:8011/cavy/springdoc/swagger-ui/index.html#/
+
+
+### todo
+数据字典缓存
+通过系统启动时缓存字典
+再通过添加注解的形式加dto的字段做转换 fieldcode=>fieldname
+再监听字典增删改接口更新缓存
+
+

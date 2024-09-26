@@ -30,10 +30,12 @@
                d.label  buss_type_name,
                e.label  trade_type_name
         from t_bus_favour_record a
-            left join  t_bus_favour_relative  b on b.relate_user_id=a.relate_user_id and  b.user_id=a.current_user_id
+            left join  t_bus_favour_relative  b on b.id=a.relate_user_id and  b.user_id=a.current_user_id
             left join t_sys_user c on a.current_user_id=c.id
             left join (select item,label from t_sys_dict_item where dic_id='17' ) d on d.item=a.buss_type
             left join (select item,label from t_sys_dict_item where dic_id='16' ) e on e.item=a.trade_type
-                          ${ew.customSqlSegment}
+        <if test="true">
+            ${ew.customSqlSegment}
+        </if>
     </select>
 </mapper>

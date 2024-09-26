@@ -1,10 +1,12 @@
 package com.jh.cavy.favour.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.ao.FavourBookGiftAO;
@@ -15,6 +17,7 @@ import com.jh.cavy.favour.mapper.FavourBookMapper;
 import com.jh.cavy.favour.service.FavourBookService;
 import com.jh.cavy.favour.vo.FavourBookGiftVO;
 import com.jh.cavy.favour.vo.FavourBookVO;
+import com.jh.cavy.favour.vo.FavourRecordVO;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,7 @@ public class FavourBookServiceImpl extends ServiceImpl<FavourBookMapper, FavourB
     public Page<FavourBookVO> queryPage(FavourBookAO favourBookAO) {
         LambdaQueryWrapper<FavourBook> queryWrapper = Wrappers.<FavourBook>lambdaQuery();
         queryWrapper.like(StringUtils.isNotBlank(favourBookAO.getBussType()), FavourBook::getBussType, favourBookAO.getBussType());
+        queryWrapper.eq(FavourBook::getCurrentUserId, RequestHeadHolder.getUserId());
         Page<FavourBookAO> page = PageUtil.newPage(favourBookAO);
         return favourBookMapper.queryPage(page, queryWrapper);
     }
@@ -74,6 +78,12 @@ public class FavourBookServiceImpl extends ServiceImpl<FavourBookMapper, FavourB
         updateWrapper.set(FavourBookGift::getRelateUserId, favourBookGiftAO.getRelateUserId());
         updateWrapper.set(FavourBookGift::getRemarks, favourBookGiftAO.getRemarks());
         favourBookGiftMapper.update(updateWrapper);
+    }
+    @Override
+    public List<FavourRecordVO> getGiftByUserId() {
+        QueryWrapper<FavourBookGift> queryWrapper = Wrappers.query();
+        queryWrapper.eq("b.user_id",RequestHeadHolder.getUserId());
+        return favourBookGiftMapper.getGiftByUserId(queryWrapper);
     }
 }
 
