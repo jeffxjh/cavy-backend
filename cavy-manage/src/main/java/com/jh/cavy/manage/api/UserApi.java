@@ -1,25 +1,27 @@
 package com.jh.cavy.manage.api;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.NumberUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
 import com.jh.cavy.cache.service.CacheService;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.Result.ResultVO;
 import com.jh.cavy.jwt.JwtProperties;
 import com.jh.cavy.jwt.JwtTokenUtil;
 import com.jh.cavy.jwt.JwtUser;
+import com.jh.cavy.manage.config.WeixinProperties;
 import com.jh.cavy.manage.domain.User;
 import com.jh.cavy.manage.param.LoginParam;
-import com.jh.cavy.manage.param.QuestionParam;
 import com.jh.cavy.manage.param.UserParam;
 import com.jh.cavy.manage.service.RoleService;
 import com.jh.cavy.manage.service.UserService;
 import com.jh.cavy.manage.vo.RoleVO;
 import com.jh.cavy.manage.vo.UserInfoVO;
 import com.jh.cavy.manage.vo.UserVO;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,24 +31,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/user")
 @RestController
+@RequiredArgsConstructor
 public class UserApi {
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    @Resource
-    private UserService userService;
-    @Resource
-    private RoleService roleService;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserService userService;
+    private final RoleService roleService;
     @Resource(name = "${cache.use}")
     private CacheService cacheService;
-    @Resource
-    private JwtProperties jwtProperties;
-
+    private final JwtProperties jwtProperties;
+    private final WeixinProperties weixinProperties;
     //@GetMapping("/login")
     //public String auth0Login(@RequestParam String userName, @RequestParam String passWord, HttpServletResponse response) {
     //    String token = "";
@@ -81,11 +79,30 @@ public class UserApi {
         }
     }
 
+    public String getOpenId(String code) {
+        String requestUrl = weixinProperties.getGetOpenidUrl() + "?appid=" + weixinProperties.getAppId() + "&secret=" + weixinProperties.getSecretId() + "&js_code=" + code + "&grant_type=authorization_code";
+        HttpRequest get = HttpUtil.createGet(requestUrl);
+        HttpResponse response = get.execute();
+        return response.body();
+    }
+
     @PostMapping("/wechat/doLogin")
     public ResultVO<UserInfoVO> wechatDoLogin(@RequestBody LoginParam loginParam, HttpServletRequest request, HttpServletResponse response) {
-        if (StringUtils.isBlank(loginParam.getOpenid())) {
-            return new ResultVO<>(2000, "openid为空", new UserInfoVO());
+        if (StringUtils.isBlank(loginParam.getCode())) {
+            return new ResultVO<>(2000, "认证code为空", new UserInfoVO());
         }
+        //并不是真的openid是code
+        String openIdJson = getOpenId(loginParam.getCode());
+        if (StringUtils.isNotBlank(openIdJson)) {
+            Object openid = JSONUtil.parseObj(openIdJson).get("openid");
+            if (openid == null) {
+                return new ResultVO<>(2000, "认证code无效", new UserInfoVO());
+            }
+            loginParam.setOpenid(openid.toString());
+        }else {
+            return new ResultVO<>(2000, "用户登录失败未获取到openid", new UserInfoVO());
+        }
+
         //有token直接返回
         JwtUser jwtUser = jwtTokenUtil.validateToken(loginParam.getToken());
         if (jwtUser != null) {
