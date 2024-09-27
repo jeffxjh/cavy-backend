@@ -51,4 +51,23 @@
             ${ew.customSqlSegment}
         </if>
     </select>
+    <select id="getRelate" resultType="com.jh.cavy.favour.vo.FavourRelativeVO">
+        select b.id,
+               b.real_name,
+               b.nick_name,
+               b.relate_type,
+               b.user_id,
+               b.relate_user_id,
+               b.add_time,
+               b.add_user,
+               b.update_time,
+               b.update_user,
+               d.label     relate_type_name,
+               c.real_name relate_user_name
+        from t_bus_favour_relative b
+                 left join t_sys_user c on b.relate_user_id = c.id
+                 left join (select item, label from t_sys_dict_item where dic_id = '18') d on d.item = b.relate_type
+
+        where b.id = #{id}
+    </select>
 </mapper>

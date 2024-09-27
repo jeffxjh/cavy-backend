@@ -19,13 +19,15 @@ public interface FavourRelativeService extends IService<FavourRelative> {
 
     Page<FavourRelativeVO> queryPage(FavourRelativeAO favourRelativeAO);
 
-    void add(FavourRelativeAO favourRelativeAO);
+    FavourRelativeVO add(FavourRelativeAO favourRelativeAO);
 
     void del(List<Integer> ids);
 
-    void modify(FavourRelativeAO favourRelativeAO);
+    FavourRelativeVO modify(FavourRelativeAO favourRelativeAO);
 
     List<FavourRelativeVO> listRelative(FavourRelativeAO favourRelativeAO);
 
     FavourRelativeRecordDetailVO listRecord(FavourRelativeAO favourRelativeAO);
+
+    FavourRelativeVO getRelate(String id);
 }

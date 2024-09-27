@@ -1,5 +1,6 @@
 package com.jh.cavy.favour.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.ao.FavourBookGiftAO;
@@ -30,18 +31,23 @@ public class FavourController {
     }
 
     @PostMapping("/relate/add")
-    public void addDict(@RequestBody FavourRelativeAO favourRelativeAO) {
-        favourRelativeService.add(favourRelativeAO);
+    public FavourRelativeVO addRelate(@RequestBody FavourRelativeAO favourRelativeAO) {
+        return favourRelativeService.add(favourRelativeAO);
     }
 
     @DeleteMapping("/relate/del")
-    public void delDict(@RequestParam("ids") List<Integer> ids) {
-        favourRelativeService.del(ids);
+    public void delRelate(@RequestParam("ids") List<Integer> ids) {
+         favourRelativeService.del(ids);
     }
 
-    @PostMapping("/relate/update")
-    public void updateDict(@RequestBody FavourRelativeAO favourRelativeAO) {
-        favourRelativeService.modify(favourRelativeAO);
+    @PutMapping("/relate/update")
+    public FavourRelativeVO updateRelate(@RequestBody FavourRelativeAO favourRelativeAO) {
+        return favourRelativeService.modify(favourRelativeAO);
+    }
+
+    @GetMapping("/relate")
+    public FavourRelativeVO getRelate(@RequestParam("id") String id) {
+        return favourRelativeService.getRelate(id);
     }
 
     @PostMapping("/book")
@@ -78,6 +84,7 @@ public class FavourController {
     public ResultPage<FavourInoutPageVO> inoutPage(@RequestBody FavourInoutAO favourInoutAO) {
         return new ResultPage<>(favourRecordService.inoutPage(favourInoutAO));
     }
+
     @PostMapping("/inout/inoutHead")
     public FavourInoutHeadVO inoutHead(@RequestBody FavourInoutHeadVO favourInoutHeadVO) {
         return favourRecordService.inoutHead(favourInoutHeadVO);
@@ -87,6 +94,7 @@ public class FavourController {
     public List<FavourRelativeVO> listRelative(@RequestBody FavourRelativeAO favourRelativeAO) {
         return favourRelativeService.listRelative(favourRelativeAO);
     }
+
     @PostMapping("/relative/listRecord")
     public FavourRelativeRecordDetailVO listRecord(@RequestBody FavourRelativeAO favourRelativeAO) {
         return favourRelativeService.listRecord(favourRelativeAO);

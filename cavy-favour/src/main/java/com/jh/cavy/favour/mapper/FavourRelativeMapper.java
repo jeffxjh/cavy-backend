@@ -22,6 +22,8 @@ public interface FavourRelativeMapper extends BaseMapper<FavourRelative> {
     List<FavourRelativeVO> listRelative(@Param(Constants.WRAPPER)LambdaQueryWrapper<FavourRelative> lambdaQuery);
 
     List<FavourRecordVO> listRecord(@Param(Constants.WRAPPER) QueryWrapper<FavourRelative> queryWrapper);
+
+    FavourRelativeVO getRelate(@Param("id")String id);
 }
 
 

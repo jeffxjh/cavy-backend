@@ -9,10 +9,10 @@ import java.util.List;
 @Setter
 @Getter
 public class FavourRelativeRecordDetailVO implements Serializable {
-    private BigDecimal totalInAmt;
-    private Long totalInNum;
-    private BigDecimal totalOutAmt;
-    private Long totalOutNum;
+    private BigDecimal totalInAmt=BigDecimal.ZERO;
+    private Long totalInNum=0L;
+    private BigDecimal totalOutAmt=BigDecimal.ZERO;
+    private Long totalOutNum=0L;
     private List<FavourRecordVO> giftOutList;
     private List<FavourRecordVO> giftReceiveList;
     private List<FavourRecordVO> recordList;

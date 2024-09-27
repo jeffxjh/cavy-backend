@@ -1,5 +1,6 @@
 package com.jh.cavy.favour.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.jh.cavy.common.Resquest.RequestHeadHolder;
+import com.jh.cavy.common.exception.APIException;
 import com.jh.cavy.favour.ao.FavourRelativeAO;
 import com.jh.cavy.favour.domain.FavourRecord;
 import com.jh.cavy.favour.domain.FavourRelative;
@@ -24,10 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,18 +47,28 @@ public class FavourRelativeServiceImpl extends ServiceImpl<FavourRelativeMapper,
     }
 
     @Override
-    public void add(FavourRelativeAO favourRelativeAO) {
-
+    public FavourRelativeVO add(FavourRelativeAO favourRelativeAO) {
+        FavourRelative favourRelative = BeanUtil.copyProperties(favourRelativeAO, FavourRelative.class);
+        favourRelative.setUserId(RequestHeadHolder.getUserId().intValue());
+        favourRelative.setRelateType(Optional.ofNullable(favourRelative.getRelateType()).orElse(1));
+        favourRelativeMapper.insert(favourRelative);
+        return BeanUtil.copyProperties(favourRelative, FavourRelativeVO.class);
     }
 
     @Override
     public void del(List<Integer> ids) {
-
+         favourRelativeMapper.deleteByIds(ids);
     }
 
     @Override
-    public void modify(FavourRelativeAO favourRelativeAO) {
-
+    public FavourRelativeVO modify(FavourRelativeAO favourRelativeAO) {
+        FavourRelative favourRelative = favourRelativeMapper.selectById(favourRelativeAO.getId());
+        if (favourRelative == null) {
+            throw new APIException("更新的数据不存在");
+        }
+        BeanUtil.copyProperties(favourRelativeAO, favourRelative);
+        favourRelativeMapper.updateById(favourRelative);
+        return null;
     }
 
     @Override
@@ -68,7 +77,7 @@ public class FavourRelativeServiceImpl extends ServiceImpl<FavourRelativeMapper,
         lambdaQuery.eq(FavourRelative::getUserId, RequestHeadHolder.getUserId());
         List<FavourRelativeVO> favourRelativeList = favourRelativeMapper.listRelative(lambdaQuery);
         return favourRelativeList.stream().filter(Objects::nonNull)
-                       .peek(a -> a.setRelateUserNameFirstChar(Pinyin.toPinyin(a.getRealName().charAt(0)).substring(0,1))
+                       .peek(a -> a.setRelateUserNameFirstChar(Pinyin.toPinyin(a.getRealName().charAt(0)).substring(0, 1))
                        ).collect(Collectors.toList());
     }
 
@@ -89,18 +98,23 @@ public class FavourRelativeServiceImpl extends ServiceImpl<FavourRelativeMapper,
         FavourRelativeRecordDetailVO favourRelativeRecordDetailVO = new FavourRelativeRecordDetailVO();
         if (CollectionUtil.isNotEmpty(outRecordList)) {
             favourRelativeRecordDetailVO.setTotalOutAmt(outRecordList.stream().map(FavourRecordVO::getAmt)
-                                                     .filter(Objects::nonNull)
-                                                     .reduce(BigDecimal.ZERO, BigDecimal::add));
+                                                                .filter(Objects::nonNull)
+                                                                .reduce(BigDecimal.ZERO, BigDecimal::add));
             favourRelativeRecordDetailVO.setTotalOutNum((long) outRecordList.size());
         }
         if (CollectionUtil.isNotEmpty(intRecordList)) {
             favourRelativeRecordDetailVO.setTotalInAmt(intRecordList.stream().map(FavourRecordVO::getAmt)
-                                                    .filter(Objects::nonNull)
-                                                    .reduce(BigDecimal.ZERO, BigDecimal::add));
+                                                               .filter(Objects::nonNull)
+                                                               .reduce(BigDecimal.ZERO, BigDecimal::add));
             favourRelativeRecordDetailVO.setTotalInNum((long) intRecordList.size());
         }
         favourRelativeRecordDetailVO.setRecordList(favourRecordVOList);
         return favourRelativeRecordDetailVO;
+    }
+
+    @Override
+    public FavourRelativeVO getRelate(String id) {
+        return favourRelativeMapper.getRelate(id);
     }
 }
 
