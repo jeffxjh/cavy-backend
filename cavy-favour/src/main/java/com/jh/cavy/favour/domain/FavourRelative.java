@@ -5,19 +5,25 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.jh.cavy.common.mybatisPlus.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 人情管理-亲友表
  *
  * @TableName t_bus_favour_relative
  */
+
+@Setter
+@Getter
 @TableName(value = "t_bus_favour_relative")
-@Data
-public class FavourRelative implements Serializable {
+public class FavourRelative extends BaseEntity {
     /**
      * 主键
      */
@@ -48,26 +54,8 @@ public class FavourRelative implements Serializable {
      */
     private Integer relateUserId;
 
-    /**
-     * 创建时间
-     */
-    private Date addTime;
 
-    /**
-     * 创建人
-     */
-    private String addUser;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 修改人
-     */
-    private String updateUser;
-
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

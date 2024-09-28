@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jh.cavy.favour.vo.FavourBookVO;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
 * @author jeffx
 * @description 针对表【t_bus_favour_book(人情管理-礼薄表)】的数据库操作Mapper
@@ -18,6 +20,8 @@ import org.apache.ibatis.annotations.Param;
 public interface FavourBookMapper extends BaseMapper<FavourBook> {
 
     Page<FavourBookVO> queryPage(Page<FavourBookAO> favourBookAOPage,@Param(Constants.WRAPPER) LambdaQueryWrapper<FavourBook> queryWrapper);
+
+    List<FavourBookVO> bookList(@Param(Constants.WRAPPER) LambdaQueryWrapper<FavourBook> objectLambdaQueryWrapper);
 }
 
 

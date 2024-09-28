@@ -1,5 +1,6 @@
 package com.jh.cavy.favour.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -8,11 +9,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.favour.ao.FavourInoutAO;
+import com.jh.cavy.favour.ao.FavourRecordAO;
+import com.jh.cavy.favour.domain.FavourBook;
 import com.jh.cavy.favour.domain.FavourRecord;
 import com.jh.cavy.favour.mapper.FavourRecordMapper;
 import com.jh.cavy.favour.service.FavourRecordService;
+import com.jh.cavy.favour.vo.FavourBookVO;
 import com.jh.cavy.favour.vo.FavourInoutHeadVO;
 import com.jh.cavy.favour.vo.FavourInoutPageVO;
+import com.jh.cavy.favour.vo.FavourRecordVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +41,7 @@ public class FavourRecordServiceImpl extends ServiceImpl<FavourRecordMapper, Fav
     public Page<FavourInoutPageVO> inoutPage(FavourInoutAO favourInoutAO) {
         Long userId = RequestHeadHolder.getUserId();
         LambdaQueryWrapper<FavourRecord> queryWrapper = Wrappers.lambdaQuery(FavourRecord.class);
-        queryWrapper.eq(FavourRecord::getCurrentUserId, userId);
+        queryWrapper.eq(FavourRecord::getCurrentUserId, userId).orderByDesc(FavourRecord::getAddTime);
         return favourRecordMapper.inoutPage(PageUtil.newPage(favourInoutAO), queryWrapper);
     }
 
@@ -45,7 +50,7 @@ public class FavourRecordServiceImpl extends ServiceImpl<FavourRecordMapper, Fav
         Long userId = RequestHeadHolder.getUserId();
         LambdaQueryWrapper<FavourRecord> queryWrapper = Wrappers.lambdaQuery(FavourRecord.class);
         queryWrapper.eq(FavourRecord::getCurrentUserId, userId);
-        List<FavourRecord> favourRecordList = favourRecordMapper.selectList(queryWrapper);
+        List<FavourRecord> favourRecordList = favourRecordMapper.inoutHead(queryWrapper);
         Map<String, List<FavourRecord>> inoutMap = favourRecordList.stream().collect(Collectors.groupingBy(FavourRecord::getTradeType));
         List<FavourRecord> outRecordList = inoutMap.get("1");
         List<FavourRecord> intRecordList = inoutMap.get("0");
@@ -63,6 +68,19 @@ public class FavourRecordServiceImpl extends ServiceImpl<FavourRecordMapper, Fav
             favourInoutHeadVO.setTotalInNum((long) intRecordList.size());
         }
         return favourInoutHeadVO;
+    }
+
+    @Override
+    public FavourRecordVO updateRecord(FavourRecordAO favourRecordAO) {
+        return null;
+    }
+
+    @Override
+    public FavourRecordVO addRecord(FavourRecordAO favourRecordAO) {
+        FavourRecord favourRecord = BeanUtil.copyProperties(favourRecordAO, FavourRecord.class);
+        favourRecord.setCurrentUserId(RequestHeadHolder.getUserId().intValue());
+        favourRecordMapper.insert(favourRecord);
+        return BeanUtil.copyProperties(favourRecord, FavourRecordVO.class);
     }
 }
 

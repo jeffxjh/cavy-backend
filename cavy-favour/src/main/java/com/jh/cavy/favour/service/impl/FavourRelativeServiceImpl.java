@@ -90,7 +90,7 @@ public class FavourRelativeServiceImpl extends ServiceImpl<FavourRelativeMapper,
         lambdaQuery.eq("user_id", RequestHeadHolder.getUserId());
         lambdaQuery.eq("b.id", favourRelativeAO.getId());
         List<FavourRecordVO> favourRecordVOList = favourRelativeMapper.listRecord(lambdaQuery);
-        List<FavourRecordVO> giftByUserId = favourBookService.getGiftByUserId();
+        List<FavourRecordVO> giftByUserId = favourBookService.getGiftByUserId(favourRelativeAO.getId());
         favourRecordVOList.addAll(giftByUserId);
         Map<String, List<FavourRecordVO>> collect = favourRecordVOList.stream().collect(Collectors.groupingBy(FavourRecordVO::getTradeType));
         List<FavourRecordVO> outRecordList = collect.get("1");

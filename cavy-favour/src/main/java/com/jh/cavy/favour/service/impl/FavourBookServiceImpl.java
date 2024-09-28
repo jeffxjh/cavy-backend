@@ -1,5 +1,6 @@
 package com.jh.cavy.favour.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jh.cavy.common.Resquest.RequestHeadHolder;
+import com.jh.cavy.common.exception.APIException;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.ao.FavourBookGiftAO;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -45,18 +48,28 @@ public class FavourBookServiceImpl extends ServiceImpl<FavourBookMapper, FavourB
     }
 
     @Override
-    public void addBook(FavourBookAO favourBookAO) {
-
+    public FavourBookVO addBook(FavourBookAO favourBookAO) {
+        FavourBook favourBook = BeanUtil.copyProperties(favourBookAO, FavourBook.class);
+        favourBook.setCurrentUserId(RequestHeadHolder.getUserId().intValue());
+        favourBook.setAmt(BigDecimal.ZERO);
+        favourBookMapper.insert(favourBook);
+        return BeanUtil.copyProperties(favourBook, FavourBookVO.class);
     }
 
     @Override
     public void delBook(List<Integer> ids) {
-
+        favourBookMapper.deleteByIds(ids);
+        favourBookGiftMapper.delete(Wrappers.<FavourBookGift>lambdaUpdate().in(FavourBookGift::getFavourBookId, ids));
     }
 
     @Override
     public void modifyBook(FavourBookAO favourBookAO) {
-
+        FavourBook favourBook = favourBookMapper.selectById(favourBookAO.getId());
+        if (favourBook == null) {
+            throw new APIException("更新的数据不存在");
+        }
+        BeanUtil.copyProperties(favourBookAO, favourBook);
+        favourBookMapper.updateById(favourBook);
     }
 
     @Override
@@ -79,11 +92,29 @@ public class FavourBookServiceImpl extends ServiceImpl<FavourBookMapper, FavourB
         updateWrapper.set(FavourBookGift::getRemarks, favourBookGiftAO.getRemarks());
         favourBookGiftMapper.update(updateWrapper);
     }
+
     @Override
-    public List<FavourRecordVO> getGiftByUserId() {
+    public List<FavourRecordVO> getGiftByUserId(Integer id) {
         QueryWrapper<FavourBookGift> queryWrapper = Wrappers.query();
-        queryWrapper.eq("b.user_id",RequestHeadHolder.getUserId());
+        queryWrapper.eq("b.user_id", RequestHeadHolder.getUserId());
+        queryWrapper.eq(id != null, "b.id", id);
         return favourBookGiftMapper.getGiftByUserId(queryWrapper);
+    }
+
+    @Override
+    public List<FavourBookVO> bookList(FavourBookAO favourBookAO) {
+        return favourBookMapper.bookList(Wrappers.lambdaQuery());
+    }
+
+    @Override
+    public void addBookGift(FavourBookGiftAO favourBookGiftAO) {
+        FavourBookGift favourBookGift = BeanUtil.copyProperties(favourBookGiftAO, FavourBookGift.class);
+        favourBookGiftMapper.insert(favourBookGift);
+    }
+
+    @Override
+    public void delBookGift(List<Integer> ids) {
+        favourBookGiftMapper.deleteByIds(ids);
     }
 }
 

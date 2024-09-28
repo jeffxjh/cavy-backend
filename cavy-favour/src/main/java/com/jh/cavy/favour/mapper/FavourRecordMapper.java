@@ -10,15 +10,19 @@ import com.jh.cavy.favour.vo.FavourInoutHeadVO;
 import com.jh.cavy.favour.vo.FavourInoutPageVO;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
-* @author jeffx
-* @description 针对表【t_bus_favour_record(人情管理-人情记录表)】的数据库操作Mapper
-* @createDate 2024-09-20 22:36:16
-* @Entity com.jh.cavy.manage.domain.TBusFavourRecord
-*/
+ * @author jeffx
+ * @description 针对表【t_bus_favour_record(人情管理-人情记录表)】的数据库操作Mapper
+ * @createDate 2024-09-20 22:36:16
+ * @Entity com.jh.cavy.manage.domain.TBusFavourRecord
+ */
 public interface FavourRecordMapper extends BaseMapper<FavourRecord> {
 
-    Page<FavourInoutPageVO> inoutPage(Page<FavourInoutAO> favourInoutAOPage, @Param(Constants.WRAPPER)  LambdaQueryWrapper<FavourRecord> queryWrapper);
+    Page<FavourInoutPageVO> inoutPage(Page<FavourInoutAO> favourInoutAOPage, @Param(Constants.WRAPPER) LambdaQueryWrapper<FavourRecord> queryWrapper);
+
+    List<FavourRecord> inoutHead(@Param(Constants.WRAPPER) LambdaQueryWrapper<FavourRecord> queryWrapper);
 }
 
 

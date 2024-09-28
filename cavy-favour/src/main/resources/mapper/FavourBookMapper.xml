@@ -7,8 +7,11 @@
     <resultMap id="BaseResultMap" type="com.jh.cavy.favour.domain.FavourBook">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="currentUserId" column="current_user_id" jdbcType="INTEGER"/>
-        <result property="bussType" column="buss_type" jdbcType="CHAR"/>
+        <result property="bussType" column="buss_type" jdbcType="VARCHAR"/>
+        <result property="bussName" column="buss_name" jdbcType="VARCHAR"/>
+        <result property="bussDate" column="buss_date" jdbcType="DATE"/>
         <result property="amt" column="amt" jdbcType="DECIMAL"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
         <result property="addUser" column="add_user" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
@@ -17,7 +20,7 @@
 
     <sql id="Base_Column_List">
         id,current_user_id,
-        buss_type,amt,add_time,
+        buss_type,buss_name,buss_date,amt,add_time,remark,
         add_user,update_time,update_user
     </sql>
 
@@ -31,17 +34,50 @@
     <resultMap id="ResultMapDetail" type="com.jh.cavy.favour.vo.FavourBookVO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="current_user_id" jdbcType="VARCHAR" property="currentUserId"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="buss_type" jdbcType="VARCHAR" property="bussType"/>
+        <result column="buss_name" jdbcType="VARCHAR" property="bussName"/>
+        <result column="buss_date" jdbcType="DATE" property="bussDate"/>
         <!--        关联查询的sql传递参数-->
         <collection property="giftList" ofType="Integer" column="{id=id,currentUserId=current_user_id}" javaType="arraylist"
                     select="selectGiftByBookIdLight">
         </collection>
     </resultMap>
     <select id="queryPage" resultType="com.jh.cavy.favour.vo.FavourBookVO" resultMap="ResultMapDetail">
-        select
-        <include refid="Base_Column_List"/>
+        select a.id,
+        current_user_id,
+        buss_type,
+        COALESCE(a.buss_name, b.label) buss_name,
+        buss_date,
+        amt,
+        add_time,
+        add_user,
+        update_time,
+        update_user,
+        remark
         from t_bus_favour_book a
-        ${ew.customSqlSegment}
+        left join (select item,label from t_sys_dict_item where dic_id='17' )b on b.item=a.buss_type
+        <if test="true">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+    <select id="bookList" resultType="com.jh.cavy.favour.vo.FavourBookVO">
+        select a.id,
+        current_user_id,
+        buss_type,
+        COALESCE(a.buss_name, b.label) buss_name,
+        buss_date,
+        amt,
+        add_time,
+        add_user,
+        update_time,
+        update_user,
+        remark
+        from t_bus_favour_book a
+        left join (select item,label from t_sys_dict_item where dic_id='17' )b on b.item=a.buss_type
+        <if test="true">
+            ${ew.customSqlSegment}
+        </if>
     </select>
 
 

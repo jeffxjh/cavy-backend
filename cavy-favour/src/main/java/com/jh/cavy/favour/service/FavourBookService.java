@@ -21,7 +21,7 @@ public interface FavourBookService extends IService<FavourBook> {
 
     Page<FavourBookVO> queryPage(FavourBookAO favourBookAO);
 
-    void addBook(FavourBookAO favourBookAO);
+    FavourBookVO addBook(FavourBookAO favourBookAO);
 
     void delBook(List<Integer> ids);
 
@@ -31,5 +31,11 @@ public interface FavourBookService extends IService<FavourBook> {
 
     void updateBookGift(FavourBookGiftAO favourBookGiftAO);
 
-    List<FavourRecordVO> getGiftByUserId();
+    List<FavourRecordVO> getGiftByUserId(Integer id);
+
+    List<FavourBookVO> bookList(FavourBookAO favourBookAO);
+
+    void addBookGift(FavourBookGiftAO favourBookGiftAO);
+
+    void delBookGift(List<Integer> ids);
 }

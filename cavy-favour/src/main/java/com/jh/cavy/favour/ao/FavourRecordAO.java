@@ -1,6 +1,7 @@
-package com.jh.cavy.favour.vo;
+package com.jh.cavy.favour.ao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jh.cavy.common.Resquest.BaseParam;
 import com.jh.cavy.common.mybatisPlus.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class FavourRecordVO extends BaseEntity {
+public class FavourRecordAO extends BaseParam {
     /**
      * 主键
      */
@@ -64,4 +65,23 @@ public class FavourRecordVO extends BaseEntity {
      */
     private BigDecimal amt;
 
+    /**
+     * 创建时间
+     */
+    private Date addTime;
+
+    /**
+     * 创建人
+     */
+    private String addUser;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
+
+    /**
+     * 修改人
+     */
+    private String updateUser;
 }

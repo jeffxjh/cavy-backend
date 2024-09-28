@@ -4,18 +4,25 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.jh.cavy.common.mybatisPlus.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 人情管理-人情记录表
  * @TableName t_bus_favour_record
  */
+@Setter
+@Getter
 @TableName(value ="t_bus_favour_record")
-@Data
-public class FavourRecord implements Serializable {
+public class FavourRecord extends BaseEntity {
     /**
      * 主键
      */
@@ -47,26 +54,9 @@ public class FavourRecord implements Serializable {
      */
     private BigDecimal amt;
 
-    /**
-     * 创建时间
-     */
-    private Date addTime;
 
-    /**
-     * 创建人
-     */
-    private String addUser;
 
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 修改人
-     */
-    private String updateUser;
-
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

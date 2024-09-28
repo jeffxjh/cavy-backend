@@ -22,7 +22,7 @@
         update_time,update_user,remarks
     </sql>
     <select id="queryPage" resultType="com.jh.cavy.favour.vo.FavourBookGiftVO">
-        select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name,b.nick_name,b.relate_type,c.buss_type
+        select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name,b.nick_name,b.relate_type,c.buss_type,c.buss_date,c.remark,c.buss_name
         from t_bus_favour_book_gift a
         left join t_bus_favour_relative b on a.relate_user_id = b.id
         left join t_bus_favour_book c on a.favour_book_id = c.id
@@ -32,8 +32,9 @@
     </select>
 
     <select id="getGiftByUserId" resultType="com.jh.cavy.favour.vo.FavourRecordVO">
-        select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name relate_user_name,b.relate_type,c.buss_type,
-        d.label buss_type_name,
+        select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name
+        relate_user_name,b.relate_type,c.buss_type,c.buss_name,c.buss_date,c.remark,
+        COALESCE(d.label, c.buss_name) buss_type_name,
         '收入' trade_type_name,
         '0' trade_type,
         f.label relate_type_name,
