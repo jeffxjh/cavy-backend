@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
-@Configuration
+@Component
 @RequiredArgsConstructor
 public class CaffeineHandle implements CacheService {
     private final Cache<String, Object> caffeineCache;
@@ -31,7 +31,7 @@ public class CaffeineHandle implements CacheService {
 
     @Override
     public boolean hasKey(String key) {
-        return caffeineCache.getIfPresent(key)!=null;
+        return caffeineCache.getIfPresent(key) != null;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class CaffeineHandle implements CacheService {
 
     @Override
     public Object hget(String key, String item) {
-        return caffeineCache.asMap().get(key+item);
+        return caffeineCache.asMap().get(key + item);
     }
 
     @Override
@@ -88,13 +88,13 @@ public class CaffeineHandle implements CacheService {
 
     @Override
     public boolean hset(String key, String item, Object value) {
-        caffeineCache.put(key+item,value);
+        caffeineCache.put(key + item, value);
         return true;
     }
 
     @Override
     public boolean hset(String key, String item, Object value, long time) {
-        return hset(key,item,value);
+        return hset(key, item, value);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class CaffeineHandle implements CacheService {
     }
 
     @Override
-    public RedisTemplate getRedisTemplate() {
+    public RedisTemplate redisTemplate() {
         return null;
     }
 

@@ -41,8 +41,7 @@ public class UserApi {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
     private final RoleService roleService;
-    @Resource(name = "${cache.use}")
-    private CacheService cacheService;
+    private final CacheService cacheService;
     private final JwtProperties jwtProperties;
     private final WeixinProperties weixinProperties;
     //@GetMapping("/login")

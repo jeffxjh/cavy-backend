@@ -1,9 +1,10 @@
 package com.jh.cavy.cache.service.impl;
 
 import com.jh.cavy.cache.service.CacheService;
-import org.springframework.context.annotation.Configuration;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
@@ -11,20 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-@Configuration
-public class RedisHandle implements CacheService {
-
-    private final RedisTemplate<String, Object> redisTemplate;
-
-    public RedisHandle(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
-    @Override
-    public RedisTemplate<String, Object> getRedisTemplate() {
-        return this.redisTemplate;
-    }
+@Component
+public record RedisHandle(RedisTemplate<String, Object> redisTemplate) implements CacheService {
 
     @Override
     public boolean expire(String key, long time) {

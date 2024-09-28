@@ -374,7 +374,7 @@ public interface CacheService {
      *
      * @return
      */
-    RedisTemplate getRedisTemplate();
+    RedisTemplate redisTemplate();
 
     Number execute(DefaultRedisScript<Number> script, List keys, Object... args);
 }

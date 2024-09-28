@@ -2,6 +2,7 @@ package com.jh.cavy.manage.api;
 
 import cn.hutool.core.util.StrUtil;
 import com.jh.cavy.cache.service.CacheService;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,10 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/business")
 @RestController
+@RequiredArgsConstructor
 public class BusinessApi {
     private static final String KEY = "business";
-    @Resource(name="${cache.use}")
-    private CacheService cacheService;
+    private final CacheService cacheService;
 
 
     @GetMapping("/")

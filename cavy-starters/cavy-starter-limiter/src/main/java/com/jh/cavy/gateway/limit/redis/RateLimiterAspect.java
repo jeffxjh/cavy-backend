@@ -26,7 +26,7 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class RateLimiterAspect {
-    @Resource(name="${cache.use}")
+    @Resource
     private CacheService cacheService;
 
     private static final ThreadLocal<String> ipThreadLocal = new ThreadLocal<>();

@@ -26,8 +26,7 @@ public class AppAfterRun implements CommandLineRunner {
     private final ApplicationContext applicationContext;
     private final DictService dictService;
     private final DictItemService dictItemService;
-    @Resource(name = "${cache.use}")
-    private CacheService cacheService;
+    private final CacheService cacheService;
 
     @Override
     public void run(String... args) throws Exception {

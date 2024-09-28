@@ -5,6 +5,7 @@ import com.jh.cavy.cache.service.CacheService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -26,8 +27,8 @@ public class JwtTokenUtil implements InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(JwtTokenUtil.class);
     private final JwtProperties jwtProperties;
     private Key key;
-    @Resource(name="${cache.use}")
-    private CacheService cacheService;
+    @Resource
+    private  CacheService cacheService;
 
     @Autowired
     public JwtTokenUtil(JwtProperties jwtProperties) {
