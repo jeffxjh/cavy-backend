@@ -18,8 +18,8 @@
     </resultMap>
 
     <sql id="recordAndGift">
-        select *
-        from (select a.id,
+        SELECT *
+        FROM (SELECT a.id,
                      a.current_user_id,
                      a.relate_user_id,
                      a.trade_type,
@@ -29,43 +29,39 @@
                      a.add_user,
                      a.update_time,
                      a.update_user,
-                     b.real_name relate_user_name,
-                     c.real_name current_user_name,
-                     d.label     buss_type_name,
-                     e.label     trade_type_name,
-                     'record'    source
-              from t_bus_favour_record a
-                       left join t_bus_favour_relative b on b.id = a.relate_user_id and b.user_id = a.current_user_id
-                       left join t_sys_user c on a.current_user_id = c.id
-                       left join (select item, label from t_sys_dict_item where dic_id = '17') d on d.item = a.buss_type
-                       left join (select item, label from t_sys_dict_item where dic_id = '16') e
-                                 on e.item = a.trade_type
+                     b.real_name AS relate_user_name,
+                     c.real_name AS current_user_name,
+                     d.label     AS buss_type_name,
+                     e.label     AS trade_type_name,
+                     'record'    AS source
+              FROM t_bus_favour_record a
+                       LEFT JOIN t_bus_favour_relative b ON b.id = a.relate_user_id AND b.user_id = a.current_user_id
+                       LEFT JOIN t_sys_user c ON a.current_user_id = c.id
+                       LEFT JOIN t_sys_dict_item d ON d.item = a.buss_type AND d.dic_id = '17'
+                       LEFT JOIN t_sys_dict_item e ON e.item = a.trade_type AND e.dic_id = '16'
 
-              union all
+              UNION ALL
 
-              select b.id,
+              SELECT b.id,
                      a.current_user_id,
                      b.relate_user_id,
-                     '0'                            trade_type,
-                     ''
-                                                    buss_type,
+                     '0'                            AS trade_type,
+                     ''                             AS buss_type,
                      b.amt,
                      b.add_time,
                      b.add_user,
                      b.update_time,
                      b.update_time,
-                     d.real_name                    relate_user_name,
-                     c.real_name
-                                                    current_user_name,
-                     COALESCE(e.label, a.buss_name) buss_type_name,
-                     '收入'                         trade_type_name,
-                     'gift'                         source
-              from t_bus_favour_book a
-                       right join t_bus_favour_book_gift b on a.id = b.favour_book_id
-                       left join t_bus_favour_relative d on d.id = b.relate_user_id and d.user_id = a.current_user_id
-                       left join t_sys_user c on a.current_user_id = c.id
-                       left join (select item, label from t_sys_dict_item where dic_id = '17') e
-                                 on e.item = a.buss_type) t
+                     d.real_name                    AS relate_user_name,
+                     c.real_name                    AS current_user_name,
+                     COALESCE(e.label, a.buss_name) AS buss_type_name,
+                     '收入'                         AS trade_type_name,
+                     'gift'                         AS source
+              FROM t_bus_favour_book a
+                       RIGHT JOIN t_bus_favour_book_gift b ON a.id = b.favour_book_id
+                       LEFT JOIN t_bus_favour_relative d ON d.id = b.relate_user_id AND d.user_id = a.current_user_id
+                       LEFT JOIN t_sys_user c ON a.current_user_id = c.id
+                       LEFT JOIN t_sys_dict_item e ON e.item = a.buss_type AND e.dic_id = '17') t
     </sql>
 
     <sql id="Base_Column_List">

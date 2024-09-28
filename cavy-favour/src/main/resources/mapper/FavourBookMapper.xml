@@ -44,37 +44,42 @@
         </collection>
     </resultMap>
     <select id="queryPage" resultType="com.jh.cavy.favour.vo.FavourBookVO" resultMap="ResultMapDetail">
-        select a.id,
-        current_user_id,
-        buss_type,
-        COALESCE(a.buss_name, b.label) buss_name,
-        buss_date,
-        amt,
-        add_time,
-        add_user,
-        update_time,
-        update_user,
-        remark
-        from t_bus_favour_book a
-        left join (select item,label from t_sys_dict_item where dic_id='17' )b on b.item=a.buss_type
+        SELECT
+        a.id,
+        a.current_user_id,
+        a.buss_type,
+        COALESCE(a.buss_name, b.label) AS buss_name,
+        a.buss_date,
+        a.amt,
+        a.add_time,
+        a.add_user,
+        a.update_time,
+        a.update_user,
+        a.remark
+        FROM
+        t_bus_favour_book a
+        LEFT JOIN t_sys_dict_item b ON b.item = a.buss_type AND b.dic_id = '17'
         <if test="true">
             ${ew.customSqlSegment}
         </if>
     </select>
     <select id="bookList" resultType="com.jh.cavy.favour.vo.FavourBookVO">
-        select a.id,
-        current_user_id,
-        buss_type,
-        COALESCE(a.buss_name, b.label) buss_name,
-        buss_date,
-        amt,
-        add_time,
-        add_user,
-        update_time,
-        update_user,
-        remark
-        from t_bus_favour_book a
-        left join (select item,label from t_sys_dict_item where dic_id='17' )b on b.item=a.buss_type
+        sql
+        SELECT
+        a.id,
+        a.current_user_id,
+        a.buss_type,
+        COALESCE(a.buss_name, b.label) AS buss_name,
+        a.buss_date,
+        a.amt,
+        a.add_time,
+        a.add_user,
+        a.update_time,
+        a.update_user,
+        a.remark
+        FROM
+        t_bus_favour_book a
+        LEFT JOIN t_sys_dict_item b ON b.item = a.buss_type AND b.dic_id = '17';
         <if test="true">
             ${ew.customSqlSegment}
         </if>

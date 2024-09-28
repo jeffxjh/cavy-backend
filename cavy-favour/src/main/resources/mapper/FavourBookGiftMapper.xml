@@ -32,18 +32,28 @@
     </select>
 
     <select id="getGiftByUserId" resultType="com.jh.cavy.favour.vo.FavourRecordVO">
-        select a.id,a.amt,a.remarks,a.relate_user_id, b.real_name
-        relate_user_name,b.relate_type,c.buss_type,c.buss_name,c.buss_date,c.remark,
-        COALESCE(d.label, c.buss_name) buss_type_name,
-        '收入' trade_type_name,
-        '0' trade_type,
-        f.label relate_type_name,
+        SELECT
+        a.id,
+        a.amt,
+        a.remarks,
+        a.relate_user_id,
+        b.real_name AS relate_user_name,
+        b.relate_type,
+        c.buss_type,
+        c.buss_name,
+        c.buss_date,
+        c.remark,
+        COALESCE(d.label, c.buss_name) AS buss_type_name,
+        '收入' AS trade_type_name,
+        '0' AS trade_type,
+        f.label AS relate_type_name,
         a.add_time
-        from t_bus_favour_book_gift a
-        left join t_bus_favour_relative b on a.relate_user_id = b.id
-        left join t_bus_favour_book c on a.favour_book_id = c.id
-        left join (select item,label from t_sys_dict_item where dic_id='17' ) d on d.item=c.buss_type
-        left join (select item,label from t_sys_dict_item where dic_id='18' ) f on f.item=b.relate_type
+        FROM
+        t_bus_favour_book_gift a
+        LEFT JOIN t_bus_favour_relative b ON a.relate_user_id = b.id
+        LEFT JOIN t_bus_favour_book c ON a.favour_book_id = c.id
+        LEFT JOIN t_sys_dict_item d ON d.item = c.buss_type AND d.dic_id = '17'
+        LEFT JOIN t_sys_dict_item f ON f.item = b.relate_type AND f.dic_id = '18'
         <if test="true">
             ${ew.customSqlSegment}
         </if>
