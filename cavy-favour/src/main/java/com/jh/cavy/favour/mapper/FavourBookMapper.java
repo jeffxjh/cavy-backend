@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.domain.FavourBook;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jh.cavy.favour.dto.FavourBookParams;
 import com.jh.cavy.favour.vo.FavourBookVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +20,7 @@ import java.util.List;
 */
 public interface FavourBookMapper extends BaseMapper<FavourBook> {
 
-    Page<FavourBookVO> queryPage(Page<FavourBookAO> favourBookAOPage,@Param(Constants.WRAPPER) LambdaQueryWrapper<FavourBook> queryWrapper);
+    Page<FavourBookVO> queryPage(Page<FavourBookParams> favourBookParamsPage, @Param(Constants.WRAPPER) LambdaQueryWrapper<FavourBook> queryWrapper);
 
     List<FavourBookVO> bookList(@Param(Constants.WRAPPER) LambdaQueryWrapper<FavourBook> objectLambdaQueryWrapper);
 }

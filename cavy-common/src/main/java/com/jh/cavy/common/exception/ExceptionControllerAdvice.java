@@ -1,6 +1,7 @@
 package com.jh.cavy.common.exception;
 
 import com.jh.cavy.common.Result.ResultVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
@@ -17,13 +19,6 @@ public class ExceptionControllerAdvice {
         // 注意哦，这里返回类型是自定义响应体
         return new ResultVO<>(e.getCode(), "响应失败", e.getMsg());
     }
-
-    //@ExceptionHandler(MethodArgumentNotValidException.class)
-    //public ResultVO<String> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-    //    ObjectError objectError = e.getBindingResult().getAllErrors().get(0);
-    //    // 注意哦，这里返回类型是自定义响应体
-    //    return new ResultVO<>(1001, "参数校验失败", objectError.getDefaultMessage());
-    //}
 
     @ExceptionHandler(ExpiredJwtException.class)
     public ResultVO<String> ExpiredJwtExceptionHandler(ExpiredJwtException e) {

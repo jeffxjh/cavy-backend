@@ -1,15 +1,15 @@
 package com.jh.cavy.favour.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.favour.ao.*;
+import com.jh.cavy.favour.dto.FavourBookParams;
 import com.jh.cavy.favour.service.FavourBookService;
 import com.jh.cavy.favour.service.FavourRecordService;
 import com.jh.cavy.favour.service.FavourRelativeService;
 import com.jh.cavy.favour.vo.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,18 +69,33 @@ public class FavourController {
     }
 
     @PostMapping("/book")
-    public ResultPage<FavourBookVO> bookPage(@RequestBody FavourBookAO favourBookAO) {
-        return new ResultPage<>(favourBookService.queryPage(favourBookAO));
+    public ResultPage<FavourBookVO> bookPage(@RequestBody @Validated FavourBookParams favourBookParams) {
+        return new ResultPage<>(favourBookService.queryPage(favourBookParams));
     }
 
     @PostMapping("/book/list")
-    public List<FavourBookVO> bookList(@RequestBody FavourBookAO favourBookAO) {
-        return favourBookService.bookList(favourBookAO);
+    public List<FavourBookVO> bookList(@RequestBody @Validated FavourBookParams favourBookParams) {
+        return favourBookService.bookList(favourBookParams);
     }
 
     @PostMapping("/book/giftReceive/queryPage")
-    public ResultPage<FavourBookGiftVO> giftReceivePage(@RequestBody FavourBookAO favourBookAO) {
-        return new ResultPage<>(favourBookService.giftReceivePage(favourBookAO));
+    public ResultPage<FavourBookGiftVO> giftReceivePage(@RequestBody @Validated FavourBookParams favourBookParams) {
+        return new ResultPage<>(favourBookService.giftReceivePage(favourBookParams));
+    }
+
+    @PostMapping("/book/add")
+    public FavourBookVO addBook(@RequestBody @Validated FavourBookAO favourBookAO) {
+        return favourBookService.addBook(favourBookAO);
+    }
+
+    @DeleteMapping("/book/del")
+    public void delBook(@RequestParam("ids") List<Integer> ids) {
+        favourBookService.delBook(ids);
+    }
+
+    @PostMapping("/book/update")
+    public void modifyBook(@RequestBody @Validated FavourBookAO favourBookAO) {
+        favourBookService.modifyBook(favourBookAO);
     }
 
     @PostMapping("/book/updateBookGift")
@@ -98,20 +113,6 @@ public class FavourController {
         favourBookService.delBookGift(ids);
     }
 
-    @PostMapping("/book/add")
-    public FavourBookVO addBook(@RequestBody FavourBookAO favourBookAO) {
-        return favourBookService.addBook(favourBookAO);
-    }
-
-    @DeleteMapping("/book/del")
-    public void delBook(@RequestParam("ids") List<Integer> ids) {
-        favourBookService.delBook(ids);
-    }
-
-    @PostMapping("/book/update")
-    public void modifyBook(@RequestBody FavourBookAO favourBookAO) {
-        favourBookService.modifyBook(favourBookAO);
-    }
 
     @PostMapping("/inout/inoutPage")
     public ResultPage<FavourInoutPageVO> inoutPage(@RequestBody FavourInoutAO favourInoutAO) {

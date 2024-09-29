@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.domain.FavourBookGift;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jh.cavy.favour.dto.FavourBookParams;
 import com.jh.cavy.favour.vo.FavourBookGiftVO;
 import com.jh.cavy.favour.vo.FavourBookVO;
 import com.jh.cavy.favour.vo.FavourRecordVO;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 public interface FavourBookGiftMapper extends BaseMapper<FavourBookGift> {
 
-    Page<FavourBookGiftVO> queryPage(Page<FavourBookAO> page, @Param(Constants.WRAPPER) Wrapper<FavourBookGift> wrapper);
+    Page<FavourBookGiftVO> queryPage(Page<FavourBookParams> page, @Param(Constants.WRAPPER) Wrapper<FavourBookGift> wrapper);
 
     List<FavourRecordVO> getGiftByUserId(@Param(Constants.WRAPPER) QueryWrapper<FavourBookGift> queryWrapper);
 

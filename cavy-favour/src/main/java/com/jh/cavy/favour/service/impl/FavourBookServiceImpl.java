@@ -14,6 +14,7 @@ import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.ao.FavourBookGiftAO;
 import com.jh.cavy.favour.domain.FavourBook;
 import com.jh.cavy.favour.domain.FavourBookGift;
+import com.jh.cavy.favour.dto.FavourBookParams;
 import com.jh.cavy.favour.mapper.FavourBookGiftMapper;
 import com.jh.cavy.favour.mapper.FavourBookMapper;
 import com.jh.cavy.favour.service.FavourBookService;
@@ -39,11 +40,11 @@ public class FavourBookServiceImpl extends ServiceImpl<FavourBookMapper, FavourB
     private final FavourBookGiftMapper favourBookGiftMapper;
 
     @Override
-    public Page<FavourBookVO> queryPage(FavourBookAO favourBookAO) {
+    public Page<FavourBookVO> queryPage(FavourBookParams favourBookParams) {
         LambdaQueryWrapper<FavourBook> queryWrapper = Wrappers.<FavourBook>lambdaQuery();
-        queryWrapper.like(StringUtils.isNotBlank(favourBookAO.getBussType()), FavourBook::getBussType, favourBookAO.getBussType());
+        queryWrapper.like(StringUtils.isNotBlank(favourBookParams.getBussType()), FavourBook::getBussType, favourBookParams.getBussType());
         queryWrapper.eq(FavourBook::getCurrentUserId, RequestHeadHolder.getUserId());
-        Page<FavourBookAO> page = PageUtil.newPage(favourBookAO);
+        Page<FavourBookParams> page = PageUtil.newPage(favourBookParams);
         return favourBookMapper.queryPage(page, queryWrapper);
     }
 
@@ -73,10 +74,10 @@ public class FavourBookServiceImpl extends ServiceImpl<FavourBookMapper, FavourB
     }
 
     @Override
-    public Page<FavourBookGiftVO> giftReceivePage(FavourBookAO favourBookAO) {
+    public Page<FavourBookGiftVO> giftReceivePage(FavourBookParams favourBookParams) {
         LambdaQueryWrapper<FavourBookGift> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(favourBookAO.getId() != null, FavourBookGift::getFavourBookId, favourBookAO.getId());
-        Page<FavourBookAO> page = PageUtil.newPage(favourBookAO);
+        queryWrapper.eq(favourBookParams.getId() != null, FavourBookGift::getFavourBookId, favourBookParams.getId());
+        Page<FavourBookParams> page = PageUtil.newPage(favourBookParams);
         return favourBookGiftMapper.queryPage(page, queryWrapper);
     }
 
@@ -102,7 +103,7 @@ public class FavourBookServiceImpl extends ServiceImpl<FavourBookMapper, FavourB
     }
 
     @Override
-    public List<FavourBookVO> bookList(FavourBookAO favourBookAO) {
+    public List<FavourBookVO> bookList(FavourBookParams favourBookParams) {
         return favourBookMapper.bookList(Wrappers.lambdaQuery());
     }
 

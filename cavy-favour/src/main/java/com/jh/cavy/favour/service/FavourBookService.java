@@ -5,6 +5,7 @@ import com.jh.cavy.favour.ao.FavourBookAO;
 import com.jh.cavy.favour.ao.FavourBookGiftAO;
 import com.jh.cavy.favour.domain.FavourBook;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jh.cavy.favour.dto.FavourBookParams;
 import com.jh.cavy.favour.vo.FavourBookGiftVO;
 import com.jh.cavy.favour.vo.FavourBookVO;
 import com.jh.cavy.favour.vo.FavourRecordVO;
@@ -19,7 +20,9 @@ import java.util.List;
 public interface FavourBookService extends IService<FavourBook> {
 
 
-    Page<FavourBookVO> queryPage(FavourBookAO favourBookAO);
+    Page<FavourBookVO> queryPage(FavourBookParams favourBookParams);
+
+    List<FavourBookVO> bookList(FavourBookParams favourBookParams);
 
     FavourBookVO addBook(FavourBookAO favourBookAO);
 
@@ -27,13 +30,12 @@ public interface FavourBookService extends IService<FavourBook> {
 
     void modifyBook(FavourBookAO favourBookAO);
 
-    Page<FavourBookGiftVO> giftReceivePage(FavourBookAO favourBookAO);
+    Page<FavourBookGiftVO> giftReceivePage(FavourBookParams favourBookParams);
 
     void updateBookGift(FavourBookGiftAO favourBookGiftAO);
 
     List<FavourRecordVO> getGiftByUserId(Integer id);
 
-    List<FavourBookVO> bookList(FavourBookAO favourBookAO);
 
     void addBookGift(FavourBookGiftAO favourBookGiftAO);
 
