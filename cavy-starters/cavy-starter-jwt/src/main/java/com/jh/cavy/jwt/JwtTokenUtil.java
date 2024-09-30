@@ -5,30 +5,28 @@ import com.jh.cavy.cache.service.CacheService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Slf4j
 public class JwtTokenUtil implements InitializingBean {
-    private static final Logger log = LoggerFactory.getLogger(JwtTokenUtil.class);
+    @Resource
+    private CacheService cacheService;
     private final JwtProperties jwtProperties;
     private Key key;
-    @Resource
-    private  CacheService cacheService;
+
 
     @Autowired
     public JwtTokenUtil(JwtProperties jwtProperties) {
@@ -45,7 +43,7 @@ public class JwtTokenUtil implements InitializingBean {
     public String generateToken(Map<String, Object> claims) {
         Assert.notNull(claims.get("scope"), "Scope must not be null!");
         claims.put("iat", new Date());
-        Date expirationDate = new Date(System.currentTimeMillis() + this.jwtProperties.getTokenValidityInSeconds().longValue());
+        Date expirationDate = new Date(System.currentTimeMillis() + this.jwtProperties.getTokenValidityInSeconds());
         return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(this.key, SignatureAlgorithm.HS512).compact();
     }
 
@@ -65,10 +63,9 @@ public class JwtTokenUtil implements InitializingBean {
         try {
             claims = Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
-            log.error("token过期 请重新登录");
-            e.printStackTrace();
+            log.error("token过期 请重新登录", e);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("解析token异常", e);
         }
         return claims;
     }
@@ -79,7 +76,7 @@ public class JwtTokenUtil implements InitializingBean {
             Claims claims = getClaimsFromToken(token);
             account = claims.get("account").toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("获取token中account异常", e);
         }
         return account;
     }
@@ -90,7 +87,7 @@ public class JwtTokenUtil implements InitializingBean {
             Claims claims = getClaimsFromToken(getToken(request));
             account = claims.get("account").toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("获取request中account异常", e);
         }
         return account;
     }
@@ -101,7 +98,7 @@ public class JwtTokenUtil implements InitializingBean {
             Claims claims = getClaimsFromToken(token);
             username = claims.get("username").toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("获取token中username异常", e);
         }
         return username;
     }
@@ -112,7 +109,7 @@ public class JwtTokenUtil implements InitializingBean {
             Claims claims = getClaimsFromToken(getToken(request));
             username = claims.get("username").toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("获取request中username异常", e);
         }
         return username;
     }
@@ -123,7 +120,7 @@ public class JwtTokenUtil implements InitializingBean {
             Claims claims = getClaimsFromToken(token);
             scope = (String) claims.get("scope", String.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("获取token中scope异常", e);
         }
         return scope;
     }
@@ -136,7 +133,7 @@ public class JwtTokenUtil implements InitializingBean {
             Date expiration = claims.getExpiration();
             return expiration.before(new Date());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("验证token有效期异常", e);
         }
         return Boolean.TRUE;
     }
@@ -148,7 +145,7 @@ public class JwtTokenUtil implements InitializingBean {
             claims.put("iat", new Date());
             refreshedToken = generateToken(claims);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("刷新token异常", e);
         }
         return refreshedToken;
     }
@@ -158,17 +155,13 @@ public class JwtTokenUtil implements InitializingBean {
             Claims claims = Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody();
             return (subject.equals(claims.getSubject())) && (!isTokenExpired(token));
         } catch (SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT signature.");
-            e.printStackTrace();
+            log.error("Invalid JWT signature.", e);
         } catch (ExpiredJwtException e) {
-            log.info("Expired JWT token.");
-            e.printStackTrace();
+            log.error("Expired JWT token.", e);
         } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT token.");
-            e.printStackTrace();
+            log.error("Unsupported JWT token.", e);
         } catch (IllegalArgumentException e) {
-            log.info("JWT token compact of handler are invalid.");
-            e.printStackTrace();
+            log.error("JWT token compact of handler are invalid.", e);
         }
         return false;
     }
@@ -176,29 +169,25 @@ public class JwtTokenUtil implements InitializingBean {
     public JwtUser validateToken(String token) {
         try {
             if (isTokenExpired(token)) {
-                log.info("Expired JWT token.");
+                log.warn("Expired JWT token.");
                 return null;
             }
-            JwtUser jwtUser = (JwtUser) cacheService.hget(jwtProperties.getRedisKey(), token);
+            JwtUser jwtUser = (JwtUser) cacheService.hget(jwtProperties.getCacheKey(), token);
             if (jwtUser == null) {
-                log.info("Invalid JWT token.");
+                log.warn("Invalid JWT token.");
                 return null;
             }
             String username = getUsernameFromToken(token);
             Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token);
             return (username.equals(jwtUser.getUsername())) && (!isTokenExpired(token)) ? jwtUser : null;
         } catch (SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT signature.");
-            e.printStackTrace();
+            log.error("Invalid JWT signature.", e);
         } catch (ExpiredJwtException e) {
-            log.info("Expired JWT token.");
-            e.printStackTrace();
+            log.error("Expired JWT token.", e);
         } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT token.");
-            e.printStackTrace();
+            log.error("Unsupported JWT token.", e);
         } catch (IllegalArgumentException e) {
-            log.info("JWT token compact of handler are invalid.");
-            e.printStackTrace();
+            log.error("JWT token compact of handler are invalid.", e);
         }
         return null;
     }
@@ -209,17 +198,13 @@ public class JwtTokenUtil implements InitializingBean {
             Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token);
             return (username.equals(jwtUser.getUsername())) && (!isTokenExpired(token));
         } catch (SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT signature.");
-            e.printStackTrace();
+            log.error("Invalid JWT signature.", e);
         } catch (ExpiredJwtException e) {
-            log.info("Expired JWT token.");
-            e.printStackTrace();
+            log.error("Expired JWT token.", e);
         } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT token.");
-            e.printStackTrace();
+            log.error("Unsupported JWT token.", e);
         } catch (IllegalArgumentException e) {
-            log.info("JWT token compact of handler are invalid.");
-            e.printStackTrace();
+            log.error("JWT token compact of handler are invalid.", e);
         }
         return false;
     }
@@ -239,7 +224,4 @@ public class JwtTokenUtil implements InitializingBean {
         return null;
     }
 
-    public JwtProperties getJwtProperties() {
-        return this.jwtProperties;
-    }
 }

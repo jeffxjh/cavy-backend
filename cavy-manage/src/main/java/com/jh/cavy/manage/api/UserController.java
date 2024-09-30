@@ -25,9 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
@@ -37,27 +35,17 @@ import java.util.Map;
 @RequestMapping("/user")
 @RestController
 @RequiredArgsConstructor
-public class UserApi {
+public class UserController {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
     private final RoleService roleService;
     private final CacheService cacheService;
     private final JwtProperties jwtProperties;
     private final WeixinProperties weixinProperties;
-    //@GetMapping("/login")
-    //public String auth0Login(@RequestParam String userName, @RequestParam String passWord, HttpServletResponse response) {
-    //    String token = "";
-    //    User user = userService.getByUserName(userName);
-    //    if (user != null) {
-    //        token = JwtUtil.createToken(user);
-    //        response.addCookie(new Cookie("token", token));
-    //    }
-    //    return token;
-    //}
 
     @PostMapping("/login")
-    public ResultVO<UserInfoVO> jjwtLogin(@RequestBody LoginParam loginParam, HttpServletRequest request, HttpServletResponse response) {
-        String token = "";
+    public ResultVO<UserInfoVO> jjwtLogin(@RequestBody LoginParam loginParam, HttpServletResponse response) {
+        String token;
         User user = userService.getByUserName(loginParam.getUsername());
         if (user != null) {
             JwtUser jwtUser = new JwtUser();
@@ -67,7 +55,7 @@ public class UserApi {
             token = jwtTokenUtil.generateToken(jwtUser);
             //boolean b = jwtTokenUtil.validateToken(token, jwtUser);
             response.addCookie(new Cookie("token", token));
-            cacheService.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
+            cacheService.hset(jwtProperties.getCacheKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
             UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
             userInfoVO.setToken(token);
             List<RoleVO> roleVOList = roleService.getRoleByUserName(userInfoVO.getUserName());
@@ -86,7 +74,7 @@ public class UserApi {
     }
 
     @PostMapping("/wechat/doLogin")
-    public ResultVO<UserInfoVO> wechatDoLogin(@RequestBody LoginParam loginParam, HttpServletRequest request, HttpServletResponse response) {
+    public ResultVO<UserInfoVO> wechatDoLogin(@RequestBody LoginParam loginParam, HttpServletResponse response) {
         if (StringUtils.isBlank(loginParam.getCode())) {
             return new ResultVO<>(2000, "认证code为空", new UserInfoVO());
         }
@@ -98,7 +86,7 @@ public class UserApi {
                 return new ResultVO<>(2000, "认证code无效", new UserInfoVO());
             }
             loginParam.setOpenid(openid.toString());
-        }else {
+        } else {
             return new ResultVO<>(2000, "用户登录失败未获取到openid", new UserInfoVO());
         }
 
@@ -126,11 +114,11 @@ public class UserApi {
         jwtUser.setId(Long.valueOf(user.getId()));
         String token = jwtTokenUtil.generateToken(jwtUser);
         response.addCookie(new Cookie("token", token));
-        cacheService.hset(jwtProperties.getRedisKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
+        cacheService.hset(jwtProperties.getCacheKey(), token, jwtUser, jwtProperties.getTokenValidityInSeconds());
         UserInfoVO userInfoVO = new UserInfoVO();
         BeanUtil.copyProperties(jwtUser, userInfoVO);
         userInfoVO.setToken(token);
-        return new ResultVO<>(1000, "success", userInfoVO);
+        return new ResultVO<>(userInfoVO);
     }
 
     @GetMapping()

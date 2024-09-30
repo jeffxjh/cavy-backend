@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
@@ -26,7 +24,7 @@ public class JwtProperties {
     private String codeKey;
     private String cookieKey;
     private Integer filterOrder;
-    private String redisKey = "token";
+    private String cacheKey = "token";
     private String appScope;
 
 }

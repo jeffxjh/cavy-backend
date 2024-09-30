@@ -2,22 +2,55 @@ package com.jh.cavy.cache.service.impl;
 
 
 import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.RemovalCause;
+import com.github.benmanes.caffeine.cache.RemovalListener;
 import com.jh.cavy.cache.service.CacheService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.K;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CaffeineHandle implements CacheService {
+    private final TimeUnit unit = TimeUnit.MINUTES;
     private final Cache<String, Object> caffeineCache;
 
+    public CaffeineHandle() {
+        caffeineCache = initCache();
+    }
+
+    /**
+     * 初始化
+     *
+     * @return
+     */
+    private Cache<String, Object> initCache() {
+        Caffeine<java.lang.Object, java.lang.Object> caffeine = Caffeine.newBuilder();
+        //key的最大size
+        caffeine.maximumSize(200);
+        //expireAfterWrite全局时间淘汰策略
+        long duration = 60 * 2L;
+        caffeine.expireAfterWrite(duration, this.unit);
+        caffeine.removalListener((RemovalListener<String, Object>)
+                                         (key, value, removalCause) ->
+                                                 log.debug("移除了key:{}  value:{} cause:{}", key, value, removalCause));
+        return caffeine.build();
+    }
 
     @Override
     public boolean expire(String key, long time) {
@@ -68,7 +101,7 @@ public class CaffeineHandle implements CacheService {
 
     @Override
     public Object hget(String key, String item) {
-        return caffeineCache.asMap().get(key + item);
+        return caffeineCache.getIfPresent(key + item);
     }
 
     @Override
@@ -85,6 +118,7 @@ public class CaffeineHandle implements CacheService {
     public boolean hmset(String key, Map<String, Object> map, long time) {
         return false;
     }
+
 
     @Override
     public boolean hset(String key, String item, Object value) {

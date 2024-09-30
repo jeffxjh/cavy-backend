@@ -190,10 +190,10 @@ management:
       exposure:
         exclude: shutdown
 cache:
-  use: redisHandle
-#  use: caffeineHandle
+#  use: redisHandle
+  use: caffeineHandle
 message:
-  enable: true
+  enable: false
 file:
   type: none
 #  type: minio
