@@ -25,37 +25,37 @@
         <!--            <artifactId>cavy-task</artifactId>-->
         <!--            <version>${modle.version}</version>-->
         <!--        </dependency>-->
-        <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-starter-file</artifactId>
-            <version>${modle.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.janino</groupId>
-            <artifactId>janino</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-starter-limiter</artifactId>
-            <version>${modle.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.jh</groupId>-->
+<!--            <artifactId>cavy-starter-file</artifactId>-->
+<!--            <version>${modle.version}</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>commons-logging</artifactId>-->
+<!--                    <groupId>commons-logging</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.janino</groupId>-->
+<!--            <artifactId>janino</artifactId>-->
+<!--            <version>3.1.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.jh</groupId>-->
+<!--            <artifactId>cavy-starter-limiter</artifactId>-->
+<!--            <version>${modle.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-starter-jwt</artifactId>
             <version>${modle.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-starter-message</artifactId>
-            <version>${modle.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.jh</groupId>-->
+<!--            <artifactId>cavy-starter-message</artifactId>-->
+<!--            <version>${modle.version}</version>-->
+<!--        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>com.h2database</groupId>-->
 <!--            <artifactId>h2</artifactId>-->
