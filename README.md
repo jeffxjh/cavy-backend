@@ -122,4 +122,46 @@ http://localhost:8011/cavy/springdoc/swagger-ui/index.html#/
 再通过添加注解的形式加dto的字段做转换 fieldcode=>fieldname
 再监听字典增删改接口更新缓存
 
-
+|                            |                                                              |                                              |
+| -------------------------- | ------------------------------------------------------------ | -------------------------------------------- |
+| Pg Source Type             | Taret [MySQL Type](https://dev.mysql.com/doc/refman/8.0/en/data-types.html) | Comment                                      |
+| INT                        | INT                                                          |                                              |
+| SMALLINT                   | SMALLINT                                                     |                                              |
+| BIGINT                     | BIGINT                                                       |                                              |
+| SERIAL                     | INT                                                          | Sets AUTO_INCREMENT in its table definition. |
+| SMALLSERIAL                | SMALLINT                                                     | Sets AUTO_INCREMENT in its table definition. |
+| BIGSERIAL                  | BIGINT                                                       | Sets AUTO_INCREMENT in its table definition. |
+| BIT                        | BIT                                                          |                                              |
+| BOOLEAN                    | TINYINT(1)                                                   |                                              |
+| REAL                       | FLOAT                                                        |                                              |
+| DOUBLE PRECISION           | DOUBLE                                                       |                                              |
+| NUMERIC                    | DECIMAL                                                      |                                              |
+| DECIMAL                    | DECIMAL                                                      |                                              |
+| MONEY                      | DECIMAL(19,2)                                                |                                              |
+| CHAR                       | CHAR/LONGTEXT                                                |                                              |
+| NATIONAL CHARACTER         | CHAR/LONGTEXT                                                |                                              |
+| VARCHAR                    | VARCHAR/MEDIUMTEXT/LONGTEXT                                  |                                              |
+| NATIONAL CHARACTER VARYING | VARCHAR/MEDIUMTEXT/LONGTEXT                                  |                                              |
+| DATE                       | DATE                                                         |                                              |
+| TIME                       | TIME                                                         |                                              |
+| TIMESTAMP                  | DATETIME                                                     |                                              |
+| INTERVAL                   | TIME                                                         |                                              |
+| BYTEA                      | LONGBLOB                                                     |                                              |
+| TEXT                       | LONGTEXT                                                     |                                              |
+| CIDR                       | VARCHAR(43)                                                  |                                              |
+| INET                       | VARCHAR(43)                                                  |                                              |
+| MACADDR                    | VARCHAR(17)                                                  |                                              |
+| UUID                       | VARCHAR(36)                                                  |                                              |
+| XML                        | LONGTEXT                                                     |                                              |
+| JSON                       | LONGTEXT                                                     |                                              |
+| TSVECTOR                   | LONGTEXT                                                     |                                              |
+| TSQUERY                    | LONGTEXT                                                     |                                              |
+| ARRAY                      | LONGTEXT                                                     |                                              |
+| POINT                      | POINT                                                        |                                              |
+| LINE                       | LINESTRING                                                   |                                              |
+| LSEG                       | LINESTRING                                                   |                                              |
+| BOX                        | POLYGON                                                      |                                              |
+| PATH                       | LINESTRING                                                   |                                              |
+| POLYGON                    | POLYGON                                                      |                                              |
+| CIRCLE                     | POLYGON                                                      |                                              |
+| TXID_SNAPSHOT              | VARCHAR                                                      |                                              |

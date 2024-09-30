@@ -97,7 +97,7 @@ CREATE TABLE `t_sys_user` (
                               `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
                               `user_name` varchar(255) DEFAULT NULL COMMENT '账号',
                               `openid` varchar(255) DEFAULT NULL COMMENT '微信openid',
-                              `password` varchar(255) DEFAULT NULL COMMENT '密码',
+                              pwd varchar(255) DEFAULT NULL COMMENT '密码',
                               `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
                               `gender` int(11) DEFAULT NULL COMMENT '性别',
                               `phone` varchar(255) DEFAULT NULL COMMENT '电话',

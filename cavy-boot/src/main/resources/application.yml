@@ -3,91 +3,116 @@ server:
   servlet:
     context-path: /cavy
 spring:
-#  dynamic:
-#    primary: mysql #设置默认的数据源或者数据源组,默认值即为master
-#    datasource:
-#      mysql:
-#        url: jdbc:mysql://${mysql.host:localhost}:${mysql.port:3306}/${mysql.db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
-#        username: ${mysql.username:root}
-#        password: ${mysql.password:123456}
-#        driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
-#      pgsql:
-#        url: jdbc:jdbc:postgresql://localhost:5432/cavy
-#        username: postgres
-#        password: 123456
-#        driver-class-name: org.postgresql.Driver
-#      slave_2:
-#        url: ENC(xxxxx) # 内置加密,使用请查看详细文档
-#        username: ENC(xxxxx)
-#        password: ENC(xxxxx)
-#        driver-class-name: com.mysql.jdbc.Driver
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:file:./${spring.application.name}
-#    schema: classpath:db/schema.sql
-#    data: classpath:db/data.sql
-#    username: sa
-#    password: sa
-#    continue-on-error: true
-#    initialization-mode: never
-#    platform: h2
-#  h2:
-#    #开启console 访问 默认false
-#    console:
-#      enabled: true
-#      settings:
-#        #开启h2 console 跟踪 方便调试  默认 false
-#        trace: true
-#        #允许console 远程访问 默认false
-#        web-allow-others: false
-#        #h2 访问路径上下文
-#      path: /h2-console
+  #  dynamic:
+  #    primary: mysql #设置默认的数据源或者数据源组,默认值即为master
+  #    datasource:
+  #      mysql:
+  #        url: jdbc:mysql://${mysql.host:localhost}:${mysql.port:3306}/${mysql.db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+  #        username: ${mysql.username:root}
+  #        password: ${mysql.password:123456}
+  #        driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+  #      pgsql:
+  #        url: jdbc:jdbc:postgresql://localhost:5432/cavy
+  #        username: postgres
+  #        password: 123456
+  #        driver-class-name: org.postgresql.Driver
+  #      slave_2:
+  #        url: ENC(xxxxx) # 内置加密,使用请查看详细文档
+  #        username: ENC(xxxxx)
+  #        password: ENC(xxxxx)
+  #        driver-class-name: com.mysql.jdbc.Driver
+  #  datasource:
+  #    driver-class-name: org.h2.Driver
+  #    url: jdbc:h2:file:./${spring.application.name}
+  #    schema: classpath:db/schema.sql
+  #    data: classpath:db/data.sql
+  #    username: sa
+  #    password: sa
+  #    continue-on-error: true
+  #    initialization-mode: never
+  #    platform: h2
+  #  h2:
+  #    #开启console 访问 默认false
+  #    console:
+  #      enabled: true
+  #      settings:
+  #        #开启h2 console 跟踪 方便调试  默认 false
+  #        trace: true
+  #        #允许console 远程访问 默认false
+  #        web-allow-others: false
+  #        #h2 访问路径上下文
+  #      path: /h2-console
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${mysql_host:localhost}:${mysql_port:3306}/${mysql_db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=false
-    username: ${mysql_username:root}
-    password: ${mysql_password:123456}
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://${mysql_host:localhost}:${mysql_port:3306}/${mysql_db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=false
+    #    username: ${mysql_username:root}
+    #    password: ${mysql_password:123456}
+    url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_db:cavy}?currentSchema=${db_db:cavy}
+    username: ${db_username:postgres}
+    password: ${db_password:123456}
+    driver-class-name: org.postgresql.Driver
+    # 指定为HikariDataSource
+    type: com.zaxxer.hikari.HikariDataSource
+    # hikari连接池配置
+    hikari:
+      #连接池名
+      pool-name: HikariCP
+      #最小空闲连接数
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认10分钟
+      idle-timeout: 600000
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认60秒
+      connection-timeout: 60000
+      # 连接测试query
+      connection-test-query: SELECT 1
+
   #    type: com.alibaba.druid.pool.DruidDataSource
-#    druid:
-#      driverClassName: com.mysql.cj.jdbc.Driver
-#      username: root
-#      password: 123456
-#      url: jdbc:mysql://localhost:3307/cavy?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-#      initialSize: 5
-#      minIdle: 5
-#      maxActive: 20
-#      maxWait: 60000
-#      validationQuery: select 1
-#      validationQueryTimeout: 5
-#      testOnBorrow: false
-#      testOnReturn: false
-#      testWhileIdle: true
-#      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-#      timeBetweenEvictionRunsMillis: 60000
-#      minEvictableIdleTimeMillis: 300000
-#      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-#      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-#      # 合并多个DruidDataSource的监控数据
-#      useGlobalDataSourceStat: true
-#      filters: stat
-#      webStatFilter:
-#        enabled: true
-#        urlPattern: /api/*
-#        sessionStatEnable: true
-#        sessionStatMaxCount: 1000
-#        profileEnable: true
-#      statViewServlet:
-#        enabled: true
-#        urlPattern: /druid/*
-#        resetEnable: false
-#        loginUsername: admin
-#        loginPassword: admin
-#      filter:
-#        stat:
-#          enabled: true
-#          mergeSql: true
-#        commons-log:
-#          connection-logger-name: stat,wall,log4j
+  #    druid:
+  #      driverClassName: com.mysql.cj.jdbc.Driver
+  #      username: root
+  #      password: 123456
+  #      url: jdbc:mysql://localhost:3307/cavy?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+  #      initialSize: 5
+  #      minIdle: 5
+  #      maxActive: 20
+  #      maxWait: 60000
+  #      validationQuery: select 1
+  #      validationQueryTimeout: 5
+  #      testOnBorrow: false
+  #      testOnReturn: false
+  #      testWhileIdle: true
+  #      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+  #      timeBetweenEvictionRunsMillis: 60000
+  #      minEvictableIdleTimeMillis: 300000
+  #      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+  #      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  #      # 合并多个DruidDataSource的监控数据
+  #      useGlobalDataSourceStat: true
+  #      filters: stat
+  #      webStatFilter:
+  #        enabled: true
+  #        urlPattern: /api/*
+  #        sessionStatEnable: true
+  #        sessionStatMaxCount: 1000
+  #        profileEnable: true
+  #      statViewServlet:
+  #        enabled: true
+  #        urlPattern: /druid/*
+  #        resetEnable: false
+  #        loginUsername: admin
+  #        loginPassword: admin
+  #      filter:
+  #        stat:
+  #          enabled: true
+  #          mergeSql: true
+  #        commons-log:
+  #          connection-logger-name: stat,wall,log4j
 
   rabbitmq:
     host: ${rabbitmq_host:localhost}
@@ -121,10 +146,10 @@ spring:
       max-file-size: 20MB
       max-request-size: 30MB
   jackson:
-      date-format: 'yyyy-MM-dd HH:mm:ss'
-      time-zone: 'GMT+8'
-      serialization:
-        write-dates-as-timestamps: false
+    date-format: 'yyyy-MM-dd HH:mm:ss'
+    time-zone: 'GMT+8'
+    serialization:
+      write-dates-as-timestamps: false
   main:
     allow-bean-definition-overriding: true
   application:
@@ -141,7 +166,7 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     org.springframework.data.convert.CustomConversions: ERROR
     o.s.boot.actuate.endpoint.EndpointId: ERROR
-   # com.jh.cavy.common.Result.ResponseControllerAdvice: debug
+    # com.jh.cavy.common.Result.ResponseControllerAdvice: debug
     com.jh.cavy.manage.mapper: debug
   file:
     path: logs
@@ -153,7 +178,7 @@ cavy:
 # 去除该配置只在logging.level中配置mapper路径实现不打印sql结果集
 mybatis-plus:
   configuration:
-#    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    #    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
