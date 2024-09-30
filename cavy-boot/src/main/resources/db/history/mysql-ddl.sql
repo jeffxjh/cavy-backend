@@ -264,6 +264,7 @@ create table cavy.t_sys_user
     user_name    varchar(255)     null comment '账号',
     pwd     varchar(255)     null comment '密码',
     openid       varchar(255)     null comment '微信openid',
+    channel       CHAR(1)         NULL comment '渠道来源',
     real_name    varchar(255)     null comment '真实姓名',
     gender       int              null comment '性别',
     phone        varchar(255)     null comment '电话',

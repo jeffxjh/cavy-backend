@@ -40,6 +40,11 @@ public class User extends BaseEntity {
     @Schema(name = "微信openid")
     private String openid;
     /**
+     * 用户渠道来源 移动端，管理后台
+     */
+    @Schema(name = "用户渠道来源 移动端，管理后台")
+    private String channel;
+    /**
      * 密码
      */
     @Schema(name = "密码")

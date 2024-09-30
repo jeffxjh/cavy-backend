@@ -390,6 +390,7 @@ CREATE TABLE cavy.t_sys_user (
                                  user_name    VARCHAR(255) NULL,         -- 账号
                                  pwd     VARCHAR(255) NULL,         -- 密码
                                  openid       VARCHAR(255) NULL,         -- 微信openid
+                                 channel       CHAR(1) NULL,         -- 渠道来源
                                  real_name    VARCHAR(255) NULL,         -- 真实姓名
                                  gender       INT NULL,                   -- 性别
                                  phone        VARCHAR(255) NULL,         -- 电话
@@ -408,6 +409,7 @@ COMMENT ON COLUMN cavy.t_sys_user.id IS 'id';
 COMMENT ON COLUMN cavy.t_sys_user.user_name IS '账号';
 COMMENT ON COLUMN cavy.t_sys_user.pwd IS '密码';
 COMMENT ON COLUMN cavy.t_sys_user.openid IS '微信openid';
+COMMENT ON COLUMN cavy.t_sys_user.channel IS '渠道来源';
 COMMENT ON COLUMN cavy.t_sys_user.real_name IS '真实姓名';
 COMMENT ON COLUMN cavy.t_sys_user.gender IS '性别';
 COMMENT ON COLUMN cavy.t_sys_user.phone IS '电话';
