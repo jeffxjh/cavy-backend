@@ -80,11 +80,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<Menu> findMenuByCurrentUser() {
         LambdaQueryWrapper<UserMenu> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(UserMenu::getUserId, RequestHeadHolder.getUserIdString());
+        queryWrapper.eq(UserMenu::getUserId, RequestHeadHolder.getUserId());
         List<UserMenu> userMenus = userMenuMapper.selectList(queryWrapper);
         Set<Long> menuIdList = userMenus.stream().map(a -> Long.valueOf(String.valueOf(a.getMenuId()))).collect(Collectors.toSet());
         List<UserRole> userRoleList = userRoleMapper.selectList(Wrappers.<UserRole>lambdaQuery()
-                                                                        .eq(true, UserRole::getUserId, RequestHeadHolder.getUserIdString()));
+                                                                        .eq(true, UserRole::getUserId, RequestHeadHolder.getUserId()));
         if (CollectionUtil.isNotEmpty(userRoleList)) {
             List<RoleMenu> roleMenus = roleMenuMapper.selectList(Wrappers.<RoleMenu>lambdaQuery()
                                                                          .in(CollectionUtil.isNotEmpty(userRoleList), RoleMenu::getRoleId, userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toSet())));

@@ -21,8 +21,8 @@ public class UserParam extends BaseParam {
     private String realName;
     @Schema(name = "openid")
     private String openid;
-    @Schema(name = "password")
-    private String password;
+    @Schema(name = "pwd")
+    private String pwd;
     @Schema(name = "email")
     private String email;
     @Schema(name = "phone")

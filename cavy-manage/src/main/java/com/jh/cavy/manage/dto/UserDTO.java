@@ -32,7 +32,7 @@ public class UserDTO {
      */
     @Schema(name = "密码")
     @ExcelProperty(value = "密码",index = 2)
-    private String password;
+    private String pwd;
 
     /**
      * 真实姓名

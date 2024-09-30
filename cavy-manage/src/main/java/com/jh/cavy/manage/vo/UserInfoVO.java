@@ -24,7 +24,7 @@ public class UserInfoVO implements Serializable {
     @Schema(name = "")
     private Integer gender;
     @Schema(name = "")
-    private String password;
+    private String pwd;
 
     @Schema(name = "")
     private String phone;

@@ -20,7 +20,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, user_name, `password`, real_name, gender, phone, email,status,default_user, add_time, add_user, update_time,
+        id, user_name, password, real_name, gender, phone, email,status,default_user, add_time, add_user, update_time,
         update_user
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -41,7 +41,7 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
-        insert into t_sys_user (user_name, openid, `password`, real_name,
+        insert into t_sys_user (user_name, openid,password, real_name,
         gender, phone, email,status,default_user,
         add_time, add_user, update_time,
         update_user)
@@ -58,11 +58,12 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userName != null">
                 user_name,
-            </if>   <if test="openid != null">
-            openid,
+            </if>
+            <if test="openid != null">
+                openid,
             </if>
             <if test="password != null">
-                `password`,
+                password,
             </if>
             <if test="realName != null">
                 real_name,
@@ -98,7 +99,8 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userName != null">
                 #{userName,jdbcType=VARCHAR},
-            </if>  <if test="openid != null">
+            </if>
+            <if test="openid != null">
                 #{openid},
             </if>
             <if test="password != null">
@@ -150,7 +152,7 @@
             openid = #{openid,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
-                `password` = #{password,jdbcType=VARCHAR},
+                pwd = #{password,jdbcType=VARCHAR},
             </if>
             <if test="realName != null">
                 real_name = #{realName,jdbcType=VARCHAR},
@@ -189,7 +191,7 @@
         <!--@mbg.generated-->
         update t_sys_user
         set user_name = #{userName,jdbcType=VARCHAR},
-        `password` = #{password,jdbcType=VARCHAR},
+        pwd = #{password,jdbcType=VARCHAR},
         real_name = #{realName,jdbcType=VARCHAR},
         openid = #{openid,jdbcType=VARCHAR},
         gender = #{gender,jdbcType=INTEGER},
@@ -206,19 +208,19 @@
 
     <select id="findByPage" resultType="com.jh.cavy.manage.vo.UserVO">
         select id,
-        user_name,
+               user_name,
                openid,
-        `password`,
-        real_name,
-        gender,
-        phone,
-        email,
-        add_time,
-        add_user,
-        update_time,
-        update_user,
-        status,
-        default_user
+               pwd,
+               real_name,
+               gender,
+               phone,
+               email,
+               add_time,
+               add_user,
+               update_time,
+               update_user,
+               status,
+               default_user
         from t_sys_user ${ew.customSqlSegment}
     </select>
 

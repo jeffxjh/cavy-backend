@@ -2,6 +2,7 @@ package com.jh.cavy.manage.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.jh.cavy.common.mybatisPlus.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -20,7 +21,10 @@ public class UserVO implements Serializable {
     private String realName;
 
     @Schema(name = "")
-    private String password;
+    private String pwd;
+
+    @Schema(name = "openid")
+    private String openid;
 
     @Schema(name = "")
     private Integer gender;

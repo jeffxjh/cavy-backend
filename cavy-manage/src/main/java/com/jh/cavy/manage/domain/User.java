@@ -43,7 +43,7 @@ public class User extends BaseEntity {
      * 密码
      */
     @Schema(name = "密码")
-    private String password;
+    private String pwd;
 
     /**
      * 真实姓名
