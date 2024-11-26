@@ -6,7 +6,7 @@
         <!--@Table t_sys_user-->
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="gender" jdbcType="INTEGER" property="gender"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
@@ -20,7 +20,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, user_name, password, real_name, gender, phone, email,status,default_user, add_time, add_user, update_time,
+        id, user_name, pwd, real_name, gender, phone, email,status,default_user, add_time, add_user, update_time,
         update_user
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -41,11 +41,11 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
-        insert into t_sys_user (user_name, openid,password, real_name,
+        insert into t_sys_user (user_name, openid,pwd, real_name,
         gender, phone, email,status,default_user,
         add_time, add_user, update_time,
         update_user)
-        values (#{userName,jdbcType=VARCHAR},#{openid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+        values (#{userName,jdbcType=VARCHAR},#{openid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
         #{gender,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{defaultUser,jdbcType=VARCHAR},
         #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
@@ -62,8 +62,8 @@
             <if test="openid != null">
                 openid,
             </if>
-            <if test="password != null">
-                password,
+            <if test="pwd != null">
+                pwd,
             </if>
             <if test="realName != null">
                 real_name,
@@ -103,8 +103,8 @@
             <if test="openid != null">
                 #{openid},
             </if>
-            <if test="password != null">
-                #{password,jdbcType=VARCHAR},
+            <if test="pwd != null">
+                #{pwd,jdbcType=VARCHAR},
             </if>
             <if test="realName != null">
                 #{realName,jdbcType=VARCHAR},
@@ -151,8 +151,8 @@
             </if>  <if test="openid != null">
             openid = #{openid,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
-                pwd = #{password,jdbcType=VARCHAR},
+            <if test="pwd != null">
+                pwd = #{pwd,jdbcType=VARCHAR},
             </if>
             <if test="realName != null">
                 real_name = #{realName,jdbcType=VARCHAR},
@@ -191,7 +191,7 @@
         <!--@mbg.generated-->
         update t_sys_user
         set user_name = #{userName,jdbcType=VARCHAR},
-        pwd = #{password,jdbcType=VARCHAR},
+        pwd = #{pwd,jdbcType=VARCHAR},
         real_name = #{realName,jdbcType=VARCHAR},
         openid = #{openid,jdbcType=VARCHAR},
         gender = #{gender,jdbcType=INTEGER},
@@ -228,7 +228,7 @@
     <resultMap id="ResultMap" type="com.jh.cavy.manage.vo.UserInfoVO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
         <result column="openid" jdbcType="VARCHAR" property="openid"/>
         <result column="real_name" jdbcType="VARCHAR" property="realName"/>
         <result column="gender" jdbcType="INTEGER" property="gender"/>
