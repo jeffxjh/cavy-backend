@@ -233,5 +233,5 @@ springdoc:
   writer-with-default-pretty-printer: true
 weixin:
   getOpenidUrl: 'https://api.weixin.qq.com/sns/jscode2session'
-  appId: ${weixin.app-id:''}
-  secretId: ${weixin.secret-id:''}
+  appId: ${weixin-app-id:""}
+  secretId: ${weixin-secret-id:""}

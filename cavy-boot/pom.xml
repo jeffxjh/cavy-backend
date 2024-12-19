@@ -265,7 +265,7 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>1.1.1</version>
+                <version>1.2.2</version>
 <!--                <executions>-->
 <!--                    <execution>-->
 <!--                        <id>build-image</id>-->
@@ -286,11 +286,12 @@
                     </imageTags>
                     <!--每次都会覆盖相同标签镜像-->
                     <forceTags>true</forceTags>
-                    <dockerHost>http://192.168.2.3:2375</dockerHost>
-                    <baseImage>openjdk:8-jre</baseImage>
+                    <dockerHost>http://192.168.2.5:2375</dockerHost>
+                    <baseImage>tomcat:jre21</baseImage>
+<!--                    <baseImage>openjdk:21</baseImage>-->
 <!--                    <entryPoint>["java","-Xms516M","-Xmx516M", "-jar","/${project.build.finalName}.jar"]-->
                     <!--docker run -d -e $JAVA_OPTS=xxx -e PARAMS=xxx -->
-                    <entryPoint>["sh","-c","java $JAVA_OPTS -Xms516M -Xmx516M -Drabbitmq_host=192.168.2.3 -Drabbitmq_username=guest -Drabbitmq_password=guest -Drabbitmq_virtualHost=/ -Dredis_host=192.168.2.11 -Dredis_password=123456 -Dredis_port=6379 -Dmysql_host=192.168.2.11 -Dmysql_port=3306 -Dmysql_username=root -Dmysql_password=123456 -Dloader.path=/cavy/lib -jar /${project.build.finalName}.jar $PARAMS"]
+                    <entryPoint>["sh","-c","java $JAVA_OPTS -Xms516M -Xmx516M -Drabbitmq_host=192.168.2.5 -Drabbitmq_username=guest -Drabbitmq_password=guest -Drabbitmq_virtualHost=/ -Dredis_host=192.168.2.5 -Dredis_password=123456 -Dredis_port=6379 -Ddb_host=192.168.2.5 -Ddb_port=5432 -Ddb_username=postgres -Ddb_password=123456 -Dloader.path=/cavy/lib -jar /${project.build.finalName}.jar $PARAMS"]
                     </entryPoint>
                     <resources>
                         <resource>
@@ -300,6 +301,14 @@
                         </resource>
                     </resources>
                 </configuration>
+                <!--jdk11以后需要添加依赖-->
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
 
