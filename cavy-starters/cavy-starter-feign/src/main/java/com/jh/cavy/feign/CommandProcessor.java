@@ -1,0 +1,137 @@
+package com.jh.cavy.feign;
+
+import com.google.auto.service.AutoService;
+import com.sun.source.util.TreePath;
+import com.sun.source.util.Trees;
+import lombok.SneakyThrows;
+
+import javax.annotation.processing.*;
+import javax.lang.model.SourceVersion;
+import javax.lang.model.element.*;
+import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
+import javax.tools.SimpleJavaFileObject;
+import java.io.*;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+@SupportedAnnotationTypes("com.jh.cavy.feign.CommandTarget")
+@SupportedSourceVersion(SourceVersion.RELEASE_21)
+@AutoService(Processor.class)
+public class CommandProcessor extends AbstractProcessor {
+
+    private String readFile(InputStream inputStream) throws IOException {
+        final int bufferSize = 1024;
+        final char[] buffer = new char[bufferSize];
+        final StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+        for (; ; ) {
+            int rsz = in.read(buffer, 0, buffer.length);
+            if (rsz < 0)
+                break;
+            out.append(buffer, 0, rsz);
+        }
+        return out.toString();
+    }
+
+    /**
+     * 需要包装一下 或者 在idea shareVM配置 -Djps.track.ap.dependencies=false
+     * @param iface
+     * @param wrapper
+     * @param <T>
+     * @return
+     */
+    private static <T> T jbUnwrap(Class<? extends T> iface, T wrapper) {
+        T unwrapped = null;
+        try {
+            final Class<?> apiWrappers = wrapper.getClass().getClassLoader().loadClass("org.jetbrains.jps.javac.APIWrappers");
+            final Method unwrapMethod = apiWrappers.getDeclaredMethod("unwrap", Class.class, Object.class);
+            unwrapped = iface.cast(unwrapMethod.invoke(null, iface, wrapper));
+        }
+        catch (Throwable ignored) {}
+        return unwrapped != null? unwrapped : wrapper;
+    }
+    @Override
+    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+
+        for (Element element : roundEnv.getElementsAnnotatedWith(CommandTarget.class)) {
+            //if (element.getKind() != ElementKind.CLASS) {
+            //    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "CommandTarget can only be applied to classes", element);
+            //    continue;
+            //}
+            ProcessingEnvironment unwrappedprocessingEnv = jbUnwrap(ProcessingEnvironment.class, processingEnv);
+
+            TreePath path = Trees.instance(unwrappedprocessingEnv).getPath(element);
+            JavaFileObject sourceFile = path.getCompilationUnit().getSourceFile();
+            String content = null;
+            try {
+                content = readFile(sourceFile.openInputStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(content);
+            TypeElement classElement = (TypeElement) element;
+            String className = classElement.getQualifiedName().toString();
+            String packageName = ((PackageElement) classElement.getEnclosingElement()).getQualifiedName().toString();
+            String proxyClassName = classElement.getSimpleName() + "Proxy";
+
+            Map<String, ExecutableElement> commandMethods = new HashMap<>();
+            for (Element enclosedElement : classElement.getEnclosedElements()) {
+                if (enclosedElement.getKind() == ElementKind.METHOD
+                            && enclosedElement.getAnnotation(Command.class) != null) {
+                    ExecutableElement method = (ExecutableElement) enclosedElement;
+                    String commandValue = method.getAnnotation(Command.class).type();
+                    commandMethods.put(commandValue, method);
+                }
+            }
+
+            try {
+                generateProxyClass(packageName, proxyClassName, className, commandMethods,content);
+            } catch (IOException e) {
+                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Failed to generate proxy class: " + e.getMessage(), element);
+            }
+        }
+        return true;
+    }
+
+    private void generateProxyClass(String packageName, String proxyClassName, String targetClassName,
+                                    Map<String, ExecutableElement> commandMethods,String content) throws IOException {
+        String fullProxyClassName = packageName + "." + proxyClassName;
+        JavaFileObject builderFile = processingEnv.getFiler().createSourceFile(fullProxyClassName);
+
+        try (Writer writer = builderFile.openWriter()) {
+            //writer.write(content);
+            writer.write("package " + packageName + ";\n\n");
+            writer.write("import org.springframework.beans.factory.annotation.Autowired;\n");
+            writer.write("import org.springframework.stereotype.Component;\n\n");
+            writer.write("/*Auto generated by Command Processor */\n");
+            writer.write("@Component\n");
+            writer.write("public class " + proxyClassName + "  {\n\n");
+            writer.write("    @Autowired\n");
+            writer.write("    private " + targetClassName + " target;\n\n");
+            writer.write("    public void handle(String msg) {\n");
+            //boolean isFirst = true;
+            //for (Map.Entry<String, ExecutableElement> entry : commandMethods.entrySet()) {
+            //    String commandValue = entry.getKey();
+            //    ExecutableElement method = entry.getValue();
+            //    if (isFirst) {
+            //        writer.write("        if (\"" + commandValue + "\".equals(msg)) {\n");
+            //        isFirst = false;
+            //    } else {
+            //        writer.write("        else if (\"" + commandValue + "\".equals(msg)) {\n");
+            //    }
+            //    writer.write("            target." + method.getSimpleName() + "(msg);\n");
+            //    writer.write("        }\n");
+            //}
+            //
+            //writer.write("        else {\n");
+            //writer.write("            throw new IllegalArgumentException(\"Unknown command: \" + msg);\n");
+            //writer.write("        }\n");
+            writer.write("    }\n");
+            writer.write("}\n");
+        }
+    }
+}

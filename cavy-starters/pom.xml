@@ -19,6 +19,7 @@
     <module>cavy-starter-file</module>
     <module>cavy-starter-message</module>
     <module>cavy-starter-limiter</module>
+    <module>cavy-starter-feign</module>
   </modules>
 
   <name>cavy-starters</name>

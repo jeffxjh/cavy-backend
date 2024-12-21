@@ -27,6 +27,7 @@
         <module>cavy-common</module>
         <module>cavy-starters</module>
         <module>cavy-favour</module>
+        <module>cavy-test</module>
     </modules>
 
     <dependencies>

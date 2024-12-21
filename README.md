@@ -165,3 +165,48 @@ http://localhost:8011/cavy/springdoc/swagger-ui/index.html#/
 | POLYGON                    | POLYGON                                                      |                                              |
 | CIRCLE                     | POLYGON                                                      |                                              |
 | TXID_SNAPSHOT              | VARCHAR                                                      |                                              |
+
+
+
+Spring4.2之后，可以使用TransactionalEventListener监听事务提交，并在调用方发送event。这种方式需要维护过多的事件及事件处理器，可维护性较差，相对而言上面第一种方案的函数式输入会简单一点。
+
+业务实现：
+
+@Service
+@Slf4j
+public class UserService extends ServiceImpl<UserDao, User> {
+@Autowired
+ApplicationEventPublisher eventPublisher;
+
+    @Transactional
+    public void add(User user){
+        super.save(user);
+        eventPublisher.publishEvent(new UserAddEvent(user.getId()));
+    }
+}
+自定义事件：
+
+@Data
+public class UserAddEvent extends ApplicationEvent {
+
+    private Integer userId;
+ 
+    public UserAddEvent(Integer userId) {
+        this.userId = userId;
+    }
+}
+监听器实现：
+
+@Slf4j
+@Component
+public class UserListener {
+
+    @Autowired
+    EmailService emailService;
+ 
+    @Async
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, classes = UserAddEvent.class)
+    public void onUserAddEvent(UserAddEvent event) {
+        emailService.sendEmail(event.getUserId());
+    }
+}
