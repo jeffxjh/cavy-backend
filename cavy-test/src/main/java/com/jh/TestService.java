@@ -1,12 +1,13 @@
 package com.jh;
 
-import com.jh.cavy.feign.Command;
-import com.jh.cavy.feign.CommandTarget;
-import jakarta.annotation.Resource;
-import org.springframework.context.annotation.Configuration;
+import com.jh.cavy.feign.Access;
+import com.jh.cavy.feign.RestFeignClient;
+import org.springframework.stereotype.Service;
 
-@CommandTarget
+
+@RestFeignClient(path = "/testService",name = "TestService",isMicro = true)
 public interface TestService {
-    @Command(type = "")
-    void test();
+
+    @Access(type = "test",path = {"test2"})
+    String test();
 }
