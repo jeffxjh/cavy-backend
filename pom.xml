@@ -28,6 +28,11 @@
         <module>cavy-starters</module>
         <module>cavy-favour</module>
         <module>cavy-test</module>
+        <module>cavy-workflow</module>
+        <module>cavy-workflow/cavy-workflow-boot</module>
+        <module>cavy-workflow/cavy-workflow-common</module>
+        <module>cavy-workflow/cavy-workflow-service</module>
+        <module>cavy-workflow/cavy-workflow-api</module>
     </modules>
 
     <dependencies>

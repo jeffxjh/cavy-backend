@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: cavy-workflow-boot
+  cloud:
+    nacos:
+      config:
+        contextPath: /nacos
+        server-addr: ${nacos_addr:127.0.0.1:8848}
+        password: nacos
+        username: nacos
+        shared-configs[0]:
+          data-id: redis.yml
+          group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
+          refresh: true   # 是否动态刷新，默认为false
+        shared-configs[1]:
+          data-id: file.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        file-extension: yml
+      discovery:
+        server-addr: ${nacos_addr:127.0.0.1:8848}
+        namespace: public
+        password: nacos
+        username: nacos
