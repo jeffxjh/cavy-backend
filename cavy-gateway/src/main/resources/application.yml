@@ -1,0 +1,10 @@
+server:
+  port: 8013
+  servlet:
+    context-path: /gateway
+
+spring:
+  main:
+    web-application-type: reactive
+#  config:
+#    import: nacos:gateway.yaml

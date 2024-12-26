@@ -1,0 +1,42 @@
+server:
+  port: 8013
+  servlet:
+    context-path: /gateway
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: cavy-gateway         # 当前应用的名称
+  cloud:
+    gateway:
+      routes:
+        - id: cavy-boot         #将/xblog-admin/开头的请求转发到 xblog-admin 上
+          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面是注册在 Nacos 上的服务名
+          uri: lb://cavy-boot
+          predicates:
+            - Path=/cavy-boot/**
+          filters:
+            - StripPrefix=1               #表明前缀/provider1需要截取掉
+    nacos:
+      config:
+        namespace: public
+        contextPath: /nacos
+        server-addr: 192.168.2.2:8848
+        password: nacos
+        username: nacos
+#        shared-configs[0]:
+#          data-id: redis.yml
+#          group: DEFAULT_GROUP
+#          refresh: true
+#        shared-configs[1]:
+#          data-id: file.yml
+#          group: DEFAULT_GROUP
+#          refresh: true
+#        file-extension: yml
+      discovery:
+        server-addr: 192.168.2.2:8848
+        namespace: public
+        password: nacos
+        username: nacos
+
