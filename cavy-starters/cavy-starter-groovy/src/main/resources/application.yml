@@ -1,0 +1,237 @@
+server:
+  port: 8014
+  servlet:
+    context-path: /groovy
+spring:
+  #  dynamic:
+  #    primary: mysql #设置默认的数据源或者数据源组,默认值即为master
+  #    datasource:
+  #      mysql:
+  #        url: jdbc:mysql://${mysql.host:localhost}:${mysql.port:3306}/${mysql.db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+  #        username: ${mysql.username:root}
+  #        password: ${mysql.password:123456}
+  #        driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+  #      pgsql:
+  #        url: jdbc:jdbc:postgresql://localhost:5432/cavy
+  #        username: postgres
+  #        password: 123456
+  #        driver-class-name: org.postgresql.Driver
+  #      slave_2:
+  #        url: ENC(xxxxx) # 内置加密,使用请查看详细文档
+  #        username: ENC(xxxxx)
+  #        password: ENC(xxxxx)
+  #        driver-class-name: com.mysql.jdbc.Driver
+  #  datasource:
+  #    driver-class-name: org.h2.Driver
+  #    url: jdbc:h2:file:./${spring.application.name}
+  #    schema: classpath:db/schema.sql
+  #    data: classpath:db/data.sql
+  #    username: sa
+  #    password: sa
+  #    continue-on-error: true
+  #    initialization-mode: never
+  #    platform: h2
+  #  h2:
+  #    #开启console 访问 默认false
+  #    console:
+  #      enabled: true
+  #      settings:
+  #        #开启h2 console 跟踪 方便调试  默认 false
+  #        trace: true
+  #        #允许console 远程访问 默认false
+  #        web-allow-others: false
+  #        #h2 访问路径上下文
+  #      path: /h2-console
+  datasource:
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://${mysql_host:localhost}:${mysql_port:3306}/${mysql_db:cavy}?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=false
+    #    username: ${mysql_username:root}
+    #    password: ${mysql_password:123456}
+    url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_db:cavy}?currentSchema=${db_db:cavy}
+    username: ${db_username:postgres}
+    password: ${db_password:123456}
+    driver-class-name: org.postgresql.Driver
+    # 指定为HikariDataSource
+    type: com.zaxxer.hikari.HikariDataSource
+    # hikari连接池配置
+    hikari:
+      #连接池名
+      pool-name: HikariCP
+      #最小空闲连接数
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认10分钟
+      idle-timeout: 600000
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认60秒
+      connection-timeout: 60000
+      # 连接测试query
+      connection-test-query: SELECT 1
+
+  #    type: com.alibaba.druid.pool.DruidDataSource
+  #    druid:
+  #      driverClassName: com.mysql.cj.jdbc.Driver
+  #      username: root
+  #      password: 123456
+  #      url: jdbc:mysql://localhost:3307/cavy?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+  #      initialSize: 5
+  #      minIdle: 5
+  #      maxActive: 20
+  #      maxWait: 60000
+  #      validationQuery: select 1
+  #      validationQueryTimeout: 5
+  #      testOnBorrow: false
+  #      testOnReturn: false
+  #      testWhileIdle: true
+  #      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+  #      timeBetweenEvictionRunsMillis: 60000
+  #      minEvictableIdleTimeMillis: 300000
+  #      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+  #      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  #      # 合并多个DruidDataSource的监控数据
+  #      useGlobalDataSourceStat: true
+  #      filters: stat
+  #      webStatFilter:
+  #        enabled: true
+  #        urlPattern: /api/*
+  #        sessionStatEnable: true
+  #        sessionStatMaxCount: 1000
+  #        profileEnable: true
+  #      statViewServlet:
+  #        enabled: true
+  #        urlPattern: /druid/*
+  #        resetEnable: false
+  #        loginUsername: admin
+  #        loginPassword: admin
+  #      filter:
+  #        stat:
+  #          enabled: true
+  #          mergeSql: true
+  #        commons-log:
+  #          connection-logger-name: stat,wall,log4j
+
+  rabbitmq:
+    host: ${rabbitmq_host:localhost}
+    port: ${rabbitmq_port:5672}
+    username: ${rabbitmq_username:guest}
+    password: ${rabbitmq_password:guest}
+    virtualHost: ${rabbitmq_virtualHost:/}
+    #开启发送失败返回
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+      #开启ack
+      direct:
+        acknowledge-mode: manual
+  data:
+    redis:
+      database: 0
+      host: ${redis_host:127.0.0.1}
+      port: ${redis_port:6379}
+      password: ${redis_password:123456}
+      timeout: 1000
+      jedis:
+        pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 30MB
+  jackson:
+    date-format: 'yyyy-MM-dd HH:mm:ss'
+    time-zone: 'GMT+8'
+    serialization:
+      write-dates-as-timestamps: false
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: cavy-backend
+es:
+  address: ${es_address:localhost:9200}
+mybatis:
+  mapper-locations: classpath:mapper/*xml
+  type-aliases-package: com.jh.cavymanage.domain
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.springframework.data.convert.CustomConversions: ERROR
+    o.s.boot.actuate.endpoint.EndpointId: ERROR
+    # com.jh.cavy.common.Result.ResponseControllerAdvice: debug
+    com.jh.cavy.manage.mapper: debug
+  file:
+    path: logs
+nacos:
+  enable: false
+cavy:
+  init-database: cavy
+  init-file: init
+# 去除该配置只在logging.level中配置mapper路径实现不打印sql结果集
+mybatis-plus:
+  configuration:
+    #    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        exclude: shutdown
+cache:
+  use: redisHandle
+  #use: caffeineHandle
+message:
+  enable: false
+file:
+  type: none
+#  type: minio
+minio:
+  endpoint: ${minio_endpoint:"http://localhost:9000/"}
+  port: ${minio_port:9000}
+  accessKey: Mingmei
+  secretKey: Mingmei/K7MDENG/bPxRfiCYEXAMPLEKEY
+  secure: false
+  bucketName: "images"
+  configDir: "/root/data"
+  webUrl: ${minio_weburl:"http://localhost:9000/"}
+
+# ===== SpringDoc配置 =====#
+springdoc:
+  swagger-ui:
+    # 自定义的文档界面访问路径。默认访问路径是/swagger-ui.html
+    path: /springdoc/docs.html
+    # 字符串类型，一共三个值来控制操作和标记的默认展开设置。它可以是“list”（仅展开标记）、“full”（展开标记和操作）或“none”（不展开任何内容）。
+    docExpansion: none
+    # 布尔值。控制“试用”请求的请求持续时间（毫秒）的显示。
+    displayRequestDuration: true
+    # 布尔值。控制供应商扩展（x-）字段和操作、参数和架构值的显示。
+    showExtensions: true
+    # 布尔值。控制参数的扩展名（pattern、maxLength、minLength、maximum、minminimum）字段和值的显示。
+    showCommonExtensions: true
+    # 布尔值。禁用swagger用户界面默认petstore url。（从v1.4.1开始提供）。
+    disable-swagger-default-url: true
+  api-docs:
+    # enabled the /v3/api-docs endpoint
+    enabled: true
+    # 自定义的文档api元数据访问路径。默认访问路径是/v3/api-docs
+    path: /springdoc/api-docs
+    # 布尔值。在@Schema（名称name、标题title和说明description，三个属性）上启用属性解析程序。
+    resolve-schema-properties: true
+  # 布尔值。实现OpenApi规范的打印。
+  writer-with-default-pretty-printer: true
+weixin:
+  getOpenidUrl: 'https://api.weixin.qq.com/sns/jscode2session'
+  appId: ${weixin-app-id:""}
+  secretId: ${weixin-secret-id:""}
