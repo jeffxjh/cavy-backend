@@ -4,4 +4,6 @@ public interface ScriptInterface {
     void exec();
 
     void refresh();
+
+    String getName();
 }

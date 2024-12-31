@@ -34,4 +34,9 @@ public class ScriptInterfaceImpl extends ServiceImpl<ScriptMapper, Script> imple
     public void refresh() {
         groovyScriptVar.refresh();
     }
+
+    @Override
+    public String getName() {
+        return "原来111111111111111的class";
+    }
 }
