@@ -1,22 +1,13 @@
-package com.jh.cavy.boot.config;
+package com.jh.configure.boot;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jh.cavy.cache.service.CacheService;
-import com.jh.cavy.manage.domain.Dict;
-import com.jh.cavy.manage.domain.DictItem;
 import com.jh.cavy.manage.service.DictItemService;
 import com.jh.cavy.manage.service.DictService;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 @Slf4j

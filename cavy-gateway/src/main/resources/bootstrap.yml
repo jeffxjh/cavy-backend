@@ -18,6 +18,13 @@ spring:
             - Path=/cavy-boot/**
           filters:
             - StripPrefix=1               #表明前缀/provider1需要截取掉
+        - id: workflow
+          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面是注册在 Nacos 上的服务名
+          uri: lb://workflow
+          predicates:
+            - Path=/workflow/**
+          filters:
+            - StripPrefix=1               #表明前缀/provider1需要截取掉
     nacos:
       config:
         namespace: public

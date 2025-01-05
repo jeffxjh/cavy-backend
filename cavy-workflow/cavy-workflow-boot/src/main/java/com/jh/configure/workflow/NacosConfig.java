@@ -1,4 +1,4 @@
-package com.jh.configure.boot;
+package com.jh.configure.workflow;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;

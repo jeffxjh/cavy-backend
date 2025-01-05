@@ -1,13 +1,17 @@
 server:
   port: 8012
   servlet:
-    context-path: /cavy
+    context-path: /workflow
 flowable:
   # 关闭定时任务JOB
   async-executor-activate: false
   # 在引擎启动时，如果数据库架构与 Flowable 引擎期望的架构不一致，Flowable 会自动更新数据库架构。这包括创建缺失的表和列，以及修改现有的表和列以匹配最新版本
   database-schema-update: true
 spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: cavy-workflow
   datasource:
     url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_db:cavy}?currentSchema=${db_db:cavy}
     username: ${db_username:postgres}
@@ -112,10 +116,7 @@ spring:
     time-zone: 'GMT+8'
     serialization:
       write-dates-as-timestamps: false
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: cavy-backend
+
 es:
   address: ${es_address:localhost:9200}
 mybatis:

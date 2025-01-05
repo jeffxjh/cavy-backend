@@ -1,4 +1,4 @@
-package com.jh.cavy.boot;
+package com.jh.cavy.workflow;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

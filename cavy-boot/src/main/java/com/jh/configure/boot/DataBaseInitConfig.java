@@ -1,4 +1,4 @@
-package com.jh.cavy.boot.config;
+package com.jh.configure.boot;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

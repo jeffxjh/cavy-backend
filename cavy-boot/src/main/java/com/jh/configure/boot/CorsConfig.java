@@ -1,4 +1,4 @@
-package com.jh.cavy.boot.config;
+package com.jh.configure.boot;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;

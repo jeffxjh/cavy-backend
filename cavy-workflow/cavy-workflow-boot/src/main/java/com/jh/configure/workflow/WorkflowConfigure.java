@@ -1,4 +1,4 @@
-package com.jh.configure.boot;
+package com.jh.configure.workflow;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableCaching
 @Configuration
-@ComponentScan(basePackages = {"com.jh.cavy.boot"})
+@ComponentScan(basePackages = {"com.jh.cavy.workflow"})
 @EnableConfigurationProperties
-public class BootConfigure {
+public class WorkflowConfigure {
 }

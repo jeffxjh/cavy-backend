@@ -1,4 +1,4 @@
-package com.jh.cavy.boot.config;
+package com.jh.configure.boot;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
