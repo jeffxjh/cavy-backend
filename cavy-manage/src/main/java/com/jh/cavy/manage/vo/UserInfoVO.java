@@ -42,6 +42,7 @@ public class UserInfoVO implements Serializable {
     private String status;
     @Schema(name = "defaultUser")
     private String defaultUser;
+    private String address;
     @Schema(name = "roleList")
     private List<RoleVO> roleList;
 }

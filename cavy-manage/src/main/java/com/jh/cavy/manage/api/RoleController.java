@@ -27,7 +27,7 @@ import java.util.List;
 public class RoleController {
     private final RoleService roleService;
 
-    @Schema(name = "根据用户名称获取菜单列表")
+    @Schema(name = "根据用户名称获取角色列表")
     @GetMapping("/getRoleByUserName")
     public List<RoleVO> getRoleByUserName(@RequestParam("userName") String userName) {
         return roleService.getRoleByUserName(userName);

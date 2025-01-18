@@ -83,5 +83,9 @@ public class User extends BaseEntity {
      */
     @Schema(name = "默认用户 0否;1是")
     private String defaultUser;
-
+    /**
+     * 地址
+     */
+    @Schema(name = "地址")
+    private String address;
 }

@@ -48,6 +48,9 @@ public class UserController {
         String token;
         User user = userService.getByUserName(loginParam.getUsername());
         if (user != null) {
+            if (!loginParam.getPwd().equals(user.getPwd())) {
+                return new ResultVO<>(2000, "账号或密码错误", new UserInfoVO());
+            }
             JwtUser jwtUser = new JwtUser();
             jwtUser.setAccount(user.getUserName());
             jwtUser.setUsername(user.getRealName());

@@ -17,11 +17,12 @@
         <result column="add_user" jdbcType="VARCHAR" property="addUser"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, user_name, pwd, real_name, gender, phone, email,status,default_user, add_time, add_user, update_time,
-        update_user
+        update_user,address
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -44,12 +45,12 @@
         insert into t_sys_user (user_name, openid,pwd, real_name,
         gender, phone, email,status,default_user,
         add_time, add_user, update_time,
-        update_user)
+        update_user,address)
         values (#{userName,jdbcType=VARCHAR},#{openid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
         #{gender,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{defaultUser,jdbcType=VARCHAR},
         #{addTime,jdbcType=TIMESTAMP}, #{addUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
-        #{updateUser,jdbcType=VARCHAR})
+        #{updateUser,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jh.cavy.manage.domain.User"
             useGeneratedKeys="true">
@@ -94,6 +95,8 @@
             </if>
             <if test="updateUser != null">
                 update_user,
+            </if>   <if test="address != null">
+            address,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -135,6 +138,8 @@
             </if>
             <if test="updateUser != null">
                 #{updateUser,jdbcType=VARCHAR},
+            </if><if test="address != null">
+                #{address,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -183,6 +188,8 @@
             </if>
             <if test="updateUser != null">
                 update_user = #{updateUser,jdbcType=VARCHAR},
+            </if> <if test="address != null">
+            address = #{address,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -202,7 +209,8 @@
         add_time = #{addTime,jdbcType=TIMESTAMP},
         add_user = #{addUser,jdbcType=VARCHAR},
         update_time = #{updateTime,jdbcType=TIMESTAMP},
-        update_user = #{updateUser,jdbcType=VARCHAR}
+        update_user = #{updateUser,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -220,7 +228,8 @@
                update_time,
                update_user,
                status,
-               default_user
+               default_user,
+               address
         from t_sys_user ${ew.customSqlSegment}
     </select>
 
@@ -236,6 +245,7 @@
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="default_user" jdbcType="VARCHAR" property="defaultUser"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
         <collection property="roleList" ofType="com.jh.cavy.manage.vo.RoleVO">
             <id column="role_id" property="id" jdbcType="INTEGER"/>
             <result column="role_name" property="roleName" jdbcType="VARCHAR"/>

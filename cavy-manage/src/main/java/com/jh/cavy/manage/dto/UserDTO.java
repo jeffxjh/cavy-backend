@@ -101,4 +101,11 @@ public class UserDTO {
     @Schema(name = "修改人")
     @ExcelIgnore
     private String updateUser;
+
+    /**
+     * 地址
+     */
+    @Schema(name = "地址")
+    @ExcelProperty(value = "地址",index = 9)
+    private String address;
 }

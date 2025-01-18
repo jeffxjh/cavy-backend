@@ -385,41 +385,52 @@ COMMENT ON COLUMN cavy.t_sys_role_menu.update_user IS '修改人';
 
 ---
 
-CREATE TABLE cavy.t_sys_user (
-                                 id           SERIAL PRIMARY KEY,         -- id
-                                 user_name    VARCHAR(255) NULL,         -- 账号
-                                 pwd     VARCHAR(255) NULL,         -- 密码
-                                 openid       VARCHAR(255) NULL,         -- 微信openid
-                                 channel       CHAR(1) NULL,         -- 渠道来源
-                                 real_name    VARCHAR(255) NULL,         -- 真实姓名
-                                 gender       INT NULL,                   -- 性别
-                                 phone        VARCHAR(255) NULL,         -- 电话
-                                 email        VARCHAR(255) NULL,         -- 邮件
-                                 status       CHAR DEFAULT '0' NOT NULL, -- 状态 0已新建;1已使用;2已禁用;3已冻结
-                                 add_time     TIMESTAMP NULL,            -- 创建时间
-                                 add_user     VARCHAR(255) NULL,         -- 创建人
-                                 update_time  TIMESTAMP NULL,            -- 修改时间
-                                 update_user  VARCHAR(255) NULL,         -- 修改人
-                                 default_user CHAR DEFAULT '0' NULL,     -- 默认用户 0否;1是
-                                 CONSTRAINT t_sys_user_pk UNIQUE (openid) -- 唯一约束
+create table cavy.t_sys_user
+(
+    id           serial
+        primary key,
+    user_name    varchar(255),
+    pwd          varchar(255),
+    openid       varchar(255)
+        constraint t_sys_user_pk
+            unique,
+    real_name    varchar(255),
+    gender       integer,
+    phone        varchar(255),
+    email        varchar(255),
+    status       char default '0'::bpchar not null,
+    add_time     timestamp,
+    add_user     varchar(255),
+    update_time  timestamp,
+    update_user  varchar(255),
+    default_user char default '0'::bpchar,
+    channel      char,
+    address      varchar(255)
 );
 
-COMMENT ON TABLE cavy.t_sys_user IS '用户信息表';
-COMMENT ON COLUMN cavy.t_sys_user.id IS 'id';
-COMMENT ON COLUMN cavy.t_sys_user.user_name IS '账号';
-COMMENT ON COLUMN cavy.t_sys_user.pwd IS '密码';
-COMMENT ON COLUMN cavy.t_sys_user.openid IS '微信openid';
-COMMENT ON COLUMN cavy.t_sys_user.channel IS '渠道来源';
-COMMENT ON COLUMN cavy.t_sys_user.real_name IS '真实姓名';
-COMMENT ON COLUMN cavy.t_sys_user.gender IS '性别';
-COMMENT ON COLUMN cavy.t_sys_user.phone IS '电话';
-COMMENT ON COLUMN cavy.t_sys_user.email IS '邮件';
-COMMENT ON COLUMN cavy.t_sys_user.status IS '状态 0已新建;1已使用;2已禁用;3已冻结';
-COMMENT ON COLUMN cavy.t_sys_user.add_time IS '创建时间';
-COMMENT ON COLUMN cavy.t_sys_user.add_user IS '创建人';
-COMMENT ON COLUMN cavy.t_sys_user.update_time IS '修改时间';
-COMMENT ON COLUMN cavy.t_sys_user.update_user IS '修改人';
-COMMENT ON COLUMN cavy.t_sys_user.default_user IS '默认用户 0否;1是';
+comment on table cavy.t_sys_user is '用户信息表';
+comment on column cavy.t_sys_user.id is 'id';
+comment on column cavy.t_sys_user.user_name is '账号';
+comment on column cavy.t_sys_user.pwd is '密码';
+comment on column cavy.t_sys_user.openid is '微信openid';
+comment on column cavy.t_sys_user.real_name is '真实姓名';
+comment on column cavy.t_sys_user.gender is '性别';
+comment on column cavy.t_sys_user.phone is '电话';
+comment on column cavy.t_sys_user.email is '邮件';
+comment on column cavy.t_sys_user.status is '状态 0已新建;1已使用;2已禁用;3已冻结';
+comment on column cavy.t_sys_user.add_time is '创建时间';
+comment on column cavy.t_sys_user.add_user is '创建人';
+comment on column cavy.t_sys_user.update_time is '修改时间';
+comment on column cavy.t_sys_user.update_user is '修改人';
+comment on column cavy.t_sys_user.default_user is '默认用户 0否;1是';
+comment on column cavy.t_sys_user.channel is '渠道来源';
+comment on column cavy.t_sys_user.address is '地址';
+alter table cavy.t_sys_user
+    owner to postgres;
+create index t_sys_user_index
+    on cavy.t_sys_user (real_name, pwd, status, phone, add_time);
+
+
 
 create index t_sys_user_index
     on cavy.t_sys_user (real_name, pwd, status, phone, add_time);
