@@ -295,8 +295,8 @@
                     <baseImage>tomcat:jre21</baseImage>
 <!--                    <baseImage>openjdk:21</baseImage>-->
 <!--                    <entryPoint>["java","-Xms516M","-Xmx516M", "-jar","/${project.build.finalName}.jar"]-->
-                    <!--docker run -d -e $JAVA_OPTS=xxx -e PARAMS=xxx -->
-                    <entryPoint>["sh","-c","java $JAVA_OPTS -Xms516M -Xmx516M -Drabbitmq_host=192.168.2.2 -Drabbitmq_username=guest -Drabbitmq_password=guest -Drabbitmq_virtualHost=/ -Dredis_host=192.168.2.2 -Dredis_password=123456 -Dredis_port=6379 -Ddb_host=192.168.2.2 -Ddb_port=5432 -Ddb_username=postgres -Ddb_password=123456 -Dloader.path=/cavy/lib -jar /${project.build.finalName}.jar $PARAMS"]
+                    <!--docker run -p 8011:8011 -e LOCALHOST="192.168.2.2" -d xujh/cavy:latest-->
+                    <entryPoint>["sh","-c","java $JAVA_OPTS -Xms516M -Xmx516M -Drabbitmq_host=$LOCALHOST -Drabbitmq_username=guest -Drabbitmq_password=guest -Drabbitmq_virtualHost=/ -Dredis_host=$LOCALHOST -Dredis_password=123456 -Dredis_port=6379 -Ddb_host=$LOCALHOST -Ddb_port=5432 -Ddb_username=postgres -Ddb_password=123456 -Dloader.path=/cavy/lib -jar /${project.build.finalName}.jar $PARAMS"]
                     </entryPoint>
                     <resources>
                         <resource>
