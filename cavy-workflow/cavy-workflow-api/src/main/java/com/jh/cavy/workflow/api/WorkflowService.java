@@ -16,8 +16,9 @@ public interface WorkflowService {
     @PostMapping("testpost")
     void testpost(@RequestBody Map<String, Object> body);
 
-    @GetMapping("createDeploy")
-    void createDeploy();
+
+    @PostMapping("createDeploy")
+    void createDeploy(@RequestBody Map<String, Object> body);
 
     @GetMapping("startTask")
     void startTask();

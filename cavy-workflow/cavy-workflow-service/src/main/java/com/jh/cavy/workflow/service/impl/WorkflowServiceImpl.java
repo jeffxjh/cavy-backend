@@ -1,6 +1,5 @@
 package com.jh.cavy.workflow.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jh.cavy.workflow.api.WorkflowService;
 import com.jh.cavy.workflow.core.WorkflowHandler;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +28,7 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     @Override
-    public void createDeploy() {
+    public void createDeploy(Map<String, Object> body) {
         workflowHandler.createDeploy();
     }
     @SneakyThrows
