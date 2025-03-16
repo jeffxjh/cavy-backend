@@ -2,16 +2,22 @@ package com.jh.cavy.workflow.core;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.common.engine.api.history.HistoricData;
 import org.flowable.engine.*;
 import org.flowable.engine.history.HistoricActivityInstance;
+import org.flowable.engine.history.HistoricProcessInstance;
+import org.flowable.engine.history.ProcessInstanceHistoryLog;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.DeploymentQuery;
+import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.history.HistoricTaskInstance;
+import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -21,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WorkflowHandler {
@@ -100,6 +107,10 @@ public class WorkflowHandler {
                                         .category("基本类型")
                                         .name("流程审批")
                                         .deploy();
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                                                      .deploymentId(deployment.getId())
+                                                      .singleResult();
+        log.info("Found process definition :key{},name{} " + processDefinition.getKey() + processDefinition.getName());
         return deployment;
     }
 
@@ -183,5 +194,46 @@ public class WorkflowHandler {
             }
         }
     }
+    void test10() {
+        HistoricProcessInstance pi = historyService.createHistoricProcessInstanceQuery().singleResult();
+        ProcessInstanceHistoryLog historyLog = historyService.createProcessInstanceHistoryLogQuery(pi.getId())
+                                                       //包括历史活动
+                                                       .includeActivities()
+                                                       //包括历史任务
+                                                       .includeTasks()
+                                                       //包括历史变量
+                                                       .includeVariables()
+                                                       .singleResult();
+        log.info("id:{},startTime:{},endTime:{}", historyLog.getId(), historyLog.getStartTime(), historyLog.getEndTime());
+        List<HistoricData> historicData = historyLog.getHistoricData();
+        for (HistoricData data : historicData) {
+            if (data instanceof HistoricActivityInstance) {
+                HistoricActivityInstance hai = (HistoricActivityInstance) data;
+                log.info("name:{},type:{}", hai.getActivityName(), hai.getActivityType());
+            }
+            if (data instanceof HistoricTaskInstance) {
+                HistoricTaskInstance hti = (HistoricTaskInstance) data;
+                log.info("name:{},assignee:{}", hti.getName(), hti.getAssignee());
+            }
+            if (data instanceof HistoricVariableInstance) {
+                HistoricVariableInstance hvi = (HistoricVariableInstance) data;
+                log.info("name:{},type:{},value:{}", hvi.getVariableName(), hvi.getVariableTypeName(), hvi.getValue());
+            }
+        }
+    }
 
+    public void queryUserTask(String userName) {
+        TaskService taskService = processEngine.getTaskService();
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(userName).list();
+        for (int i=0; i<tasks.size(); i++) {
+           log.info(tasks.get(i).getId(), tasks.get(i).getAssignee(),tasks.get(i).getName(),tasks.get(i).getDescription());
+        }
+    }
+
+    public void queryHisTask(String taskId) {
+        List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().finished().list();
+        for (HistoricProcessInstance hpi : list) {
+            log.info("name:{},startTime:{},endTime:{}",hpi.getName(),hpi.getStartTime(),hpi.getEndTime());
+        }
+    }
 }

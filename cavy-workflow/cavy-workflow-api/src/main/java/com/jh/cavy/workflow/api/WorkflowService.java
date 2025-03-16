@@ -24,8 +24,13 @@ public interface WorkflowService {
     void startTask();
 
     @GetMapping("completeTask")
-    void completeTask(String taskId);
+    void completeTask(@RequestParam("taskId") String taskId);
 
     @GetMapping("queryTask")
     void queryTask(HttpServletResponse httpServletResponse, @RequestParam("processId") String processId);
+    @GetMapping("queryHisTask")
+    void queryHisTask(@RequestParam("taskId") String taskId);
+
+    @GetMapping("queryUserTask")
+    void queryUserTask(@RequestParam("userName") String userName);
 }

@@ -34,7 +34,8 @@ public class WorkflowServiceImpl implements WorkflowService {
     @SneakyThrows
     @Override
     public void startTask() {
-        workflowHandler.startTask("base", "TEST");
+        //定义在流程模型中
+        workflowHandler.startTask("Process_2", "TEST");
     }
 
     @Override
@@ -46,5 +47,15 @@ public class WorkflowServiceImpl implements WorkflowService {
     @Override
     public void queryTask(HttpServletResponse httpServletResponse, String processId) {
         workflowHandler.genProcessDiagram(httpServletResponse,processId);
+    }
+
+    @Override
+    public void queryHisTask(String taskId) {
+        workflowHandler.queryHisTask(taskId);
+    }
+
+    @Override
+    public void queryUserTask(String userName) {
+        workflowHandler.queryUserTask(userName);
     }
 }
