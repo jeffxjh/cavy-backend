@@ -10,8 +10,13 @@
     </parent>
     <artifactId>cavy-manage</artifactId>
 
-    <packaging>jar</packaging>
-
+    <packaging>pom</packaging>
+    <modules>
+        <module>cavy-manage-boot</module>
+        <module>cavy-manage-api</module>
+        <module>cavy-manage-service</module>
+        <module>cavy-manage-common</module>
+    </modules>
 
     <dependencies>
         <!--        <dependency>-->
