@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /cavy
 spring:
+  profiles:
+    active: @spring.profiles.active@
   main:
     allow-bean-definition-overriding: true
   application:
