@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.flowable.org/processdef">
+
+    <process id="simpleApproval" name="简单审批流程" isExecutable="true">
+
+        <!-- 开始节点 -->
+        <startEvent id="startEvent" name="开始"/>
+
+        <!-- 用户提交申请 -->
+        <userTask id="submitTask" name="提交申请"
+                  flowable:assignee="${applicant}">
+            <documentation>员工提交请假申请</documentation>
+        </userTask>
+
+        <!-- 经理审批 -->
+        <userTask id="managerApprove" name="经理审批"
+                  flowable:assignee="${manager}">
+            <documentation>部门经理审批申请</documentation>
+        </userTask>
+
+        <!-- 网关：根据审批结果路由 -->
+        <exclusiveGateway id="decisionGateway" name="审批决定"/>
+
+        <!-- HR备案（仅当审批通过时） -->
+        <userTask id="hrRecord" name="HR备案"
+                  flowable:assignee="hr">
+            <documentation>人力资源部备案</documentation>
+        </userTask>
+
+        <!-- 结束节点 -->
+        <endEvent id="endEvent" name="结束"/>
+
+        <!-- 序列流连接 -->
+        <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="submitTask"/>
+        <sequenceFlow id="flow2" sourceRef="submitTask" targetRef="managerApprove"/>
+        <sequenceFlow id="flow3" sourceRef="managerApprove" targetRef="decisionGateway"/>
+
+        <!-- 审批通过流向 -->
+        <sequenceFlow id="flow4" sourceRef="decisionGateway" targetRef="hrRecord">
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[${approved == true}]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+        <!-- 审批不通过直接结束 -->
+        <sequenceFlow id="flow5" sourceRef="decisionGateway" targetRef="endEvent">
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[${approved == false}]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+        <sequenceFlow id="flow6" sourceRef="hrRecord" targetRef="endEvent"/>
+
+    </process>
+</definitions>

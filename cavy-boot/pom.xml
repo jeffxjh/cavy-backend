@@ -11,16 +11,19 @@
     <artifactId>cavy-boot</artifactId>
     <packaging>jar</packaging>
     <dependencies>
+        <!--        微服务部署时 只需引入api-->
+        <!--        单机部署时 需引入boot-->
         <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-workflow-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <artifactId>cavy-workflow-boot</artifactId>
+            <version>${modle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-manage</artifactId>
+            <artifactId>cavy-manage-boot</artifactId>
             <version>${modle.version}</version>
-        </dependency> <dependency>
+        </dependency>
+        <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-favour</artifactId>
             <version>${modle.version}</version>
@@ -30,42 +33,42 @@
         <!--            <artifactId>cavy-task</artifactId>-->
         <!--            <version>${modle.version}</version>-->
         <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.jh</groupId>-->
-<!--            <artifactId>cavy-starter-file</artifactId>-->
-<!--            <version>${modle.version}</version>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>commons-logging</artifactId>-->
-<!--                    <groupId>commons-logging</groupId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.codehaus.janino</groupId>-->
-<!--            <artifactId>janino</artifactId>-->
-<!--            <version>3.1.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.jh</groupId>-->
-<!--            <artifactId>cavy-starter-limiter</artifactId>-->
-<!--            <version>${modle.version}</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.jh</groupId>-->
+        <!--            <artifactId>cavy-starter-file</artifactId>-->
+        <!--            <version>${modle.version}</version>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <artifactId>commons-logging</artifactId>-->
+        <!--                    <groupId>commons-logging</groupId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.codehaus.janino</groupId>-->
+        <!--            <artifactId>janino</artifactId>-->
+        <!--            <version>3.1.0</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.jh</groupId>-->
+        <!--            <artifactId>cavy-starter-limiter</artifactId>-->
+        <!--            <version>${modle.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.jh</groupId>
             <artifactId>cavy-starter-jwt</artifactId>
             <version>${modle.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.jh</groupId>-->
-<!--            <artifactId>cavy-starter-message</artifactId>-->
-<!--            <version>${modle.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.h2database</groupId>-->
-<!--            <artifactId>h2</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.jh</groupId>-->
+        <!--            <artifactId>cavy-starter-message</artifactId>-->
+        <!--            <version>${modle.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.h2database</groupId>-->
+        <!--            <artifactId>h2</artifactId>-->
+        <!--            <scope>runtime</scope>-->
+        <!--        </dependency>-->
     </dependencies>
 
 
@@ -106,10 +109,10 @@
                         <!--如果不配置则会把所有依赖包都打包到主jar中-->
                         <!--如果存在配置只会把指定依赖打包到主jar-->
                         <!--主要场景是针对不常用jar使用外部依赖的方式，只把项目jar包打到主jar-->
-<!--                        <include>-->
-<!--                            <groupId>non-exists</groupId>-->
-<!--                            <artifactId>non-exists</artifactId>-->
-<!--                        </include>-->
+                        <!--                        <include>-->
+                        <!--                            <groupId>non-exists</groupId>-->
+                        <!--                            <artifactId>non-exists</artifactId>-->
+                        <!--                        </include>-->
                         <!--                        <include>-->
                         <!--                            <groupId>com.jh</groupId>-->
                         <!--                            <artifactId>cavy-backend</artifactId>-->
@@ -271,32 +274,36 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.2</version>
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>build-image</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>build</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
+                <!--                <executions>-->
+                <!--                    <execution>-->
+                <!--                        <id>build-image</id>-->
+                <!--                        <phase>package</phase>-->
+                <!--                        <goals>-->
+                <!--                            <goal>build</goal>-->
+                <!--                        </goals>-->
+                <!--                    </execution>-->
+                <!--                </executions>-->
                 <configuration>
                     <!-- 指定Dockerfile所在的路径 -->
-<!--                    <dockerDirectory>${project.basedir}/src/main/resources/docker</dockerDirectory>-->
-<!--                    <imageName>cavy-backend/${project.artifactId}:${project.version}</imageName>-->
+                    <!--                    <dockerDirectory>${project.basedir}/src/main/resources/docker</dockerDirectory>-->
+                    <!--                    <imageName>cavy-backend/${project.artifactId}:${project.version}</imageName>-->
                     <imageName>xujh/cavy:latest</imageName>
                     <imageTags>
-<!--                        <imageTag>${version}</imageTag>-->
+                        <!--                        <imageTag>${version}</imageTag>-->
                         <imageTag>latest</imageTag>
                     </imageTags>
                     <!--每次都会覆盖相同标签镜像-->
                     <forceTags>true</forceTags>
                     <dockerHost>http://192.168.2.2:2375</dockerHost>
                     <baseImage>tomcat:jre21</baseImage>
-<!--                    <baseImage>openjdk:21</baseImage>-->
-<!--                    <entryPoint>["java","-Xms516M","-Xmx516M", "-jar","/${project.build.finalName}.jar"]-->
+                    <!--                    <baseImage>openjdk:21</baseImage>-->
+                    <!--                    <entryPoint>["java","-Xms516M","-Xmx516M", "-jar","/${project.build.finalName}.jar"]-->
                     <!--docker run -p 8011:8011 -e LOCALHOST="192.168.2.2" -d xujh/cavy:latest-->
-                    <entryPoint>["sh","-c","java $JAVA_OPTS -Xms516M -Xmx516M -Drabbitmq_host=$LOCALHOST -Drabbitmq_username=guest -Drabbitmq_password=guest -Drabbitmq_virtualHost=/ -Dredis_host=$LOCALHOST -Dredis_password=123456 -Dredis_port=6379 -Ddb_host=$LOCALHOST -Ddb_port=5432 -Ddb_username=postgres -Ddb_password=123456 -Dloader.path=/cavy/lib -jar /${project.build.finalName}.jar $PARAMS"]
+                    <entryPoint>["sh","-c","java $JAVA_OPTS -Xms516M -Xmx516M -Drabbitmq_host=$LOCALHOST
+                        -Drabbitmq_username=guest -Drabbitmq_password=guest -Drabbitmq_virtualHost=/
+                        -Dredis_host=$LOCALHOST -Dredis_password=123456 -Dredis_port=6379 -Ddb_host=$LOCALHOST
+                        -Ddb_port=5432 -Ddb_username=postgres -Ddb_password=123456 -Dloader.path=/cavy/lib -jar
+                        /${project.build.finalName}.jar $PARAMS"]
                     </entryPoint>
                     <resources>
                         <resource>

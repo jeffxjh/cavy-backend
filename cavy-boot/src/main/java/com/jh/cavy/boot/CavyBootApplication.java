@@ -1,6 +1,6 @@
 package com.jh.cavy.boot;
 
-import com.jh.cavy.workflow.api.WorkflowService;
+import com.jh.cavy.workflow.api.service.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -8,7 +8,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 @Configuration
 //@EnableDiscoveryClient
 //@EnableLimit
-@EnableFeignClients("com.jh.cavy.workflow")
+//@EnableFeignClients("com.jh.cavy.workflow")
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"com.jh.configure"})
 @RestController

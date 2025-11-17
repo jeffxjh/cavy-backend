@@ -1,6 +1,6 @@
 package com.jh.cavy.workflow.service.impl;
 
-import com.jh.cavy.workflow.api.WorkflowService;
+import com.jh.cavy.workflow.api.service.WorkflowService;
 import com.jh.cavy.workflow.core.WorkflowHandler;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

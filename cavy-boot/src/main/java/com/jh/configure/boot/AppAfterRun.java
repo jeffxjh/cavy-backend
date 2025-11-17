@@ -1,8 +1,6 @@
 package com.jh.configure.boot;
 
 import com.jh.cavy.cache.service.CacheService;
-import com.jh.cavy.manage.service.DictItemService;
-import com.jh.cavy.manage.service.DictService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -15,8 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AppAfterRun implements CommandLineRunner {
     private final ApplicationContext applicationContext;
-    private final DictService dictService;
-    private final DictItemService dictItemService;
+
     private final CacheService cacheService;
 
     @Override
