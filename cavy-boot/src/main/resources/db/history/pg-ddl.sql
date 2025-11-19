@@ -475,4 +475,23 @@ COMMENT ON COLUMN cavy.t_sys_user_role.role_id IS '角色id';
 CREATE CAST (character varying AS bigint) WITH INOUT AS IMPLICIT;
 
 
-DROP CAST  IF EXISTS  (character varying AS bigint)
+DROP CAST  IF EXISTS  (character varying AS bigint);
+
+drop table t_wf_process_definition ;
+CREATE TABLE t_wf_process_definition (
+                                 id          SERIAL PRIMARY KEY,
+                                 name VARCHAR(255) NOT NULL,
+                                 process_id VARCHAR(50) NOT NULL,
+                                 def_key VARCHAR(50),
+                                 bpmn_xml TEXT NOT NULL,
+                                 version INTEGER DEFAULT 1,
+                                 status VARCHAR(50) DEFAULT 'active',
+                                 add_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                 add_user VARCHAR(255),
+                                 update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                 update_user VARCHAR(255)
+);
+
+-- 添加唯一约束
+ALTER TABLE t_wf_process_definition ADD CONSTRAINT uk_t_wf_process_definition_process_id UNIQUE (process_id);
+ALTER TABLE t_wf_process_definition ADD CONSTRAINT uk_t_wf_process_definition_def_key UNIQUE (def_key);

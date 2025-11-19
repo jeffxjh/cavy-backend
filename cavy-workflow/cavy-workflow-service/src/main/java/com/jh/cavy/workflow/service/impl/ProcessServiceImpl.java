@@ -3,6 +3,7 @@ package com.jh.cavy.workflow.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jh.cavy.workflow.api.dto.*;
 import com.jh.cavy.workflow.api.service.ProcessService;
 import com.jh.cavy.workflow.domain.LeaveApply;
@@ -23,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -52,23 +52,17 @@ public class ProcessServiceImpl implements ProcessService {
      */
     @Override
     public String deployProcess(ProcessDefinitionDTO dto) {
-        // 保存到自定义表
-        ProcessDef definition = new ProcessDef();
-        definition.setId(UUID.randomUUID().toString());
-        definition.setName(dto.getName());
-        definition.setDefKey(dto.getKey());
-        definition.setBpmnXml(dto.getBpmnXml());
-        definition.setVersion(1);
-        definition.setStatus("active");
-        processDefMapper.insert(definition);
-
+        ProcessDef processDef = processDefMapper.selectOne(Wrappers.<ProcessDef>lambdaQuery()
+                                                                   .eq(true, ProcessDef::getProcessId, dto.getProcessId()));
         // 部署到Flowable引擎
         Deployment deployment = repositoryService.createDeployment()
-                                        .addString(dto.getKey() + ".bpmn20.xml", dto.getBpmnXml())
+                                        .addString(processDef.getDefKey() + ".bpmn20.xml", processDef.getBpmnXml())
                                         .name(dto.getName())
-                                        .key(dto.getKey())
+                                        .key(dto.getDefKey())
                                         .deploy();
 
+        processDef.setDefKey(deployment.getId());
+        processDefMapper.updateById(processDef);
         return deployment.getId();
     }
 
@@ -103,7 +97,7 @@ public class ProcessServiceImpl implements ProcessService {
         apply.setProcessInstanceId(instance.getId());
         leaveApplyMapper.updateById(apply);
 
-        return BeanUtil.copyProperties(instance,ProcessInstanceDTO.class);
+        return BeanUtil.copyProperties(instance, ProcessInstanceDTO.class);
     }
 
     /**
@@ -171,6 +165,6 @@ public class ProcessServiceImpl implements ProcessService {
     public List<ProcessDefDTO> getProcessDefinitions() {
         LambdaQueryWrapper<ProcessDef> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ProcessDef::getStatus, "active");
-        return BeanUtil.copyToList(processDefMapper.selectList(wrapper),ProcessDefDTO.class);
+        return BeanUtil.copyToList(processDefMapper.selectList(wrapper), ProcessDefDTO.class);
     }
 }

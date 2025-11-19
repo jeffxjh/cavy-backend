@@ -1,5 +1,6 @@
 package com.jh.cavy.workflow.api.service;
 
+import com.jh.cavy.workflow.api.dto.ProcessDefinitionDTO;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,11 @@ public interface WorkflowService {
     @PostMapping("testpost")
     void testpost(@RequestBody Map<String, Object> body);
 
+    @PostMapping("/definition")
+    void createDefinition(@RequestBody ProcessDefinitionDTO dto);
+
+    @PostMapping("/deploy")
+    String deployProcess(@RequestParam("processId") String processId);
 
     @PostMapping("createDeploy")
     void createDeploy(@RequestBody Map<String, Object> body);
@@ -29,6 +35,7 @@ public interface WorkflowService {
 
     @GetMapping("queryTask")
     void queryTask(HttpServletResponse httpServletResponse, @RequestParam("processId") String processId);
+
     @GetMapping("queryHisTask")
     void queryHisTask(@RequestParam("taskId") String taskId);
 

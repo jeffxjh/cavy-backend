@@ -17,6 +17,8 @@ public class ProcessDef extends BaseEntity {
 
     private String name;
 
+    private String processId;
+
     private String defKey;
 
     private String bpmnXml;
