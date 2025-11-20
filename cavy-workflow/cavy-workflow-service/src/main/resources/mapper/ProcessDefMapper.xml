@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.cavy.workflow.mapper.ProcessDefMapper">
+
+    <resultMap id="BaseResultMap" type="com.jh.cavy.workflow.domain.ProcessDef">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="INTEGER"/>
+        <result property="processId" column="process_id" jdbcType="VARCHAR"/>
+        <result property="defKey" column="def_key" jdbcType="VARCHAR"/>
+        <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+        <result property="addUser" column="add_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="defStatus" column="def_status" jdbcType="VARCHAR"/>
+        <result property="bpmnXml" column="bpmn_xml" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,process_id,
+        def_key,add_time,add_user,
+        update_time,update_user,status,def_status,bpmn_xml,version
+    </sql>
+    <sql id="Base_Column_For_Page">
+        id,name,process_id,
+        def_key,add_time,add_user,
+        update_time,update_user,status,def_status,bpmn_xml,version
+    </sql>
+    <select id="queryPageDefinition" resultType="com.jh.cavy.workflow.api.dto.ProcessDefinitionVO">
+        select
+        <include refid="Base_Column_For_Page"/>
+        from t_wf_process_definition
+
+        <if test="true">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+
+</mapper>

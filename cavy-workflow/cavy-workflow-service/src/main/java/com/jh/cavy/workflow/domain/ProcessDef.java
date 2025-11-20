@@ -26,4 +26,6 @@ public class ProcessDef extends BaseEntity {
     private Integer version;
 
     private String status;
+
+    private String defStatus;
 }

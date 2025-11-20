@@ -1,10 +1,9 @@
 package com.jh.cavy.workflow.api.dto;
 
-import com.jh.cavy.common.Resquest.BaseParam;
 import lombok.Data;
 
 @Data
-public class ProcessDefinitionDTO extends BaseParam {
+public class ProcessDefinitionVO {
     private String id;
     private String name;
     private String processId;

@@ -478,20 +478,21 @@ CREATE CAST (character varying AS bigint) WITH INOUT AS IMPLICIT;
 DROP CAST  IF EXISTS  (character varying AS bigint);
 
 drop table t_wf_process_definition ;
-CREATE TABLE t_wf_process_definition (
-                                 id          SERIAL PRIMARY KEY,
-                                 name VARCHAR(255) NOT NULL,
-                                 process_id VARCHAR(50) NOT NULL,
-                                 def_key VARCHAR(50),
-                                 bpmn_xml TEXT NOT NULL,
-                                 version INTEGER DEFAULT 1,
-                                 status VARCHAR(50) DEFAULT 'active',
-                                 add_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                 add_user VARCHAR(255),
-                                 update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                 update_user VARCHAR(255)
+CREATE TABLE t_wf_process_definition
+(
+    id          serial4                                         NOT NULL,
+    "name"      varchar(255)                                    NOT NULL,
+    process_id  varchar(50)                                     NULL,
+    def_key     varchar(50)                                     NULL,
+    bpmn_xml    text                                            NULL,
+    "version"   int4        DEFAULT 1                           NULL,
+    status      varchar(50) DEFAULT 'active'::character varying NULL,
+    add_time    timestamp   DEFAULT CURRENT_TIMESTAMP           NULL,
+    add_user    varchar(255)                                    NULL,
+    update_time timestamp   DEFAULT CURRENT_TIMESTAMP           NULL,
+    update_user varchar(255)                                    NULL,
+    def_status  varchar     DEFAULT '0'::character varying      NOT NULL,
+    CONSTRAINT t_wf_process_definition_pkey PRIMARY KEY (id),
+    CONSTRAINT uk_t_wf_process_definition_def_key UNIQUE (def_key),
+    CONSTRAINT uk_t_wf_process_definition_process_id UNIQUE (process_id)
 );
-
--- 添加唯一约束
-ALTER TABLE t_wf_process_definition ADD CONSTRAINT uk_t_wf_process_definition_process_id UNIQUE (process_id);
-ALTER TABLE t_wf_process_definition ADD CONSTRAINT uk_t_wf_process_definition_def_key UNIQUE (def_key);

@@ -1,8 +1,14 @@
 package com.jh.cavy.workflow.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jh.cavy.common.Resquest.RequestHeadHolder;
+import com.jh.cavy.common.Result.ResultPage;
+import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.workflow.api.dto.ProcessDefinitionDTO;
+import com.jh.cavy.workflow.api.dto.ProcessDefinitionVO;
 import com.jh.cavy.workflow.api.service.ProcessService;
 import com.jh.cavy.workflow.api.service.WorkflowService;
 import com.jh.cavy.workflow.core.WorkflowHandler;
@@ -12,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.*;
 import org.flowable.bpmn.model.Process;
 import org.flowable.engine.RepositoryService;
@@ -45,7 +52,8 @@ public class WorkflowServiceImpl implements WorkflowService {
      */
     @GetMapping("/process-definition/{processDefinitionId}/properties")
     public ResponseEntity<?> getProcessDefinitionProperties(
-            @PathVariable String processDefinitionId) {
+            @PathVariable String processDefinitionId)
+    {
 
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
         Process process = bpmnModel.getProcesses().get(0);
@@ -139,6 +147,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
         return customProperties;
     }
+
     @Override
     public void testget(String id, String name) {
         log.info("testget");
@@ -167,19 +176,34 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     @Override
+    public ResultPage<ProcessDefinitionVO> queryPageDefinition(ProcessDefinitionDTO dto) {
+        Long userId = RequestHeadHolder.getUserId();
+        LambdaQueryWrapper<ProcessDef> queryWrapper = Wrappers.lambdaQuery(ProcessDef.class);
+        queryWrapper.and(StringUtils.isNotBlank(dto.getName()),wrapper -> wrapper
+                                            .like(StringUtils.isNotBlank(dto.getName()), ProcessDef::getName, dto.getName())
+                                            .or()
+                                            .like(StringUtils.isNotBlank(dto.getName()), ProcessDef::getDefKey, dto.getName()))
+                //.eq(ProcessDef::getName, userId)
+                .orderByDesc(ProcessDef::getUpdateTime);
+        Page<ProcessDefinitionVO> processDefinitionVOPage = processDefMapper.queryPageDefinition(PageUtil.newPage(dto), queryWrapper);
+        return new ResultPage<>(processDefinitionVOPage);
+    }
+
+    @Override
     public String deployProcess(String processId) {
         ProcessDef processDef = processDefMapper.selectOne(Wrappers.<ProcessDef>lambdaQuery()
                                                                    .eq(true, ProcessDef::getProcessId, processId));
         if (processDef == null) {
             return "";
         }
-        return processService.deployProcess(BeanUtil.copyProperties(processDef,ProcessDefinitionDTO.class));
+        return processService.deployProcess(BeanUtil.copyProperties(processDef, ProcessDefinitionDTO.class));
     }
 
     @Override
     public void createDeploy(Map<String, Object> body) {
         workflowHandler.createDeploy();
     }
+
     @SneakyThrows
     @Override
     public void startTask() {
@@ -195,7 +219,7 @@ public class WorkflowServiceImpl implements WorkflowService {
     @SneakyThrows
     @Override
     public void queryTask(HttpServletResponse httpServletResponse, String processId) {
-        workflowHandler.genProcessDiagram(httpServletResponse,processId);
+        workflowHandler.genProcessDiagram(httpServletResponse, processId);
     }
 
     @Override
