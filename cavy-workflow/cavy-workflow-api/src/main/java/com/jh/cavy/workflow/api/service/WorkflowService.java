@@ -3,6 +3,8 @@ package com.jh.cavy.workflow.api.service;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.workflow.api.dto.ProcessDefinitionDTO;
 import com.jh.cavy.workflow.api.dto.ProcessDefinitionVO;
+import com.jh.cavy.workflow.api.dto.TaskResult;
+import com.jh.cavy.workflow.api.dto.TradeDTO;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,12 @@ public interface WorkflowService {
 
     @GetMapping("startTask")
     void startTask();
+
+    @PostMapping("loadTask")
+    TaskResult loadTask(@RequestBody TradeDTO tradeDTO);
+
+    @PostMapping("commitTask")
+    TaskResult commitTask(@RequestBody TradeDTO tradeDTO);
 
     @GetMapping("completeTask")
     void completeTask(@RequestParam("taskId") String taskId);

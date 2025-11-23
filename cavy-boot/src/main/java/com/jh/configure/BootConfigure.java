@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableCaching
 @Configuration
-@ComponentScan(basePackages = {"com.jh.configure","com.jh.cavy.manage","com.jh.cavy.workflow"})
+@ComponentScan(basePackages = {"com.jh.configure","com.jh.cavy.manage","com.jh.cavy.workflow","com.jh.cavy.test"})
 @EnableConfigurationProperties
 public class BootConfigure {
 }

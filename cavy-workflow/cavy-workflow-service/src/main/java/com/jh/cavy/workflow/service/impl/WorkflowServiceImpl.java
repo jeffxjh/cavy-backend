@@ -7,11 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jh.cavy.common.Resquest.RequestHeadHolder;
 import com.jh.cavy.common.Result.ResultPage;
 import com.jh.cavy.common.mybatisPlus.PageUtil;
-import com.jh.cavy.workflow.api.dto.ProcessDefinitionDTO;
-import com.jh.cavy.workflow.api.dto.ProcessDefinitionVO;
+import com.jh.cavy.workflow.api.dto.*;
 import com.jh.cavy.workflow.api.service.ProcessService;
 import com.jh.cavy.workflow.api.service.WorkflowService;
-import com.jh.cavy.workflow.core.WorkflowHandler;
+import com.jh.cavy.workflow.core.*;
 import com.jh.cavy.workflow.domain.ProcessDef;
 import com.jh.cavy.workflow.mapper.ProcessDefMapper;
 import jakarta.servlet.http.HttpServletResponse;
@@ -46,6 +45,8 @@ public class WorkflowServiceImpl implements WorkflowService {
     final RuntimeService runtimeService;
     final ProcessService processService;
     final ProcessDefMapper processDefMapper;
+    final TaskNodeExecutor taskNodeExecutor;
+    ;
 
     /**
      * 获取流程定义中的自定义属性
@@ -179,10 +180,10 @@ public class WorkflowServiceImpl implements WorkflowService {
     public ResultPage<ProcessDefinitionVO> queryPageDefinition(ProcessDefinitionDTO dto) {
         Long userId = RequestHeadHolder.getUserId();
         LambdaQueryWrapper<ProcessDef> queryWrapper = Wrappers.lambdaQuery(ProcessDef.class);
-        queryWrapper.and(StringUtils.isNotBlank(dto.getName()),wrapper -> wrapper
-                                            .like(StringUtils.isNotBlank(dto.getName()), ProcessDef::getName, dto.getName())
-                                            .or()
-                                            .like(StringUtils.isNotBlank(dto.getName()), ProcessDef::getDefKey, dto.getName()))
+        queryWrapper.and(StringUtils.isNotBlank(dto.getName()), wrapper -> wrapper
+                                                                                   .like(StringUtils.isNotBlank(dto.getName()), ProcessDef::getName, dto.getName())
+                                                                                   .or()
+                                                                                   .like(StringUtils.isNotBlank(dto.getName()), ProcessDef::getDefKey, dto.getName()))
                 //.eq(ProcessDef::getName, userId)
                 .orderByDesc(ProcessDef::getUpdateTime);
         Page<ProcessDefinitionVO> processDefinitionVOPage = processDefMapper.queryPageDefinition(PageUtil.newPage(dto), queryWrapper);
@@ -209,6 +210,33 @@ public class WorkflowServiceImpl implements WorkflowService {
     public void startTask() {
         //定义在流程模型中
         workflowHandler.startTask("Process_2", "TEST");
+    }
+
+    @Override
+    public TaskResult loadTask(TradeDTO tradeDTO) {
+        FormData formData = new FormData();
+        Map<String, Object> formFields = new HashMap<>();
+        formFields.put("orderNo", "ORD20231215001");
+        formFields.put("customerId", "CUST001");
+        formData.setFormFields(formFields);
+        tradeDTO.setFormData(formData);
+        return taskNodeExecutor.execute(tradeDTO);
+    }
+
+    @Override
+    public TaskResult commitTask(TradeDTO tradeDTO) {
+        tradeDTO.setTxnType("ORDER_CREATE");
+        tradeDTO.setStepNo("N0000");  // 这会自动找到 OrderN0000 类
+        tradeDTO.setOperateType(OperateType.COMMIT);
+
+        FormData formData = new FormData();
+        Map<String, Object> formFields = new HashMap<>();
+        formFields.put("orderNo", "ORD20231215001");
+        formFields.put("customerId", "CUST001");
+        formData.setFormFields(formFields);
+        tradeDTO.setFormData(formData);
+
+        return taskNodeExecutor.execute(tradeDTO);
     }
 
     @Override
