@@ -1,6 +1,7 @@
 package com.jh.cavy.workflow.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.db.PageResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,7 +11,8 @@ import com.jh.cavy.common.mybatisPlus.PageUtil;
 import com.jh.cavy.workflow.api.dto.*;
 import com.jh.cavy.workflow.api.service.ProcessService;
 import com.jh.cavy.workflow.api.service.WorkflowService;
-import com.jh.cavy.workflow.core.*;
+import com.jh.cavy.workflow.core.TaskNodeExecutor;
+import com.jh.cavy.workflow.core.WorkflowHandler;
 import com.jh.cavy.workflow.domain.ProcessDef;
 import com.jh.cavy.workflow.mapper.ProcessDefMapper;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,8 +25,10 @@ import org.flowable.bpmn.model.Process;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.TaskQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -173,6 +177,12 @@ public class WorkflowServiceImpl implements WorkflowService {
         definition.setBpmnXml(dto.getBpmnXml());
         definition.setVersion(dto.getVersion() == null ? 1 : dto.getVersion());
         definition.setStatus(dto.getStatus() == null ? "active" : dto.getStatus());
+        Deployment deployment = repositoryService.createDeployment()
+                                        .addString(definition.getDefKey() + ".bpmn20.xml", definition.getBpmnXml())
+                                        .name(definition.getName())
+                                        .key(definition.getDefKey())
+                                        .deploy();
+        definition.setDefKey(deployment.getId());
         processDefMapper.insert(definition);
     }
 
@@ -188,6 +198,16 @@ public class WorkflowServiceImpl implements WorkflowService {
                 .orderByDesc(ProcessDef::getUpdateTime);
         Page<ProcessDefinitionVO> processDefinitionVOPage = processDefMapper.queryPageDefinition(PageUtil.newPage(dto), queryWrapper);
         return new ResultPage<>(processDefinitionVOPage);
+    }
+
+    @Override
+    public ResultPage<TaskInfoVO> todoTaskPageList(TaskInfoAO dto) {
+        TaskQuery taskQuery = taskService.createTaskQuery();
+        List<Task> tasks = taskQuery.taskAssignee(RequestHeadHolder.getAccount())
+                                   .listPage(dto.getPageIndex().intValue() - 1, dto.getPageSize().intValue());
+        Page<TaskInfoVO> taskInfoVOPage = new Page<>(dto.getPageIndex().intValue() - 1, dto.getPageSize(), taskQuery.count());
+        taskInfoVOPage.setRecords(BeanUtil.copyToList(tasks, TaskInfoVO.class));
+        return new ResultPage<>(taskInfoVOPage);
     }
 
     @Override
@@ -225,17 +245,6 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     public TaskResult commitTask(TradeDTO tradeDTO) {
-        tradeDTO.setTxnType("ORDER_CREATE");
-        tradeDTO.setStepNo("N0000");  // 这会自动找到 OrderN0000 类
-        tradeDTO.setOperateType(OperateType.COMMIT);
-
-        FormData formData = new FormData();
-        Map<String, Object> formFields = new HashMap<>();
-        formFields.put("orderNo", "ORD20231215001");
-        formFields.put("customerId", "CUST001");
-        formData.setFormFields(formFields);
-        tradeDTO.setFormData(formData);
-
         return taskNodeExecutor.execute(tradeDTO);
     }
 

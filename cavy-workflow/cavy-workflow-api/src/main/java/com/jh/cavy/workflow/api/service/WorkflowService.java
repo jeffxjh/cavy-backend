@@ -1,10 +1,7 @@
 package com.jh.cavy.workflow.api.service;
 
 import com.jh.cavy.common.Result.ResultPage;
-import com.jh.cavy.workflow.api.dto.ProcessDefinitionDTO;
-import com.jh.cavy.workflow.api.dto.ProcessDefinitionVO;
-import com.jh.cavy.workflow.api.dto.TaskResult;
-import com.jh.cavy.workflow.api.dto.TradeDTO;
+import com.jh.cavy.workflow.api.dto.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +25,9 @@ public interface WorkflowService {
     @PostMapping("/definition/queryPage")
     ResultPage<ProcessDefinitionVO> queryPageDefinition(@RequestBody ProcessDefinitionDTO dto);
 
+    @PostMapping("/todoTaskPageList")
+    ResultPage<TaskInfoVO> todoTaskPageList(@RequestBody TaskInfoAO dto);
+
     @PostMapping("/deploy")
     String deployProcess(@RequestParam("processId") String processId);
 
@@ -38,10 +38,10 @@ public interface WorkflowService {
     void startTask();
 
     @PostMapping("loadTask")
-    TaskResult loadTask(@RequestBody TradeDTO tradeDTO);
+    TaskResult loadTask(@RequestBody TradeDTO<?> tradeDTO);
 
     @PostMapping("commitTask")
-    TaskResult commitTask(@RequestBody TradeDTO tradeDTO);
+    TaskResult commitTask(@RequestBody TradeDTO<?> tradeDTO);
 
     @GetMapping("completeTask")
     void completeTask(@RequestParam("taskId") String taskId);
