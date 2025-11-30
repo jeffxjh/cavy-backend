@@ -23,7 +23,7 @@ public class OrderN0000 implements TaskNode<OrderDTO> {
         OrderDTO formData = new OrderDTO();
         formData.setApplicant("张站");
         formData.setReason("成功了");
-        context.getTradeDTO().setFormData(formData);
+        context.getTradeData().setFormData(formData);
 
     }
 

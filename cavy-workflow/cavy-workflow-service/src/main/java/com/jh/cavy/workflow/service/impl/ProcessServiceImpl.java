@@ -104,7 +104,7 @@ public class ProcessServiceImpl implements ProcessService {
      * 查询用户任务
      */
     @Override
-    public List<TaskDTO> getUserTasks(String assignee) {
+    public List<TaskDTOOld> getUserTasks(String assignee) {
         List<Task> tasks = taskService.createTaskQuery()
                                    .taskAssignee(assignee)
                                    .orderByTaskCreateTime().desc()
@@ -112,7 +112,7 @@ public class ProcessServiceImpl implements ProcessService {
 
         return tasks.stream().map(task ->
         {
-            TaskDTO dto = new TaskDTO();
+            TaskDTOOld dto = new TaskDTOOld();
             dto.setId(task.getId());
             dto.setName(task.getName());
             dto.setAssignee(task.getAssignee());

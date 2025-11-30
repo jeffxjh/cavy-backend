@@ -7,38 +7,57 @@ import java.util.Map;
 
 @Data
 public class TaskContext<T> {
+    /**
+     * 交易类型 流程key
+     */
     private String txnType;
+    /**
+     * 步骤号 节点编码
+     */
     private String stepNo;
+
+    /**
+     *
+     *@see com.jh.cavy.workflow.api.dto.OperateType
+     */
     private OperateType operateType;
-    private TradeDTO<T> tradeDTO;
+    /**
+     * 交易业务数据
+     */
+    private TradeData<T> tradeData;
+    /**
+     * 流程配置数据
+     */
+    private Map<String, Object> flowConfig;
     private Map<String, Object> params;
     private Map<String, Object> results;
     private boolean success;
     private String errorMessage;
 
-    public TaskContext(TradeDTO<T> tradeDTO) {
-        this.txnType = tradeDTO.getTxnType();
-        this.stepNo = tradeDTO.getStepNo();
-        this.operateType = tradeDTO.getOperateType();
-        this.tradeDTO = tradeDTO;
+    public TaskContext(TradeData<T> tradeData) {
+        this.txnType = tradeData.getTxnType();
+        this.stepNo = tradeData.getStepNo();
+        this.operateType = tradeData.getOperateType();
+        this.tradeData = tradeData;
         this.params = new HashMap<>();
         this.results = new HashMap<>();
 
         // 将扩展参数合并到params中
-        if (tradeDTO.getExtParams() != null) {
-            this.params.putAll(tradeDTO.getExtParams());
+        if (tradeData.getExtParams() != null) {
+            this.params.putAll(tradeData.getExtParams());
         }
     }
 
-    // 便捷方法：获取流程数据
     public FlowData getFlowData() {
-        return tradeDTO.getFlowData();
+        return tradeData.getFlowData();
+    }
+    public String getTxnCode() {
+        return tradeData.getTxnCode();
     }
 
-    // 便捷方法：获取流程扩展数据
     public Object getFlowExtData(String key) {
-        if (tradeDTO.getFlowData() != null && tradeDTO.getFlowData().getExtFlowData() != null) {
-            return tradeDTO.getFlowData().getExtFlowData().get(key);
+        if (tradeData.getFlowData() != null && tradeData.getFlowData().getExtFlowData() != null) {
+            return tradeData.getFlowData().getExtFlowData().get(key);
         }
         return null;
     }

@@ -28,7 +28,7 @@ public interface ProcessService {
      * @param assignee
      * @return
      */
-    List<TaskDTO> getUserTasks(String assignee);
+    List<TaskDTOOld> getUserTasks(String assignee);
 
     /**
      * 提交任务

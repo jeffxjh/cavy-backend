@@ -1,11 +1,21 @@
 package com.jh.cavy.workflow.api.dto;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.FieldNameConstants;
 
+import java.io.Serializable;
 import java.util.Map;
+import java.util.UUID;
 
 @Data
-public class FlowData {
+@FieldNameConstants
+public class FlowData implements Serializable {
+    /**
+     * 交易编号 流程key
+     */
+    private String txnCode= UUID.randomUUID().toString();
     /**
      * 流程实例ID
      */
@@ -20,6 +30,11 @@ public class FlowData {
      * 上一节点ID
      */
     private String previousNodeId;
+
+    /**
+     * 上个节点处理人
+     */
+    private String previousAssignee;
 
     /**
      * 流程状态

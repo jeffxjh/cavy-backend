@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class TradeDTO<T> implements Serializable {
+public class TradeData<T> implements Serializable {
     /**
      * 交易类型
      */
@@ -43,6 +43,9 @@ public class TradeDTO<T> implements Serializable {
      */
     private Map<String, Object> extParams;
 
+    public String getTxnCode() {
+        return flowData.getTxnCode();
+    }
     /**
      * 获取完整的操作描述
      */

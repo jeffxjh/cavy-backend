@@ -193,8 +193,8 @@ management:
       exposure:
         exclude: shutdown
 cache:
-#  use: redisHandle
-  use: caffeineHandle
+  use: redisHandle
+  #use: caffeineHandle
 message:
   enable: false
 file:

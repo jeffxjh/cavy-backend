@@ -38,10 +38,10 @@ public interface WorkflowService {
     void startTask();
 
     @PostMapping("loadTask")
-    TaskResult loadTask(@RequestBody TradeDTO<?> tradeDTO);
+    TaskResult loadTask(@RequestBody TradeData<?> tradeData);
 
     @PostMapping("commitTask")
-    TaskResult commitTask(@RequestBody TradeDTO<?> tradeDTO);
+    TaskResult commitTask(@RequestBody TradeData<?> tradeData);
 
     @GetMapping("completeTask")
     void completeTask(@RequestParam("taskId") String taskId);
