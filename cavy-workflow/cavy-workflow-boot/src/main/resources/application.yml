@@ -96,17 +96,22 @@ spring:
         acknowledge-mode: manual
   data:
     redis:
+      # 核心开关：cluster（集群）/standalone（单机）
+      mode: cluster
+      cluster:
+        nodes: 192.168.2.2:6380,192.168.2.2:6381,192.168.2.2:6382
+        max-redirects: 3
+      password: 123456
       database: 0
       host: ${redis_host:127.0.0.1}
       port: ${redis_port:6379}
-      password: ${redis_password:123456}
-      timeout: 1000
-      jedis:
+      Jedis:
         pool:
           max-active: 8
-          max-wait: -1
           max-idle: 8
-          min-idle: 0
+          min-idle: 2
+          max-wait: -1ms
+      timeout: 2000ms
   servlet:
     multipart:
       max-file-size: 20MB

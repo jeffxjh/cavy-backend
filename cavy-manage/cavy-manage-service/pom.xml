@@ -24,11 +24,7 @@
             <artifactId>cavy-manage-api</artifactId>
             <version>${modle.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.jh</groupId>
-            <artifactId>cavy-starter-jwt</artifactId>
-            <version>${modle.version}</version>
-        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>

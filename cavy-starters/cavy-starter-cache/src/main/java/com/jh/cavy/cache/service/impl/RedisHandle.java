@@ -1,7 +1,6 @@
 package com.jh.cavy.cache.service.impl;
 
 import com.jh.cavy.cache.service.CacheService;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Component;

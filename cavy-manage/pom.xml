@@ -32,16 +32,37 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
-            <version>2.2.11</version>
+            <version>4.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-starter-jwt</artifactId>
+            <artifactId>cavy-starter-message</artifactId>
             <version>${modle.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jh</groupId>
-            <artifactId>cavy-starter-message</artifactId>
+            <artifactId>cavy-starter-jwt</artifactId>
             <version>${modle.version}</version>
         </dependency>
         <!--        <dependency>-->

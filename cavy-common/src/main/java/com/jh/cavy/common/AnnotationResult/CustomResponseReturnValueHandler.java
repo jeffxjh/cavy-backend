@@ -12,6 +12,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 public class CustomResponseReturnValueHandler implements HandlerMethodReturnValueHandler, AsyncHandlerMethodReturnValueHandler {
 
     private static final ObjectMapper objectMapper;
@@ -37,7 +39,7 @@ public class CustomResponseReturnValueHandler implements HandlerMethodReturnValu
     public void handleReturnValue(Object data, MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest) throws Exception {
         modelAndViewContainer.setRequestHandled(true);
         HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(APPLICATION_JSON_VALUE);
 
         String message = "操作成功";
         String status = "success";

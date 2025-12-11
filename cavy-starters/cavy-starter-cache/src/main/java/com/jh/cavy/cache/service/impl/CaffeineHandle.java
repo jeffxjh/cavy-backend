@@ -8,16 +8,11 @@ import com.github.benmanes.caffeine.cache.RemovalListener;
 import com.jh.cavy.cache.service.CacheService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.K;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.caffeine.CaffeineCache;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
