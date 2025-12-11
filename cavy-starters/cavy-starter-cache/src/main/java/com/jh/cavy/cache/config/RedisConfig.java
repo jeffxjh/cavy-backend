@@ -75,7 +75,7 @@ public class RedisConfig {
         clusterConfig.setMaxRedirects(maxRedirects);
 
         // 2. 设置密码
-        if (!StringUtils.hasText(pwd)) {
+        if (StringUtils.hasText(pwd)) {
             clusterConfig.setPassword(pwd);
         }
 
@@ -96,7 +96,7 @@ public class RedisConfig {
         RedisStandaloneConfiguration standaloneConfig = new RedisStandaloneConfiguration();
         standaloneConfig.setHostName(host);
         standaloneConfig.setDatabase(database);
-        if (!StringUtils.hasText(pwd)) {
+        if (StringUtils.hasText(pwd)) {
             standaloneConfig.setPassword(pwd);
         }
         standaloneConfig.setPort(port);
