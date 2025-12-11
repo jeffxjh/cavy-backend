@@ -27,6 +27,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,7 +54,7 @@ public class RedisConfig {
     @ConfigurationProperties(prefix = "spring.data.redis.pool")
     public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxWaitMillis(10000);
+        jedisPoolConfig.setMaxWait(Duration.ofMillis(10000));
         return jedisPoolConfig;
     }
 
@@ -74,7 +75,7 @@ public class RedisConfig {
         clusterConfig.setMaxRedirects(maxRedirects);
 
         // 2. 设置密码
-        if (!StringUtils.isEmpty(pwd)) {
+        if (!StringUtils.hasText(pwd)) {
             clusterConfig.setPassword(pwd);
         }
 
@@ -95,7 +96,7 @@ public class RedisConfig {
         RedisStandaloneConfiguration standaloneConfig = new RedisStandaloneConfiguration();
         standaloneConfig.setHostName(host);
         standaloneConfig.setDatabase(database);
-        if (!StringUtils.isEmpty(pwd)) {
+        if (!StringUtils.hasText(pwd)) {
             standaloneConfig.setPassword(pwd);
         }
         standaloneConfig.setPort(port);
@@ -137,11 +138,10 @@ public class RedisConfig {
         template.setHashKeySerializer(stringRedisSerializer);
         // Jackson2JsonRedisSerializer 序列化器 存储是纯json格式，反序列化是map，必须在创建时指定classType
         // 这里采用指定默认序列化的方式，默认也会存class类型，也可以反序列化强转为对象类型
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(objectMapper,Object.class);
         template.setValueSerializer(jackson2JsonRedisSerializer);
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
