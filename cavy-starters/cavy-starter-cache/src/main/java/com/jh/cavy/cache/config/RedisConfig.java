@@ -43,7 +43,7 @@ public class RedisConfig {
     private Integer port;
     @Value("${spring.data.redis.password:}")
     private String pwd;
-    @Value("${spring.data.redis.cluster.nodes}")
+    @Value("${spring.data.redis.cluster.nodes:}")
     private String clusterNodes;
     @Value("${spring.data.redis.cluster.max-redirects:3}")
     private int maxRedirects;
