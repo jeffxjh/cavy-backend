@@ -21,10 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -40,24 +37,21 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
     @Qualifier(RabbitMqExchangeConfig.MSG_EXCHANGE_BEAN)
     private TopicExchange msgExchange;
     private final Map<String, BaseListen> listenMap = new ConcurrentHashMap<>();
-    // 自行收集队列名称，不再依赖RabbitMqAutoConfig
-    private List<String> businessQueueNames = new ArrayList<>();
-
-
+    private final Set<String> businessQueueNames = new LinkedHashSet<>();
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         BeanDefinitionRegistry registry = (BeanDefinitionRegistry) applicationContext.getAutowireCapableBeanFactory();
-
         // 扫描所有BaseListen实现类，创建队列/绑定
         Map<String, BaseListen> listenBeans = applicationContext.getBeansOfType(BaseListen.class);
         for (BaseListen listen : listenBeans.values()) {
             MsgListen msgListen = AnnotationUtils.findAnnotation(listen.getClass(), MsgListen.class);
             if (msgListen == null) continue;
-
+            // 缓存监听器
             String listenKey = msgListen.value();
             String queueName = msgListen.queuePrefix() + listenKey;
-
+            listenMap.put(listenKey, listen);
+            businessQueueNames.add(queueName);
             // 1. 注册队列Bean（避免重复注册）
             String queueBeanName = listenKey + "Queue";
             if (!registry.containsBeanDefinition(queueBeanName)) {
@@ -67,7 +61,6 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
                                                          .getBeanDefinition();
                 registry.registerBeanDefinition(queueBeanName, queueDefinition);
             }
-
             // 2. 注册绑定Bean（避免重复注册）
             String bindingBeanName = listenKey + "Binding";
             if (!registry.containsBeanDefinition(bindingBeanName)) {
@@ -82,21 +75,5 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
                 registry.registerBeanDefinition(bindingBeanName, bindingDefinition);
             }
         }
-        // 1. 扫描所有BaseListen，缓存监听器+收集队列名称
-        Map<String, BaseListen> beansOfType = applicationContext.getBeansOfType(BaseListen.class);
-        for (BaseListen listen : beansOfType.values()) {
-            MsgListen msgListen = AnnotationUtils.findAnnotation(listen.getClass(), MsgListen.class);
-            if (msgListen == null) continue;
-
-            // 缓存监听器
-            String listenKey = msgListen.value();
-            listenMap.put(listenKey, listen);
-
-            // 收集队列名称（与RabbitMqAutoConfig逻辑一致）
-            String queueName = msgListen.queuePrefix() + listenKey;
-            businessQueueNames.add(queueName);
-        }
-        // 去重
-        businessQueueNames = new ArrayList<>(new LinkedHashSet<>(businessQueueNames));
     }
 }
