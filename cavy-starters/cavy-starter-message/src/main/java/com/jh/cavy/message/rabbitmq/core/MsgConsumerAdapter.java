@@ -32,7 +32,8 @@ public class MsgConsumerAdapter {
             String msgData,
             @Header(name = "msgLogId", required = false) Long msgLogId,
             @Header(name = "amqp_receivedRoutingKey") String routingKey
-    ) {
+    )
+    {
         RabbitMqAutoConfig rabbitMqAutoConfig = SpringUtil.getBean(RabbitMqAutoConfig.class);
         BaseListen listen = rabbitMqAutoConfig.getListenMap().get(routingKey);
         if (listen == null) {
@@ -55,7 +56,8 @@ public class MsgConsumerAdapter {
                 updateLog.setNeedResend(0);
                 msgLogMapper.updateById(updateLog);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             if (msgLogId != null) {
                 MsgLog updateLog = new MsgLog();
                 updateLog.setId(msgLogId);

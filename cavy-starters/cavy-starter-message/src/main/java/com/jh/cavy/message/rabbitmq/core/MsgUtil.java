@@ -22,8 +22,9 @@ public class MsgUtil {
 
     /**
      * 发送消息
-     * @param key 监听key（对应BaseListen的getListenKey）
-     * @param data 业务数据
+     *
+     * @param key       监听key（对应BaseListen的getListenKey）
+     * @param data      业务数据
      * @param isDurable 是否持久化（持久化则写入msg_log表）
      */
     @SneakyThrows
@@ -55,7 +56,8 @@ public class MsgUtil {
                     RabbitMqExchangeConfig.MSG_EXCHANGE,
                     key,
                     msgData,
-                    message -> {
+                    message ->
+                    {
                         // 持久化消息（队列已持久化，消息需标记为持久化）
                         if (isDurable) {
                             message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
@@ -65,7 +67,8 @@ public class MsgUtil {
                         return message;
                     }
             );
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // 发送失败：更新日志为需要重发
             if (isDurable && logId != null) {
                 MsgLog updateLog = new MsgLog();
