@@ -226,6 +226,7 @@ springdoc:
     # 布尔值。禁用swagger用户界面默认petstore url。（从v1.4.1开始提供）。
     disable-swagger-default-url: true
   api-docs:
+    version: "openapi_3_0"
     # enabled the /v3/api-docs endpoint
     enabled: true
     # 自定义的文档api元数据访问路径。默认访问路径是/v3/api-docs
