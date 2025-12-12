@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RabbitMqExchangeConfig {
+    public static final String MSG_QUEUE = "msg.listener.";
     public static final String MSG_EXCHANGE = "msg.exchange";
     public static final String MSG_EXCHANGE_BEAN = "msgExchangeBeanName";
 

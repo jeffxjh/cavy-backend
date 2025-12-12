@@ -28,7 +28,7 @@ public class MsgUtil {
      * @param isDurable 是否持久化（持久化则写入msg_log表）
      */
     @SneakyThrows
-    public void sendMsg(String key, Object data, boolean isDurable) {
+    public void sendMsg(String exchange,String key, Object data, boolean isDurable) {
         // 1. 序列化消息数据
         String msgData = new ObjectMapper().writeValueAsString(data);
 
@@ -53,7 +53,7 @@ public class MsgUtil {
         // 3. 发送消息到RabbitMQ
         try {
             rabbitTemplate.convertAndSend(
-                    RabbitMqExchangeConfig.MSG_EXCHANGE,
+                    exchange,
                     key,
                     msgData,
                     message ->

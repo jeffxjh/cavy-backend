@@ -1,5 +1,6 @@
 package com.jh.cavy.boot;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.jh.cavy.message.rabbitmq.core.MsgUtil;
 import com.jh.cavy.workflow.api.service.WorkflowService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,7 +43,10 @@ public class CavyBootApplication {
         orderData.put("userId", "U1001");
 
         // 发送消息：key=订单监听器key，持久化=true
-        msgUtil.sendMsg("order.msg", orderData, true);
+        msgUtil.sendMsg("order.exchange","order.create", orderData, true);
+        Object bean2 = SpringUtil.getBean("msg.listener.order.createQueue");
+        Object bean3 = SpringUtil.getBean("order.createBinding");
+        Object bean1 = SpringUtil.getBean("order.exchangeExchange");
         return "消息发送成功";
     }
     @Autowired

@@ -38,7 +38,7 @@ public class MsgResendTask {
                 // 反序列化数据
                 Object data = new ObjectMapper().convertValue(log.getMsgData(), Object.class);
                 // 调用MsgUtil重发（持久化标识沿用原配置）
-                msgUtil.sendMsg(log.getMsgKey(), data, log.getIsDurable() == 1);
+                msgUtil.sendMsg( RabbitMqExchangeConfig.MSG_EXCHANGE,log.getMsgKey(), data, log.getIsDurable() == 1);
             } catch (Exception e) {
                 // 重发失败：更新重发次数
                 MsgLog updateLog = new MsgLog();

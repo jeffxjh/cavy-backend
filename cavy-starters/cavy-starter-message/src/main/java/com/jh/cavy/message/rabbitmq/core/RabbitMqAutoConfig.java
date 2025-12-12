@@ -5,12 +5,10 @@ import com.jh.cavy.message.rabbitmq.core.mapper.MsgLogMapper;
 import jakarta.annotation.Resource;
 import lombok.Getter;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.QueueBuilder;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -39,6 +37,9 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
     private final Map<String, BaseListen> listenMap = new ConcurrentHashMap<>();
     private final Set<String> businessQueueNames = new LinkedHashSet<>();
 
+    @Autowired
+    private AmqpAdmin amqpAdmin;
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         BeanDefinitionRegistry registry = (BeanDefinitionRegistry) applicationContext.getAutowireCapableBeanFactory();
@@ -53,7 +54,7 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
             listenMap.put(listenKey, listen);
             businessQueueNames.add(queueName);
             // 1. 注册队列Bean（避免重复注册）
-            String queueBeanName = listenKey + "Queue";
+            String queueBeanName = queueName + "Queue";
             if (!registry.containsBeanDefinition(queueBeanName)) {
                 BeanDefinition queueDefinition = BeanDefinitionBuilder
                                                          .genericBeanDefinition(Queue.class, () -> QueueBuilder.durable(queueName).build())
@@ -61,19 +62,34 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
                                                          .getBeanDefinition();
                 registry.registerBeanDefinition(queueBeanName, queueDefinition);
             }
-            // 2. 注册绑定Bean（避免重复注册）
+            // 2. 注册交换机Bean（避免重复注册）
+            String exchangePrefix = msgListen.exchangePrefix();
+            String exchangeBeanName = exchangePrefix + "Exchange";
+            if (!registry.containsBeanDefinition(exchangeBeanName)) {
+                BeanDefinition exchangeDefinition = BeanDefinitionBuilder
+                                                           .genericBeanDefinition(TopicExchange.class, () ->
+                                                                                                          ExchangeBuilder.topicExchange(exchangePrefix).durable(true).build())
+                                                           .setScope(BeanDefinition.SCOPE_SINGLETON)
+                                                           .getBeanDefinition();
+                registry.registerBeanDefinition(exchangeBeanName, exchangeDefinition);
+            }
+            TopicExchange exchange = applicationContext.getBean(exchangeBeanName, TopicExchange.class);
+            amqpAdmin.declareExchange(exchange);
+            // 3. 注册绑定Bean（避免重复注册）
             String bindingBeanName = listenKey + "Binding";
             if (!registry.containsBeanDefinition(bindingBeanName)) {
                 BeanDefinition bindingDefinition = BeanDefinitionBuilder
                                                            .genericBeanDefinition(Binding.class, () ->
                                                            {
                                                                Queue queue = applicationContext.getBean(queueBeanName, Queue.class);
-                                                               return BindingBuilder.bind(queue).to(msgExchange).with(listenKey);
+                                                               return BindingBuilder.bind(queue).to(exchange).with(listenKey);
                                                            })
                                                            .setScope(BeanDefinition.SCOPE_SINGLETON)
                                                            .getBeanDefinition();
                 registry.registerBeanDefinition(bindingBeanName, bindingDefinition);
             }
+            Binding binding = new Binding(queueName, Binding.DestinationType.QUEUE, exchangePrefix, listenKey, null);
+            amqpAdmin.declareBinding(binding);
         }
     }
 }

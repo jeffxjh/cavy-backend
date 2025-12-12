@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * 订单消息监听器：仅需添加@MsgListen注解，无任何配置代码
  */
-@MsgListen("order.msg")
+@MsgListen(value = "order.create",exchangePrefix = "order.exchange")
 @Component
 public class OrderListen implements BaseListen {
 
