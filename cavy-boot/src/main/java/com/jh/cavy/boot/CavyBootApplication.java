@@ -1,8 +1,10 @@
 package com.jh.cavy.boot;
 
+import com.jh.cavy.message.rabbitmq.core.MsgUtil;
 import com.jh.cavy.workflow.api.service.WorkflowService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 @Configuration
@@ -28,7 +31,20 @@ public class CavyBootApplication {
     public static void main(String[] args) {
         SpringApplication.run(CavyBootApplication.class, args);
     }
+    @Resource
+    private MsgUtil msgUtil;
+    @GetMapping("/sendOrderMsg")
+    public String sendOrderMsg() {
+        // 构造业务数据
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("orderId", "100001");
+        orderData.put("amount", 99.9);
+        orderData.put("userId", "U1001");
 
+        // 发送消息：key=订单监听器key，持久化=true
+        msgUtil.sendMsg("order.msg", orderData, true);
+        return "消息发送成功";
+    }
     @Autowired
     private WorkflowService workflowService;
     @Operation(summary = "测试接口")  // SpringDoc 注解

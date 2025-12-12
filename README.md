@@ -213,3 +213,6 @@ public class UserListener {
         emailService.sendEmail(event.getUserId());
     }
 }
+### 中间件快速访问
+http://192.168.2.2:15672/#/
+
