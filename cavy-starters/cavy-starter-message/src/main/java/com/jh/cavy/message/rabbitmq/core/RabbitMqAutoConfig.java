@@ -50,6 +50,9 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
             if (msgListen == null) continue;
             // 缓存监听器
             String listenKey = msgListen.value();
+            if (listenKey.isEmpty()) {
+                listenKey = listen.getClass().getSimpleName().toLowerCase();;
+            }
             String queueName = msgListen.queuePrefix() + listenKey;
             listenMap.put(listenKey, listen);
             businessQueueNames.add(queueName);
@@ -78,11 +81,12 @@ public class RabbitMqAutoConfig implements ApplicationContextAware {
             // 3. 注册绑定Bean（避免重复注册）
             String bindingBeanName = listenKey + "Binding";
             if (!registry.containsBeanDefinition(bindingBeanName)) {
+                String finalListenKey = listenKey;
                 BeanDefinition bindingDefinition = BeanDefinitionBuilder
                                                            .genericBeanDefinition(Binding.class, () ->
                                                            {
                                                                Queue queue = applicationContext.getBean(queueBeanName, Queue.class);
-                                                               return BindingBuilder.bind(queue).to(exchange).with(listenKey);
+                                                               return BindingBuilder.bind(queue).to(exchange).with(finalListenKey);
                                                            })
                                                            .setScope(BeanDefinition.SCOPE_SINGLETON)
                                                            .getBeanDefinition();

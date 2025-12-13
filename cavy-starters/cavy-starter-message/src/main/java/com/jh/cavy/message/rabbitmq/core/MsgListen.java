@@ -15,7 +15,7 @@ public @interface MsgListen {
     /**
      * 监听routerKey（对应消息路由键）
      */
-    String value();
+    String value() default "";
 
     /**
      * 交换机名称前缀（默认复用监听key）
